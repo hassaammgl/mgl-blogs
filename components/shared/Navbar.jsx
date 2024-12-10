@@ -1,7 +1,7 @@
-// app/components/Navbar.jsx
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import Logo from "./Logo";
 import {
 	Sheet,
 	SheetContent,
@@ -11,6 +11,7 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { ModeToggle } from "./Mode";
+import { Poppins } from "next/font/google";
 
 const links = [
 	{
@@ -35,6 +36,11 @@ const links = [
 	},
 ];
 
+const poppins = Poppins({
+	weight: "400",
+	subsets: ["latin"],
+});
+
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -43,40 +49,47 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className=" shadow-lg backdrop-blur sticky top-0 left-0 w-full ">
+		<nav className="shadow-lg backdrop-blur sticky top-0 left-0 w-full">
 			<Sheet>
 				<div className="max-w-7xl mx-auto px-4">
 					<div className="flex justify-between h-16">
-						{/* Logo */}
 						<div className="flex-shrink-0 flex items-center">
 							<Link
 								href="/"
-								className="text-xl font-bold text-gray-800"
-							>
-								mgl-blogs
-							</Link>
+								className="text-xl font-bold dark:text-white text-gray-800 hover:text-green-500 dark:hover:text-green-400 transition-colors"
+							></Link>
 						</div>
 
-						{/* Desktop Menu */}
 						<div className="hidden md:flex items-center space-x-4">
 							<ModeToggle />
 							{links.map((link) => (
 								<Link
 									key={link._id}
 									href={link.href}
-									className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md"
+									className="text-gray-600 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 px-3 py-2 rounded-md transition-colors"
 								>
 									{link.label}
 								</Link>
 							))}
+							<Link
+								href="/login"
+								className="text-white bg-green-600 hover:bg-green-500 dark:bg-green-700 dark:hover:bg-green-600 px-4 py-2 rounded-md transition-colors"
+							>
+								Login
+							</Link>
+							<Link
+								href="/signup"
+								className="text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:border-green-500 dark:hover:border-green-400 hover:text-green-500 dark:hover:text-green-400 px-4 py-2 rounded-md transition-colors"
+							>
+								Sign Up
+							</Link>
 						</div>
 
-						{/* Mobile Menu Button */}
 						<div className="md:hidden flex items-center">
 							<SheetTrigger onClick={toggleMenu}>
 								<span className="sr-only">Open main menu</span>
 								<svg
-									className="block h-6 w-6"
+									className="block h-6 w-6 dark:text-white"
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
@@ -96,7 +109,9 @@ const Navbar = () => {
 
 				<SheetContent>
 					<SheetHeader>
-						<SheetTitle>MGL-BLOGS</SheetTitle>
+						<SheetTitle className="dark:text-white">
+							<Logo fontFamily={poppins.style.fontFamily} />
+						</SheetTitle>
 						<SheetDescription>
 							<div className="md:hidden">
 								<div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -104,12 +119,26 @@ const Navbar = () => {
 										<Link
 											key={link._id}
 											href={link.href}
-											className="block text-gray-600 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md"
+											className="block text-gray-600 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 rounded-md transition-colors"
 											onClick={toggleMenu}
 										>
 											{link.label}
 										</Link>
 									))}
+									<Link
+										href="/login"
+										className="block text-gray-600 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 rounded-md transition-colors"
+										onClick={toggleMenu}
+									>
+										Login
+									</Link>
+									<Link
+										href="/signup"
+										className="block text-gray-600 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 rounded-md transition-colors"
+										onClick={toggleMenu}
+									>
+										Sign Up
+									</Link>
 								</div>
 							</div>
 						</SheetDescription>
