@@ -12,7 +12,7 @@ const Logo = ({ className, fontFamily = "Arial" }) => {
 					fontSize: "24px",
 					fontWeight: "bold",
 				}}
-				className="dark:fill-white fill-gray-800"
+				className="fill-gray-900 dark:fill-gray-100 transition-colors duration-200"
 			>
 				mgl blogs
 			</text>
