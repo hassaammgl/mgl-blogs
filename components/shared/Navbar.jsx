@@ -49,7 +49,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="shadow-lg backdrop-blur sticky top-0 left-0 w-full">
+		<nav className="shadow-lg backdrop-blur fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-black/80">
 			<Sheet>
 				<div className="max-w-7xl mx-auto px-4">
 					<div className="flex justify-between h-16">
