@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/sheet";
 import { ModeToggle } from "./Mode";
 import { Poppins } from "next/font/google";
+import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { Button } from "../ui/button";
 
 const links = [
 	{
@@ -71,7 +73,7 @@ const Navbar = () => {
 									{link.label}
 								</Link>
 							))}
-							<Link
+							{/* <Link
 								href="/login"
 								className="text-white bg-green-600 hover:bg-green-500 dark:bg-green-700 dark:hover:bg-green-600 px-4 py-2 rounded-md transition-colors"
 							>
@@ -82,7 +84,13 @@ const Navbar = () => {
 								className="text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:border-green-500 dark:hover:border-green-400 hover:text-green-500 dark:hover:text-green-400 px-4 py-2 rounded-md transition-colors"
 							>
 								Sign Up
-							</Link>
+							</Link> */}
+							<SignedOut>
+								<SignInButton mode="modal" />
+							</SignedOut>
+							<SignedIn>
+								<UserButton />
+							</SignedIn>
 						</div>
 
 						<div className="md:hidden flex items-center">
@@ -125,7 +133,7 @@ const Navbar = () => {
 											{link.label}
 										</Link>
 									))}
-									<Link
+									{/* <Link
 										href="/login"
 										className="block text-gray-600 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 rounded-md transition-colors"
 										onClick={toggleMenu}
@@ -135,10 +143,18 @@ const Navbar = () => {
 									<Link
 										href="/signup"
 										className="block text-gray-600 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 rounded-md transition-colors"
-										onClick={toggleMenu}
+										
 									>
 										Sign Up
-									</Link>
+									</Link> */}
+									<SignedOut>
+										<Button onClick={toggleMenu}>
+											<SignInButton mode="modal" />
+										</Button>
+									</SignedOut>
+									<SignedIn>
+										<UserButton />
+									</SignedIn>
 								</div>
 							</div>
 						</SheetDescription>

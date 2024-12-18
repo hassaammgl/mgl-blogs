@@ -1,6 +1,6 @@
 export default function Home() {
 	return (
-		<main className="min-h-screen w-full overflow-x-hidden">
+		<main className=" w-full overflow-x-hidden">
 			<section className="header relative pt-16 flex min-h-[500px] md:min-h-[600px] lg:min-h-[860px]">
 				<div className="container mx-auto px-4 flex items-center">
 					<div className="w-full lg:w-6/12">
@@ -45,7 +45,7 @@ export default function Home() {
 				</div>
 				<img
 					className="absolute top-0 right-0 pt-16 w-10/12 sm:w-8/12 lg:w-6/12 max-w-2xl opacity-75 md:opacity-100 z-0"
-					src="https://www.creative-tim.com/learning-lab/tailwind-starter-kit/img/ill_header_3.png"
+					src="/side.png"
 					alt="..."
 				/>
 			</section>

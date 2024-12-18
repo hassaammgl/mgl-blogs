@@ -1,7 +1,15 @@
 import localFont from "next/font/local";
 import NavBar from "@/components/shared/Navbar";
-import "./globals.css";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+
+} from '@clerk/nextjs'
+import './globals.css'
 import { ThemeProvider } from "@/components/shared/theme-provider"
+import Footer from "@/components/shared/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,19 +29,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <ThemeProvider attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <ThemeProvider attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
-          <NavBar />
-          {children}
-        </body>
-      </ThemeProvider>
-    </html>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            <NavBar />
+            {children}
+            <Footer />
+          </body>
+        </ThemeProvider>
+      </html>
+    </ClerkProvider>
   );
 }
