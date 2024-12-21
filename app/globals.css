@@ -92,3 +92,12 @@ body {
 	color: #999;
 	text-transform: uppercase;
 }
+
+/* In your global CSS file */
+.ql-container {
+	@apply font-sans;
+}
+
+.ql-editor {
+	@apply min-h-[300px];
+}
