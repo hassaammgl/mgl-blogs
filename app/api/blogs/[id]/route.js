@@ -1,5 +1,5 @@
 // app/api/blogs/[id]/route.js
-import connectDB from '@/lib/mongoose';
+import connectDB from '@/lib/db/db';
 import Blog from '@/models/Blog';
 import { NextResponse } from 'next/server';
 
