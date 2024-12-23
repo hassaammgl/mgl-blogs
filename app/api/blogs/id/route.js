@@ -4,10 +4,12 @@ import Blog from '@/models/Blog';
 import { NextResponse } from 'next/server';
 
 // GET single blog
-export async function GET(request, { params }) {
+export async function POST(request) {
     try {
         await connectDB();
-        const blog = await Blog.findById(params.id);
+        const { _id } = await request.json()
+
+        const blog = await Blog.findById({ _id });
 
         if (!blog) {
             return NextResponse.json(

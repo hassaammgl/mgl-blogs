@@ -50,13 +50,25 @@ const blogSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],
+    favorites: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],
     isPublished: {
         type: Boolean,
         default: false
     },
     publishedAt: {
         type: Date
-    }
+    },
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comments'
+    }]
 }, {
     timestamps: true // This will add createdAt and updatedAt fields automatically
 });
