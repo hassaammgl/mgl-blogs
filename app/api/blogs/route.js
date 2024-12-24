@@ -7,7 +7,6 @@ import { NextResponse } from 'next/server';
 export async function GET(request) {
     try {
         await connectDB();
-
         // Get query parameters
         const { searchParams } = new URL(request.url);
         const page = parseInt(searchParams.get('page')) || 1;
@@ -26,9 +25,9 @@ export async function GET(request) {
         // Get total count for pagination
         const total = await Blog.countDocuments(query);
 
-        // Get blogs with pagination
+        // Get most viewed blogs with pagination
         const blogs = await Blog.find(query)
-            .sort({ createdAt: -1 })
+            .sort({ views: -1 }) // Sort by views in descending order
             .skip(skip)
             .limit(limit);
 
@@ -48,6 +47,7 @@ export async function GET(request) {
         );
     }
 }
+
 
 // CREATE new blog
 export async function POST(request) {

@@ -133,20 +133,6 @@ const Navbar = () => {
 											{link.label}
 										</Link>
 									))}
-									{/* <Link
-										href="/login"
-										className="block text-gray-600 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 rounded-md transition-colors"
-										onClick={toggleMenu}
-									>
-										Login
-									</Link>
-									<Link
-										href="/signup"
-										className="block text-gray-600 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 rounded-md transition-colors"
-										
-									>
-										Sign Up
-									</Link> */}
 									<SignedOut>
 										<Button onClick={toggleMenu}>
 											<SignInButton mode="modal" />

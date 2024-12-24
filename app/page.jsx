@@ -1,4 +1,12 @@
-export default function Home() {
+import { fetchAllBlogs } from "@/lib/actions/blog.action";
+import moment from "moment";
+import Link from "next/link";
+
+export default async function Home() {
+	const blogs = await fetchAllBlogs(3);
+
+	console.log(blogs);
+
 	return (
 		<main className=" w-full overflow-x-hidden">
 			<section className="header relative pt-16 flex min-h-[500px] md:min-h-[600px] lg:min-h-[860px]">
@@ -187,124 +195,59 @@ export default function Home() {
 					</div>
 
 					<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-						{/* Blog Card 1 */}
-						<div className="group bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-200">
-							<div className="relative overflow-hidden rounded-t-2xl">
-								<img
-									src="https://picsum.photos/600/400"
-									alt="Blog 1"
-									className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-200"
-								/>
-								<div className="absolute top-4 right-4 bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
-									New
-								</div>
-							</div>
-							<div className="p-6">
-								<span className="text-blue-600 dark:text-blue-400 text-sm font-semibold">
-									Development
-								</span>
-								<h3 className="text-xl font-bold text-gray-900 dark:text-white mt-2">
-									Getting Started with TailwindCSS
-								</h3>
-								<p className="mt-3 text-gray-600 dark:text-gray-300 line-clamp-3">
-									Learn how to set up and utilize TailwindCSS
-									in your next project with our comprehensive
-									guide.
-								</p>
-								<div className="flex items-center mt-4">
+						{blogs.blogs.map((blog) => (
+							<div className="group bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-200">
+								<div className="relative overflow-hidden rounded-t-2xl">
 									<img
-										src="https://picsum.photos/32/32"
-										alt="Author"
-										className="w-8 h-8 rounded-full"
+										src={blog.image}
+										alt={blog.title}
+										className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-200"
 									/>
-									<div className="ml-3">
-										<p className="text-sm font-semibold text-gray-900 dark:text-white">
-											John Doe
-										</p>
-										<p className="text-sm text-gray-500 dark:text-gray-400">
-											2 days ago
-										</p>
+									{blog.publishedAt &&
+										moment().diff(
+											moment(blog.publishedAt),
+											"days"
+										) <= 7 && (
+											<div className="absolute top-4 right-4 bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
+												New
+											</div>
+										)}
+								</div>
+								<div className="p-6">
+									<span className="text-blue-600 dark:text-blue-400 text-sm font-semibold">
+										{blog.category}
+									</span>
+									<h3 className="text-xl font-bold text-gray-900 dark:text-white mt-2">
+										{blog.title}
+									</h3>
+									<p className="mt-3 text-gray-600 dark:text-gray-300 line-clamp-3">
+										{blog.description}
+									</p>
+									<div className="flex items-center mt-4">
+										<img
+											src="https://picsum.photos/32/32"
+											alt="Author"
+											className="w-8 h-8 rounded-full"
+										/>
+										<div className="ml-3">
+											<p className="text-sm font-semibold text-gray-900 dark:text-white">
+												John Doe
+											</p>
+											<p className="text-sm text-gray-500 dark:text-gray-400">
+												{moment(
+													blog.publishedAt
+												).fromNow()}
+											</p>
+										</div>
 									</div>
+									<Link href={`/blog/${blog._id}`}>
+										<button className="w-full px-4 md:px-6 py-3 md:py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-bold hover:opacity-90 transform hover:-translate-y-1 transition-all duration-200 mt-4">
+											Read More
+										</button>
+									</Link>
 								</div>
 							</div>
-						</div>
-
-						{/* Blog Card 2 */}
-						<div className="group bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-200">
-							<div className="relative overflow-hidden rounded-t-2xl">
-								<img
-									src="https://picsum.photos/601/400"
-									alt="Blog 2"
-									className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-200"
-								/>
-							</div>
-							<div className="p-6">
-								<span className="text-purple-600 dark:text-purple-400 text-sm font-semibold">
-									Design
-								</span>
-								<h3 className="text-xl font-bold text-gray-900 dark:text-white mt-2">
-									Modern UI Design Principles
-								</h3>
-								<p className="mt-3 text-gray-600 dark:text-gray-300 line-clamp-3">
-									Explore the essential principles of modern
-									UI design and how to implement them
-									effectively.
-								</p>
-								<div className="flex items-center mt-4">
-									<img
-										src="https://picsum.photos/33/33"
-										alt="Author"
-										className="w-8 h-8 rounded-full"
-									/>
-									<div className="ml-3">
-										<p className="text-sm font-semibold text-gray-900 dark:text-white">
-											Jane Smith
-										</p>
-										<p className="text-sm text-gray-500 dark:text-gray-400">
-											5 days ago
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						{/* Blog Card 3 */}
-						<div className="group bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-200">
-							<div className="relative overflow-hidden rounded-t-2xl">
-								<img
-									src="https://picsum.photos/602/400"
-									alt="Blog 3"
-									className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-200"
-								/>
-							</div>
-							<div className="p-6">
-								<span className="text-green-600 dark:text-green-400 text-sm font-semibold">
-									Performance
-								</span>
-								<h3 className="text-xl font-bold text-gray-900 dark:text-white mt-2">
-									Optimizing React Applications
-								</h3>
-								<p className="mt-3 text-gray-600 dark:text-gray-300 line-clamp-3">
-									Tips and tricks for improving the
-									performance of your React applications.
-								</p>
-								<div className="flex items-center mt-4">
-									<img
-										src="https://picsum.photos/34/34"
-										alt="Author"
-										className="w-8 h-8 rounded-full"
-									/>
-									<div className="ml-3">
-										<p className="text-sm font-semibold text-gray-900 dark:text-white">
-											Mike Johnson
-										</p>
-										<p className="text-sm text-gray-500 dark:text-gray-400">
-											1 week ago
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
+						))}
 					</div>
 				</div>
 			</section>
