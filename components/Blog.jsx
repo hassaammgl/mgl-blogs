@@ -1,8 +1,10 @@
+"use client";
 import Favourite from "@/components/svgs/Favourite";
 import Like from "@/components/svgs/Like";
 import View from "@/components/svgs/View";
 import React from "react";
 import { formatDate } from "@/lib/utils";
+import moment from "moment";
 
 const Blog = ({ data }) => {
 	return (
@@ -20,7 +22,7 @@ const Blog = ({ data }) => {
 						<div className="flex items-center justify-between space-x-4">
 							<div className="flex items-center space-x-4">
 								<img
-									src={"data.author.avatar"}
+									src={"https://picsum.photos/34/34"}
 									alt={"data.author.name"}
 									className="w-14 h-14 rounded-full border-2 border-blue-500"
 								/>
@@ -29,7 +31,7 @@ const Blog = ({ data }) => {
 										{"data.author.name"}
 									</p>
 									<p className="text-gray-600 dark:text-gray-400">
-										{formatDate(data.publishedAt)}
+										{moment(data.publishedAt).fromNow()}
 									</p>
 								</div>
 							</div>

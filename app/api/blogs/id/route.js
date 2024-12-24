@@ -9,7 +9,7 @@ export async function POST(request) {
         await connectDB();
         const { _id } = await request.json()
 
-        const blog = await Blog.findById({ _id });
+        const blog = await Blog.findById({ _id }).populate('author');
 
         if (!blog) {
             return NextResponse.json(

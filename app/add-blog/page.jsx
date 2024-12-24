@@ -13,8 +13,29 @@ export default function BlogForm() {
 		description: "",
 		content: "",
 		status: "draft",
+		tags: [],
 		isPublished: false,
 	});
+
+	const [tagInput, setTagInput] = useState("");
+
+	const handleAddTag = (e) => {
+		e.preventDefault();
+		if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
+			setFormData({
+				...formData,
+				tags: [...formData.tags, tagInput.trim()],
+			});
+			setTagInput("");
+		}
+	};
+
+	const handleRemoveTag = (tagToRemove) => {
+		setFormData({
+			...formData,
+			tags: formData.tags.filter((tag) => tag !== tagToRemove),
+		});
+	};
 
 	const convertToBase64 = (file) => {
 		return new Promise((resolve, reject) => {
@@ -48,6 +69,53 @@ export default function BlogForm() {
 		}
 	};
 
+	// const handleSubmit = async (e) => {
+	// 	e.preventDefault();
+
+	// 	try {
+	// 		const response = await fetch("/api/blogs", {
+	// 			method: "POST",
+	// 			headers: {
+	// 				"Content-Type": "application/json",
+	// 			},
+	// 			body: JSON.stringify({
+	// 				title: formData.title,
+	// 				description: formData.description,
+	// 				content: formData.content,
+	// 				category: formData.category,
+	// 				image: formData.imageBase64,
+	// 				tags: formData.tags,
+	// 				status: formData.status,
+	// 				isPublished: formData.isPublished,
+	// 				publishedAt: formData.isPublished
+	// 					? new Date().toISOString()
+	// 					: null,
+	// 			}),
+	// 		});
+
+	// 		if (!response.ok) {
+	// 			throw new Error("Failed to create blog post");
+	// 		}
+
+	// 		const data = await response.json();
+	// 		console.log("Blog post created:", data);
+
+	// 		setFormData({
+	// 			image: null,
+	// 			imageBase64: "",
+	// 			category: "",
+	// 			title: "",
+	// 			tags: [],
+	// 			description: "",
+	// 			content: "",
+	// 			status: "draft",
+	// 			isPublished: false,
+	// 		});
+	// 	} catch (error) {
+	// 		console.error("Error creating blog post:", error);
+	// 	}
+	// };
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -64,6 +132,7 @@ export default function BlogForm() {
 					category: formData.category,
 					image: formData.imageBase64,
 					status: formData.status,
+					tags: formData.tags, // Add this line
 					isPublished: formData.isPublished,
 					publishedAt: formData.isPublished
 						? new Date().toISOString()
@@ -78,7 +147,6 @@ export default function BlogForm() {
 			const data = await response.json();
 			console.log("Blog post created:", data);
 
-			// Reset form
 			setFormData({
 				image: null,
 				imageBase64: "",
@@ -87,8 +155,10 @@ export default function BlogForm() {
 				description: "",
 				content: "",
 				status: "draft",
+				tags: [], // Add this line
 				isPublished: false,
 			});
+			setTagInput("");
 		} catch (error) {
 			console.error("Error creating blog post:", error);
 		}
@@ -171,7 +241,43 @@ export default function BlogForm() {
 						className="w-full min-h-[200px]"
 					/>
 				</div>
-
+				<div>
+					<label className="block text-sm font-medium mb-2">
+						Add Tags
+					</label>
+					<Input
+						type="text"
+						value={tagInput}
+						onChange={(e) => setTagInput(e.target.value)}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								e.preventDefault();
+								handleAddTag(e);
+							}
+						}}
+						placeholder="Enter a tag"
+						className="flex-1"
+					/>
+				</div>
+				{formData.tags.length > 0 && (
+					<div className="flex flex-wrap gap-2 mt-2">
+						{formData.tags.map((tag, index) => (
+							<span
+								key={index}
+								className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800"
+							>
+								{tag}
+								<button
+									type="button"
+									onClick={() => handleRemoveTag(tag)}
+									className="ml-2 text-blue-600 hover:text-blue-800"
+								>
+									×
+								</button>
+							</span>
+						))}
+					</div>
+				)}
 				<div>
 					<label className="block text-sm font-medium mb-2">
 						Status
@@ -212,3 +318,84 @@ export default function BlogForm() {
 		</div>
 	);
 }
+
+// "use client";
+// import React, { useState } from "react";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Textarea } from "@/components/ui/textarea";
+
+// export default function BlogForm() {
+// 	const [formData, setFormData] = useState({
+// 		image: null,
+// 		imageBase64: "",
+// 		category: "",
+// 		title: "",
+// 		description: "",
+// 		content: "",
+// 		status: "draft",
+// 		tags: [],
+// 		isPublished: false,
+// 	});
+
+// 	// ... (keep your existing functions)
+
+// 	return (
+// 		<div className="container mt-20 mx-auto w-2/4 py-8 px-4">
+// 			<form onSubmit={handleSubmit} className="space-y-8">
+// 				{/* ... (keep your existing form fields) */}
+
+// 				{/* Add this new tags section before the Status field */}
+// 				<div>
+// 					<label className="block text-sm font-medium mb-2">
+// 						Tags
+// 					</label>
+// 					<div className="flex gap-2">
+// 						<Input
+// 							type="text"
+// 							value={tagInput}
+// 							onChange={(e) => setTagInput(e.target.value)}
+// 							placeholder="Enter a tag"
+// 							className="flex-1"
+// 						/>
+// 						<Button
+// 							type="button"
+// 							onClick={handleAddTag}
+// 							variant="secondary"
+// 						>
+// 							Add Tag
+// 						</Button>
+// 					</div>
+// 					{formData.tags.length > 0 && (
+// 						<div className="flex flex-wrap gap-2 mt-2">
+// 							{formData.tags.map((tag, index) => (
+// 								<span
+// 									key={index}
+// 									className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800"
+// 								>
+// 									{tag}
+// 									<button
+// 										type="button"
+// 										onClick={() => handleRemoveTag(tag)}
+// 										className="ml-2 text-blue-600 hover:text-blue-800"
+// 									>
+// 										×
+// 									</button>
+// 								</span>
+// 							))}
+// 						</div>
+// 					)}
+// 					<p className="text-sm text-gray-500 mt-1">
+// 						Press "Add Tag" or Enter to add tags
+// 					</p>
+// 				</div>
+
+// 				{/* ... (keep your existing form fields) */}
+
+// 				<Button type="submit" className="w-full">
+// 					Create Blog Post
+// 				</Button>
+// 			</form>
+// 		</div>
+// 	);
+// }

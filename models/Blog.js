@@ -73,6 +73,15 @@ const blogSchema = new mongoose.Schema({
     timestamps: true // This will add createdAt and updatedAt fields automatically
 });
 
+// Pre-save hook to set publishedAt date
+blogSchema.pre('save', function (next) {
+    if (this.isPublished && !this.publishedAt) {
+        this.publishedAt = new Date();
+    }
+    next();
+});
+
+
 // Create slug from title before saving
 blogSchema.pre('save', function (next) {
     this.slug = this.title
