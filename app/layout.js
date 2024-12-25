@@ -2,10 +2,6 @@ import localFont from "next/font/local";
 import NavBar from "@/components/shared/Navbar";
 import {
   ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-
 } from '@clerk/nextjs'
 import './globals.css'
 import { ThemeProvider } from "@/components/shared/theme-provider"

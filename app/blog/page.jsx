@@ -1,39 +1,25 @@
 "use client";
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { fetchAllBlogs } from "@/lib/actions/blog.action";
+import moment from "moment";
+import { categoryBlog as categories } from "@/constants";
 
 const page = () => {
-	const blogs = [
-		{
-			id: crypto.randomUUID(),
-			image: "https://picsum.photos/601/400",
-			category: "Design",
-			title: "Modern UI Design Principles",
-			description:
-				"Explore the essential principles of modern UI design and how to implement them effectively.",
-			author: {
-				name: "Jane Smith",
-				avatar: "https://picsum.photos/33/33",
-				date: "5 days ago",
-			},
-		},
-		{
-			id: crypto.randomUUID(),
-			image: "https://picsum.photos/602/400",
-			category: "Development",
-			title: "Getting Started with React",
-			description:
-				"Learn the fundamentals of React and start building modern web applications.",
-			author: {
-				name: "John Doe",
-				avatar: "https://picsum.photos/34/34",
-				date: "1 week ago",
-			},
-		},
-	];
-
-	const categories = ["All", "Design", "Development"];
+	const [blogs, setBlogs] = useState([]);
 	const [selectedCategory, setSelectedCategory] = useState("All");
+
+	useEffect(() => {
+		const fetchBlogs = async () => {
+			try {
+				const data = await fetchAllBlogs(15);
+				setBlogs(data.blogs);
+			} catch (error) {
+				console.error("Error fetching blogs:", error);
+			}
+		};
+
+		fetchBlogs();
+	}, []);
 
 	const filteredBlogs =
 		selectedCategory === "All"
@@ -48,15 +34,26 @@ const page = () => {
 			</h1>
 
 			{/* Category Slider */}
-			<div className="flex gap-4 overflow-x-auto pb-4 mb-8">
-				{categories.map((category) => (
+			<div className="flex gap-4 overflow-x-auto pb-4 mb-8 scrollbar-hide">
+				{categories.map((category, i) => (
 					<button
-						key={category}
-						className={`px-6 py-2 rounded-full whitespace-nowrap ${
-							selectedCategory === category
-								? "bg-purple-600 text-white"
-								: "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-						}`}
+						key={i}
+						className={`
+        px-6 
+        py-3 
+        rounded-full 
+        whitespace-nowrap
+        font-medium
+        transition-all
+        duration-200
+        hover:scale-105
+        active:scale-95
+        ${
+			selectedCategory === category
+				? "bg-gradient-to-r from-purple-500 to-purple-700 text-white shadow-lg shadow-purple-200 dark:shadow-purple-900/30"
+				: "bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200"
+		}
+      `}
 						onClick={() => setSelectedCategory(category)}
 					>
 						{category}
@@ -99,7 +96,7 @@ const page = () => {
 										{blog.author.name}
 									</p>
 									<p className="text-sm text-gray-500 dark:text-gray-400">
-										{blog.author.date}
+										{moment(blog.author.date).fromNow()}
 									</p>
 								</div>
 							</div>

@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { categoryBlog } from "@/constants";
+import { useRouter } from "next/navigation";
 
 export default function BlogForm() {
+	const router = useRouter();
 	const [formData, setFormData] = useState({
 		image: null,
 		imageBase64: "",
@@ -100,6 +102,7 @@ export default function BlogForm() {
 
 			const data = await response.json();
 			console.log("Blog post created:", data);
+			router.push(`/blog/${data._id}`);
 
 			setFormData({
 				image: null,
