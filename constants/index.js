@@ -1,4 +1,5 @@
 export const categoryBlog = [
+    "All",
     "Technology",
     "Science",
     "Health",

@@ -5,8 +5,15 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { categoryBlog } from "@/constants";
 import { useRouter } from "next/navigation";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 
 export default function BlogForm() {
+	const editor = useEditor({
+		extensions: [StarterKit],
+		content: "<p>Hello World! 🌎️</p>",
+	});
+
 	const router = useRouter();
 	const [formData, setFormData] = useState({
 		image: null,
@@ -155,13 +162,7 @@ export default function BlogForm() {
 					<label className="block text-sm font-medium mb-2">
 						Category
 					</label>
-					{/* <Input
-						name="category"
-						placeholder="e.g. Development"
-						value={formData.category}
-						onChange={handleChange}
-						className="w-full"
-					/> */}
+
 					<select
 						name="category"
 						value={formData.category}
