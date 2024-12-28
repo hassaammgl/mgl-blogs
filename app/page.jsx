@@ -272,6 +272,14 @@ const Blogs = ({ blogs }) => {
 						))
 					)}
 				</div>
+
+				<div className="flex justify-center mt-8">
+					<Link href="/blog">
+						<span className="text-blue-600 dark:text-blue-400 font-semibold text-lg">
+							View all posts
+						</span>
+					</Link>
+				</div>
 			</div>
 		</section>
 	);

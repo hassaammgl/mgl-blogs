@@ -6,18 +6,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { categoryBlog } from "@/constants";
 import { useRouter } from "next/navigation";
 
-export default function BlogForm() {
+const UpdateBlog = ({ blog }) => {
 	const router = useRouter();
 	const [formData, setFormData] = useState({
 		image: null,
-		imageBase64: "",
-		category: "",
-		title: "",
-		description: "",
-		content: "",
-		status: "draft",
-		tags: [],
-		isPublished: false,
+		imageBase64: blog.image,
+		category: blog.category,
+		title: blog.title,
+		description: blog.description,
+		content: blog.content,
+		status: blog.status,
+		tags: blog.tags,
+		isPublished: blog.isPublished,
 	});
 
 	const [tagInput, setTagInput] = useState("");
@@ -76,12 +76,13 @@ export default function BlogForm() {
 		e.preventDefault();
 
 		try {
-			const response = await fetch("/api/blogs", {
-				method: "POST",
+			const response = await fetch("/api/blogs/update-blog", {
+				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
+					_id: blog._id,
 					title: formData.title,
 					description: formData.description,
 					content: formData.content,
@@ -101,6 +102,7 @@ export default function BlogForm() {
 			}
 
 			const data = await response.json();
+			console.log("Blog post updated:", data);
 			router.push(`/blog/${data._id}`);
 
 			setFormData({
@@ -116,7 +118,7 @@ export default function BlogForm() {
 			});
 			setTagInput("");
 		} catch (error) {
-			console.error("Error creating blog post:", error);
+			console.error("Error updating blog post:", error);
 		}
 	};
 
@@ -125,11 +127,11 @@ export default function BlogForm() {
 			<form onSubmit={handleSubmit} className="space-y-8">
 				<div>
 					<h2 className="text-green-500 text-2xl font-semibold mb-4 text-center">
-						Add Blog Post
+						Update Blog Post
 					</h2>
 
 					<label className="block text-sm font-medium mb-2">
-						Featured Image
+						Update Image
 					</label>
 					<Input
 						type="file"
@@ -278,9 +280,11 @@ export default function BlogForm() {
 				</div>
 
 				<Button type="submit" className="w-full">
-					Create Blog Post
+					Update Blog Post
 				</Button>
 			</form>
 		</div>
 	);
-}
+};
+
+export default UpdateBlog;
