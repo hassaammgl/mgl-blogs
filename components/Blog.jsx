@@ -22,13 +22,15 @@ const Blog = ({ data }) => {
 							<div className="flex items-center justify-between space-x-4">
 								<div className="flex items-center space-x-4">
 									<img
-										src={"https://picsum.photos/34/34"}
-										alt={"data.author.name"}
+										src={data.author.imageUrl}
+										alt={`${data.author.firstName} Avatar`}
 										className="w-14 h-14 rounded-full border-2 border-blue-500"
 									/>
 									<div className="text-left">
 										<p className="text-lg font-semibold text-gray-900 dark:text-white">
-											{"data.author.name"}
+											{data.author.firstname +
+												" " +
+												data.author.lastname}
 										</p>
 										<p className="text-gray-600 dark:text-gray-400">
 											{moment(data.publishedAt).fromNow()}

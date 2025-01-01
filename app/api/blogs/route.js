@@ -2,57 +2,16 @@
 import connectDB from '@/lib/db/db';
 import Blog from '@/models/Blog';
 import { NextResponse } from 'next/server';
-
-// GET all blogs
-export async function GET(request) {
-    try {
-        await connectDB();
-        // Get query parameters
-        const { searchParams } = new URL(request.url);
-        const page = parseInt(searchParams.get('page')) || 1;
-        const limit = parseInt(searchParams.get('limit')) || 10;
-        const category = searchParams.get('category');
-        const status = searchParams.get('status');
-
-        // Build query
-        let query = {};
-        if (category) query.category = category;
-        if (status) query.status = status;
-
-        // Calculate skip for pagination
-        const skip = (page - 1) * limit;
-
-        // Get total count for pagination
-        const total = await Blog.countDocuments(query);
-
-        // Get most viewed blogs with pagination
-        const blogs = await Blog.find(query)
-            .sort({ views: -1 }) // Sort by views in descending order
-            .skip(skip)
-            .limit(limit);
-
-        return NextResponse.json({
-            blogs,
-            pagination: {
-                total,
-                page,
-                limit,
-                pages: Math.ceil(total / limit)
-            }
-        });
-    } catch (error) {
-        return NextResponse.json(
-            { error: error.message },
-            { status: 500 }
-        );
-    }
-}
+import { currentUser } from "@clerk/nextjs/server";
+import { User } from "@/models/User";
+import Like from '@/models/Likes';
 
 
 // CREATE new blog
 export async function POST(request) {
     try {
         await connectDB();
+        const user = await currentUser()
         const body = await request.json();
 
         // Add publishedAt date if blog is being published
@@ -60,12 +19,22 @@ export async function POST(request) {
             body.publishedAt = new Date();
         }
         console.log(body);
-
+        const userExists = await User.findOne({ email: user.emailAddresses[0].emailAddress })
         // const blog = await Blog.create(body);
         const { title, description, content, category, image, status, tags } = body;
+        const blog = new Blog({
+            title,
+            description,
+            content,
+            category,
+            image,
+            status,
+            tags,
+            author: userExists._id
+        });
+        await blog.save();
 
-
-        // return NextResponse.json(blog, { status: 201 });
+        return NextResponse.json(blog, { status: 201 });
     } catch (error) {
         return NextResponse.json(
             { error: error.message },
@@ -81,12 +50,17 @@ export async function PATCH(request) {
     try {
         await connectDB();
         const body = await request.json();
-        const blog = await Blog.findByIdAndUpdate(
-            body._id,
-            { $inc: { likes: 1 } },
-            { new: true }
-        );
-        return NextResponse.json(blog);
+        const { blogId } = body;
+        const user = await currentUser();
+        const userExists = await User.findOne({ email: user.emailAddresses[0].emailAddress })
+        const like = new Like({
+            blog: blogId,
+            user: userExists._id
+        });
+
+        await like.save();
+        return NextResponse.json(like, { status: 201 });
+
     } catch (error) {
         return NextResponse.json(
             { error: error.message },

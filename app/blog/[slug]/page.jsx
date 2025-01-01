@@ -12,7 +12,7 @@ const Page = async ({ params }) => {
 		return <Blog data={blog} />;
 	} catch (error) {
 		return (
-			<div>
+			<div className="container mx-10 my-auto">
 				<h1 className="text-4xl font-bold text-center text-gray-800">
 					Blog not found
 				</h1>
