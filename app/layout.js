@@ -25,7 +25,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      signInFallbackRedirectUrl="/api"
+      signUpFallbackRedirectUrl="/api"
+    >
       <html lang="en" suppressHydrationWarning>
         <ThemeProvider attribute="class"
           defaultTheme="system"

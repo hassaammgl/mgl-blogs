@@ -59,9 +59,34 @@ export async function POST(request) {
         if (body.isPublished) {
             body.publishedAt = new Date();
         }
+        console.log(body);
 
-        const blog = await Blog.create(body);
-        return NextResponse.json(blog, { status: 201 });
+        // const blog = await Blog.create(body);
+        const { title, description, content, category, image, status, tags } = body;
+
+
+        // return NextResponse.json(blog, { status: 201 });
+    } catch (error) {
+        return NextResponse.json(
+            { error: error.message },
+            { status: 400 }
+        );
+    }
+}
+
+
+// PATCH Likes for blog
+
+export async function PATCH(request) {
+    try {
+        await connectDB();
+        const body = await request.json();
+        const blog = await Blog.findByIdAndUpdate(
+            body._id,
+            { $inc: { likes: 1 } },
+            { new: true }
+        );
+        return NextResponse.json(blog);
     } catch (error) {
         return NextResponse.json(
             { error: error.message },

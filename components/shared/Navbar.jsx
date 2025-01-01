@@ -73,20 +73,11 @@ const Navbar = () => {
 									{link.label}
 								</Link>
 							))}
-							{/* <Link
-								href="/login"
-								className="text-white bg-green-600 hover:bg-green-500 dark:bg-green-700 dark:hover:bg-green-600 px-4 py-2 rounded-md transition-colors"
-							>
-								Login
-							</Link>
-							<Link
-								href="/signup"
-								className="text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:border-green-500 dark:hover:border-green-400 hover:text-green-500 dark:hover:text-green-400 px-4 py-2 rounded-md transition-colors"
-							>
-								Sign Up
-							</Link> */}
 							<SignedOut>
-								<SignInButton mode="modal" />
+								<SignInButton
+									mode="modal"
+									signInFallbackRedirectUrl="/register"
+								/>
 							</SignedOut>
 							<SignedIn>
 								<UserButton />

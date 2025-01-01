@@ -52,11 +52,11 @@ const blogSchema = new mongoose.Schema({
     },
     likes: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Likes',
     }],
     favorites: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Favourites',
     }],
     isPublished: {
         type: Boolean,

@@ -1,5 +1,5 @@
 import UpdateBlog from "@/components/UpdateBlog";
-import { fetchBlogData } from "@/lib/actions/blog.action";
+import { fetchBlogData } from "@/actions/blog.action";
 
 export default async function Page({ params }) {
 	const { _id } = await params;

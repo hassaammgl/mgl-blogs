@@ -1,4 +1,4 @@
-import { fetchAllBlogs } from "@/lib/actions/blog.action";
+import { fetchAllBlogs } from "@/actions/blog.action";
 import moment from "moment";
 import Link from "next/link";
 

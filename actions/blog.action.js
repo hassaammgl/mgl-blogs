@@ -1,7 +1,6 @@
 "use server";
 import axios from "axios";
 
-
 export const fetchBlogData = async (slug) => {
     try {
         const response = await axios.post("http://localhost:3000/api/blogs/id", {
@@ -19,6 +18,16 @@ export const fetchAllBlogs = async (limit) => {
             params: {
                 limit: limit
             }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const updateLikes = async (blogId) => {
+    try {
+        const response = await axios.patch("http://localhost:3000/api/blogs", {
         });
         return response.data;
     } catch (error) {
