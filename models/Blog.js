@@ -1,4 +1,3 @@
-// models/Blog.js
 import mongoose from 'mongoose';
 
 const blogSchema = new mongoose.Schema({
@@ -109,6 +108,8 @@ blogSchema.statics = {
     }
 };
 
-const Blog = mongoose.models.Blog || mongoose.model('Blog', blogSchema);
+mongoose.models = {};
+
+const Blog = mongoose.model('Blog', blogSchema);
 
 export default Blog;

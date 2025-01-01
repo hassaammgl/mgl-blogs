@@ -3,13 +3,15 @@ import connectDB from '@/lib/db/db';
 import Blog from '@/models/Blog';
 import { NextResponse } from 'next/server';
 
-// GET single blog
-export async function POST(request) {
+// GET single blog 
+export async function GET(_, { params }) {
     try {
         await connectDB();
-        const { _id } = await request.json()
-
+        const _id = (await params).id
         const blog = await Blog.findById({ _id }).populate('author');
+
+        console.log(blog);
+
 
         if (!blog) {
             return NextResponse.json(
@@ -17,6 +19,7 @@ export async function POST(request) {
                 { status: 404 }
             );
         }
+
 
         // Increment view count
         await blog.updateViewCount();

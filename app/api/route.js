@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { currentUser, auth } from "@clerk/nextjs/server";
 import { User } from "@/models/User";
+import { apiRoutes } from "@/constants";
 
 
 export async function GET(request) {
@@ -8,13 +9,13 @@ export async function GET(request) {
     const authResult = await auth()
 
     if (!authResult.userId) {
-        return NextResponse.redirect('http://localhost:3000/')
+        return NextResponse.redirect(apiRoutes.app)
     }
 
     const ifuserExists = await User.findOne({ email: user.emailAddresses[0].emailAddress })
 
     if (ifuserExists) {
-        return NextResponse.redirect('http://localhost:3000/')
+        return NextResponse.redirect(apiRoutes.app)
     }
 
     const newUser = new User({
@@ -32,5 +33,5 @@ export async function GET(request) {
     await newUser.save()
     console.log(newUser);
 
-    return NextResponse.redirect('http://localhost:3000/')
+    return NextResponse.redirect(apiRoutes.app)
 }

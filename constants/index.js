@@ -108,3 +108,80 @@ export const categoryBlog = [
     "Food",
     "Other",
 ]
+
+export const apiRoutes = {
+    app: {
+        url: "http://localhost:3000",
+        method: "GET"
+    },
+    blogs: {
+        get_all: {
+            url: () => `${apiRoutes.app.url}/api/blogs`,
+            method: "GET"
+        },
+        get_by_id: {
+            url: (id) => `${apiRoutes.app.url}/api/blogs/${id}`,
+            method: "GET"
+        },
+        create: {
+            url: () => `${apiRoutes.app.url}/api/blogs`,
+            method: "POST"
+        },
+        update: {
+            url: (id) => `${apiRoutes.app.url}/api/blogs/${id}`,
+            method: "PUT"
+        },
+        delete: {
+            url: (id) => `${apiRoutes.app.url}/api/blogs/${id}`,
+            method: "DELETE"
+        }
+    },
+    comments: {
+        get_all: {
+            url: (blogId) => `${apiRoutes.app.url}/api/blogs/${blogId}/comments`,
+            method: "GET"
+        },
+        create: {
+            url: (blogId) => `${apiRoutes.app.url}/api/blogs/${blogId}/comments`,
+            method: "POST"
+        },
+        update: {
+            url: (commentId) => `${apiRoutes.app.url}/api/comments/${commentId}`,
+            method: "PUT"
+        },
+        delete: {
+            url: (commentId) => `${apiRoutes.app.url}/api/comments/${commentId}`,
+            method: "DELETE"
+        }
+    },
+    categories: {
+        get_all: {
+            url: () => `${apiRoutes.app.url}/api/categories`,
+            method: "GET"
+        },
+        create: {
+            url: () => `${apiRoutes.app.url}/api/categories`,
+            method: "POST"
+        }
+    },
+    tags: {
+        get_all: {
+            url: () => `${apiRoutes.app.url}/api/tags`,
+            method: "GET"
+        },
+        create: {
+            url: () => `${apiRoutes.app.url}/api/tags`,
+            method: "POST"
+        }
+    },
+    likes: {
+        like_blog: {
+            url: (id) => `${apiRoutes.app.url}/api/blogs/${id}/like`,
+            method: "POST"
+        },
+        remove_like: {
+            url: (id) => `${apiRoutes.app.url}/api/blogs/${id}/like`,
+            method: "DELETE"
+        }
+    }
+};

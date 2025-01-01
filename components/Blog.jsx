@@ -22,18 +22,20 @@ const Blog = ({ data }) => {
 							<div className="flex items-center justify-between space-x-4">
 								<div className="flex items-center space-x-4">
 									<img
-										src={data.author.imageUrl}
-										alt={`${data.author.firstName} Avatar`}
+										src={data?.author?.imageUrl}
+										alt={`${data?.author?.firstName} Avatar`}
 										className="w-14 h-14 rounded-full border-2 border-blue-500"
 									/>
 									<div className="text-left">
 										<p className="text-lg font-semibold text-gray-900 dark:text-white">
-											{data.author.firstname +
+											{data?.author?.firstname +
 												" " +
-												data.author.lastname}
+												data?.author?.lastname}
 										</p>
 										<p className="text-gray-600 dark:text-gray-400">
-											{moment(data.publishedAt).fromNow()}
+											{moment(
+												data?.publishedAt
+											).fromNow()}
 										</p>
 									</div>
 								</div>
@@ -41,13 +43,13 @@ const Blog = ({ data }) => {
 									<button className="flex items-center justify-center space-x-2 border rounded-full px-4 py-1.5 text-sm font-medium transition-colors bg-red-500 border-red-500 text-white">
 										<Like />
 										<span className="hidden md:inline-block">
-											{data.likes.length} Likes
+											{data?.likes?.length} Likes
 										</span>
 									</button>
 									<button className="flex items-center justify-center space-x-2 border border-blue-500 rounded-full px-4 py-1.5 text-sm font-medium text-blue-500 hover:text-white hover:bg-blue-600 transition-colors">
 										<Favourite />
 										<span className="hidden md:inline-block">
-											{data.favorites.length} Favorites
+											{data?.favorites?.length} Favorites
 										</span>
 									</button>
 								</div>
@@ -58,19 +60,19 @@ const Blog = ({ data }) => {
 								<div className="flex items-center space-x-2">
 									<View />
 									<span className="text-gray-600">
-										{data.viewCount} views
+										{data?.viewCount} views
 									</span>
 								</div>
 								<div className="flex items-center space-x-2">
 									<Like />
 									<span className="text-gray-600">
-										{data.likes.length} Likes
+										{data?.likes?.length} Likes
 									</span>
 								</div>
 								<div className="flex items-center space-x-2">
 									<Favourite />
 									<span className="text-gray-600">
-										{data.favorites.length} Favorites
+										{data?.favorites?.length} Favorites
 									</span>
 								</div>
 							</div>
@@ -79,8 +81,8 @@ const Blog = ({ data }) => {
 						{/* Featured Image */}
 						<div className="rounded-xl overflow-hidden shadow-2xl mb-12">
 							<img
-								src={data.image}
-								alt={data.title}
+								src={data?.image}
+								alt={data?.title}
 								className="w-full h-[500px] md:h-[600px] object-cover"
 							/>
 						</div>
@@ -88,7 +90,7 @@ const Blog = ({ data }) => {
 						{/* Content */}
 						<div className="prose prose-lg md:prose-xl dark:prose-invert mx-auto">
 							<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-								{data.content}
+								{data?.content}
 							</p>
 						</div>
 
