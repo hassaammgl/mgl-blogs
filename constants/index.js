@@ -116,7 +116,7 @@ export const apiRoutes = {
     },
     blogs: {
         get_all: {
-            url: () => `${apiRoutes.app.url}/api/blogs`,
+            url: (limit) => `${apiRoutes.app.url}/api/blogs?limit=${limit}`,
             method: "GET"
         },
         get_by_id: {

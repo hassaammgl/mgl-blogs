@@ -1,13 +1,10 @@
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
-import { fetchAllBlogs } from "@/actions/blog.action";
-import moment from "moment";
-import Link from "next/link";
+import { getAllBlogs } from "@/actions/blog.action";
 import Pagination from "react-paginating";
 import BlogCards from "@/components/BlogCards";
 
 const limit = 6;
-const pageCount = 3;
 
 const Page = () => {
 	const [blogs, setBlogs] = useState([]);
@@ -17,7 +14,7 @@ const Page = () => {
 	useEffect(() => {
 		const fetchBlogs = async () => {
 			try {
-				const data = await fetchAllBlogs(1500);
+				const data = await getAllBlogs();
 				setBlogs(data.blogs);
 			} catch (error) {
 				console.error("Error fetching blogs:", error);
@@ -34,7 +31,7 @@ const Page = () => {
 
 	const filteredCategory = [
 		"All",
-		...new Set(blogs.map((blog) => blog.category)),
+		...new Set(blogs?.map((blog) => blog.category)),
 	];
 
 	const total = filteredBlogs.length;
@@ -79,7 +76,6 @@ const Page = () => {
 				<Pagination
 					total={total}
 					limit={limit}
-					pageCount={pageCount}
 					currentPage={currentPage}
 				>
 					{({

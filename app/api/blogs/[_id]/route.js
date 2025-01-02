@@ -8,29 +8,31 @@ export async function GET(request, { params }) {
         await connectDB();
         const _id = (await params)._id
         console.log("_id:", _id);
-        const blog = await Blog.findOne({ _id });
+        // const blog = await Blog.findOne({ _id });
 
-
+        const [blog] = await Promise.all([
+            Blog.findById({ _id }).populate('author').populate('comments')
+        ]);
 
         // const blog = await Blog.findById({ _id }).populate('author').populate('comments');
 
         console.log(blog);
 
 
-        // if (!blog) {
-        // return NextResponse.json(
-        // { error: 'Blog not found' },
-        // { status: 404 }
-        // );
-        // }
+        if (!blog) {
+            return NextResponse.json(
+                { error: 'Blog not found' },
+                { status: 404 }
+            );
+        }
 
 
         // Increment view count
-        // await blog.updateViewCount();
+        await blog.updateViewCount();
 
-        // return NextResponse.json(blog);
+        return NextResponse.json(blog);
 
-        return NextResponse.json({ message: "success" }, { status: 200 });
+        // return NextResponse.json({ message: "success" }, { status: 200 });
     } catch (error) {
         return NextResponse.json(
             { error: error.message },
