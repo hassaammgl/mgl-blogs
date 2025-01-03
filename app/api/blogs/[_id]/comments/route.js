@@ -1,17 +1,13 @@
-import { connectDB, disconnectDB } from '@/lib/db/db';
-import Blog from '@/models/Blog';
-import { NextResponse } from 'next/server';
 
-// GET single blog
+import { connectDB, disconnectDB } from "@/lib/db/db";
+
+
 export async function GET(_, { params }) {
     try {
         await connectDB();
         const _id = (await params)._id
         console.log("_id:", _id);
-        const blog = await Blog.findById({ _id }).populate('author');
-
-        console.log(blog);
-
+        const blog = await Blog.findById({ _id });
 
         if (!blog) {
             return NextResponse.json(
@@ -20,11 +16,7 @@ export async function GET(_, { params }) {
             );
         }
 
-
-        // Increment view count
-        await blog.updateViewCount();
-
-        return NextResponse.json(blog);
+        return NextResponse.json(blog.comments);
 
     } catch (error) {
         return NextResponse.json(
@@ -32,6 +24,6 @@ export async function GET(_, { params }) {
             { status: 500 }
         );
     } finally {
-        await disconnectDB();
+        await disconnectDB()
     }
 }

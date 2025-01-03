@@ -32,3 +32,17 @@ export const getAllBlogs = async (limit) => {
     const res = response.json();
     return res;
 }
+
+
+export const postComment = async (data) => {
+    const response = await fetch(apiRoutes.comments.create.url(data._id), {
+        method: apiRoutes.blogs.post_comment.method,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    console.log("response:", response);
+    const res = response.json();
+    return res;
+}

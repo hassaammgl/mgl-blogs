@@ -9,7 +9,7 @@ export async function GET(req) {
         const limit = url.searchParams.get('limit');
         console.log("limit", limit);
 
-        const blogs = await Blog.find().limit(limit).populate('author').populate('comments');
+        const blogs = await Blog.find().limit(limit).populate('author');
 
         return NextResponse.json({
             blogs,

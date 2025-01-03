@@ -1,4 +1,5 @@
 import Blog from "@/components/Blog";
+import Comments from "@/components/Comments";
 import { getBlogData } from "@/actions/blog.action";
 
 const Page = async ({ params }) => {
@@ -9,7 +10,16 @@ const Page = async ({ params }) => {
 		const blog = await getBlogData(slug);
 		console.log(blog);
 
-		return <Blog data={blog} />;
+		return (
+			<div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+				<div className="container mx-auto px-4 py-12">
+					<article className="max-w-5xl mx-auto mt-12">
+						<Blog data={blog} />
+						<Comments blogId={blog._id} />
+					</article>
+				</div>
+			</div>
+		);
 	} catch (error) {
 		return (
 			<div className="container mx-10 my-auto">

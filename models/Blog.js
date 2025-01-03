@@ -64,10 +64,6 @@ const blogSchema = new mongoose.Schema({
     publishedAt: {
         type: Date
     },
-    comments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comments'
-    }]
 }, {
     timestamps: true // This will add createdAt and updatedAt fields automatically
 });
