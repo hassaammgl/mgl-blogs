@@ -14,7 +14,7 @@ export const getBlogData = async (id) => {
             "Content-Type": "application/json",
         },
     });
-    console.log("response:", response);
+    // console.log("response:", response);
 
     const res = response.json();
     return res;
@@ -28,7 +28,7 @@ export const getAllBlogs = async (limit) => {
             "Content-Type": "application/json",
         },
     });
-    console.log("response:", response);
+    // console.log("response:", response);
     const res = response.json();
     return res;
 }

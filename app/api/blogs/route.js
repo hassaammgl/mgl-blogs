@@ -1,4 +1,4 @@
-import connectDB from '@/lib/db/db';
+import { connectDB, disconnectDB } from '@/lib/db/db';
 import Blog from '@/models/Blog';
 import { NextResponse } from 'next/server'
 
@@ -9,11 +9,7 @@ export async function GET(req) {
         const limit = url.searchParams.get('limit');
         console.log("limit", limit);
 
-
-        // Get most viewed blogs with pagination
-        const blogs = await Blog.find().limit(parseInt(limit)).sort({ views: -1 }).populate('author', 'username firstname lastname imageUrl').populate('comments', 'content createdAt').exec();
-        console.log("blogs", blogs.length);
-
+        const blogs = await Blog.find().limit(limit).populate('author').populate('comments');
 
         return NextResponse.json({
             blogs,
@@ -23,6 +19,9 @@ export async function GET(req) {
             { error: error.message },
             { status: 500 }
         );
+    } finally {
+        await disconnectDB()
     }
 
 }
+

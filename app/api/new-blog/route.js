@@ -1,5 +1,5 @@
 // app/api/blogs/route.js
-import connectDB from '@/lib/db/db';
+import { connectDB, disconnectDB } from '@/lib/db/db';
 import Blog from '@/models/Blog';
 import { NextResponse } from 'next/server';
 import { currentUser } from "@clerk/nextjs/server";
@@ -18,7 +18,6 @@ export async function POST(request) {
         }
         console.log(body);
         const userExists = await User.findOne({ email: user.emailAddresses[0].emailAddress })
-        // const blog = await Blog.create(body);
         const { title, description, content, category, image, status, tags } = body;
         const blog = new Blog({
             title,
@@ -38,5 +37,7 @@ export async function POST(request) {
             { error: error.message },
             { status: 400 }
         );
+    } finally {
+        await disconnectDB()
     }
 }

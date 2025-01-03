@@ -76,7 +76,7 @@ export default function BlogForm() {
 		e.preventDefault();
 
 		try {
-			const response = await fetch("/api/blogs", {
+			const response = await fetch("/api/new-blog", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
