@@ -20,7 +20,7 @@ export const getBlogData = async (id) => {
     return res;
 }
 
-export const getAllBlogs = async (limit) => {
+export const getAllBlogs = async (limit = 1300) => {
 
     const response = await fetch(apiRoutes.blogs.get_all.url(limit), {
         method: apiRoutes.blogs.get_all.method,
@@ -36,7 +36,7 @@ export const getAllBlogs = async (limit) => {
 
 export const postComment = async (data) => {
     const response = await fetch(apiRoutes.comments.create.url(data._id), {
-        method: apiRoutes.blogs.post_comment.method,
+        method: apiRoutes.comments.create.method,
         headers: {
             "Content-Type": "application/json",
         },

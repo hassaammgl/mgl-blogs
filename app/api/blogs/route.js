@@ -1,5 +1,6 @@
 import { connectDB, disconnectDB } from '@/lib/db/db';
 import Blog from '@/models/Blog';
+import { User } from '@/models/User';
 import { NextResponse } from 'next/server'
 
 export async function GET(req) {

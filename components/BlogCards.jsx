@@ -12,7 +12,7 @@ const BlogCards = ({ blog }) => {
 					className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-200"
 				/>
 				{blog.publishedAt &&
-					moment().diff(moment(blog.publishedAt), "days") <= 7 && (
+					moment().diff(moment(blog.createdAt), "days") <= 7 && (
 						<div className="absolute top-4 right-4 bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
 							New
 						</div>
@@ -39,7 +39,7 @@ const BlogCards = ({ blog }) => {
 							{blog.author.firstname + " " + blog.author.lastname}
 						</p>
 						<p className="text-sm text-gray-500 dark:text-gray-400">
-							{moment(blog.publishedAt).fromNow()}
+							{moment(blog.createdAt).fromNow()}
 						</p>
 					</div>
 				</div>

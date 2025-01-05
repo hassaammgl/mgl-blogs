@@ -1,5 +1,5 @@
 import Blog from "@/models/Blog";
-import connectDB from "@/lib/db/db";
+import { connectDB, disconnectDB } from "@/lib/db/db";
 import { NextResponse } from "next/server";
 
 export async function PUT(request) {
@@ -25,5 +25,7 @@ export async function PUT(request) {
             { error: error.message },
             { status: 400 }
         );
+    } finally {
+        await disconnectDB();
     }
 }

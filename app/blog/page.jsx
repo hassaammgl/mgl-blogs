@@ -1,7 +1,6 @@
 "use client";
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import { getAllBlogs } from "@/actions/blog.action";
-import Pagination from "react-paginating";
 import BlogCards from "@/components/BlogCards";
 
 const limit = 6;
@@ -9,21 +8,22 @@ const limit = 6;
 const Page = () => {
 	const [blogs, setBlogs] = useState([]);
 	const [selectedCategory, setSelectedCategory] = useState("All");
-	const [currentPage, setCurrentPage] = useState(1);
 
 	useEffect(() => {
 		const fetchBlogs = async () => {
 			try {
-				const data = await getAllBlogs();
-				setBlogs(data.blogs);
+				const response = await getAllBlogs();
+				console.log("response:", response.blogs);
+
+				setBlogs(response.blogs || []);
 			} catch (error) {
-				console.error("Error fetching blogs:", error);
+				console.error("Failed to fetch blogs:", error);
 			}
 		};
 
 		fetchBlogs();
 	}, []);
-
+	console.log(blogs);
 	const filteredBlogs =
 		selectedCategory === "All"
 			? blogs
@@ -35,102 +35,41 @@ const Page = () => {
 	];
 
 	const total = filteredBlogs.length;
-	const startIndex = (currentPage - 1) * limit;
-	const currentBlogs = filteredBlogs.slice(startIndex, startIndex + limit);
 
-	const handlePageChange = (page) => {
-		setCurrentPage(page);
-	};
+	console.log(total);
 
 	return (
 		<div className="container mx-auto mt-12 p-8">
 			<h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
 				Our Latest Blogs
 			</h1>
-
-			<div className="flex gap-4 overflow-x-auto pb-4 mb-8 scrollbar-hide">
-				{filteredCategory.map((category, i) => (
+			<div className="flex justify-center mb-8">
+				{filteredCategory.map((category) => (
 					<button
-						key={i}
-						className={`px-6 py-3 rounded-full whitespace-nowrap font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${
+						key={category}
+						className={`mr-4 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold hover:opacity-90 transform hover:-translate-y-1 transition-all duration-200 mt-4 ${
 							selectedCategory === category
-								? "bg-gradient-to-r from-purple-500 to-purple-700 text-white shadow-lg shadow-purple-200 dark:shadow-purple-900/30"
-								: "bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200"
+								? "bg-blue-600 text-white"
+								: "bg-gray-200 text-gray-600"
 						}`}
-						onClick={() => {
-							setSelectedCategory(category);
-							setCurrentPage(1);
-						}}
+						onClick={() => setSelectedCategory(category)}
 					>
 						{category}
 					</button>
 				))}
 			</div>
-			<Suspense fallback={<h1>Loading...</h1>}>
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{currentBlogs.map((blog) => (
+
+			<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full mx-auto">
+				{!blogs || blogs.length === 0 ? (
+					<h1 className="text-3xl md:text-4xl font-extrabold text-gray-600 dark:text-gray-300 text-center w-full">
+						No blogs found yet
+					</h1>
+				) : (
+					filteredBlogs.map((blog) => (
 						<BlogCards key={blog._id} blog={blog} />
-					))}
-				</div>
-
-				<Pagination
-					total={total}
-					limit={limit}
-					currentPage={currentPage}
-				>
-					{({
-						pages,
-						hasPreviousPage,
-						hasNextPage,
-						previousPage,
-						nextPage,
-						getPageItemProps,
-					}) => (
-						<div className="flex justify-center items-center gap-2 mt-8">
-							{hasPreviousPage && (
-								<button
-									className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded"
-									{...getPageItemProps({
-										pageValue: previousPage,
-										onPageChange: handlePageChange,
-									})}
-								>
-									&lt;
-								</button>
-							)}
-
-							{pages.map((page) => (
-								<button
-									key={page}
-									className={`px-4 py-2 rounded ${
-										currentPage === page
-											? "bg-blue-500 text-white"
-											: "bg-gray-200 dark:bg-gray-700"
-									}`}
-									{...getPageItemProps({
-										pageValue: page,
-										onPageChange: handlePageChange,
-									})}
-								>
-									{page}
-								</button>
-							))}
-
-							{hasNextPage && (
-								<button
-									className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded"
-									{...getPageItemProps({
-										pageValue: nextPage,
-										onPageChange: handlePageChange,
-									})}
-								>
-									&gt;
-								</button>
-							)}
-						</div>
-					)}
-				</Pagination>
-			</Suspense>
+					))
+				)}
+			</div>
 		</div>
 	);
 };

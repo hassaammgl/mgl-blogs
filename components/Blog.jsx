@@ -30,7 +30,7 @@ const Blog = ({ data }) => {
 									data?.author?.lastname}
 							</p>
 							<p className="text-gray-600 dark:text-gray-400">
-								{moment(data?.publishedAt).fromNow()}
+								{moment(data?.createdAt).fromNow()}
 							</p>
 						</div>
 					</div>

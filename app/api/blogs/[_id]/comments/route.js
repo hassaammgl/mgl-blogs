@@ -1,4 +1,4 @@
-
+import Blog from "@/models/Blog";
 import { connectDB, disconnectDB } from "@/lib/db/db";
 
 
@@ -16,7 +16,9 @@ export async function GET(_, { params }) {
             );
         }
 
-        return NextResponse.json(blog.comments);
+        console.log(blog);
+
+
 
     } catch (error) {
         return NextResponse.json(
