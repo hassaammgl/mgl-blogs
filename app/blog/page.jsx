@@ -2,12 +2,14 @@
 import React, { useState, useEffect } from "react";
 import { getAllBlogs } from "@/actions/blog.action";
 import BlogCards from "@/components/BlogCards";
+import Pagination from "@/components/shared/Pagination";
 
 const limit = 6;
 
 const Page = () => {
 	const [blogs, setBlogs] = useState([]);
 	const [selectedCategory, setSelectedCategory] = useState("All");
+	const [currentPage, setCurrentPage] = useState(1);
 
 	useEffect(() => {
 		const fetchBlogs = async () => {
@@ -37,6 +39,10 @@ const Page = () => {
 	const total = filteredBlogs.length;
 
 	console.log(total);
+
+	const handlePageChange = (page) => {
+		setCurrentPage(page);
+	};
 
 	return (
 		<div className="container mx-auto mt-12 p-8">
@@ -70,6 +76,12 @@ const Page = () => {
 					))
 				)}
 			</div>
+			<Pagination
+				totalItems={total}
+				itemsPerPage={limit}
+				currentPage={currentPage}
+				onPageChange={handlePageChange}
+			/>
 		</div>
 	);
 };
