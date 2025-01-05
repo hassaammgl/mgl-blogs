@@ -49,20 +49,24 @@ const Page = () => {
 			<h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
 				Our Latest Blogs
 			</h1>
-			<div className="flex justify-center mb-8">
-				{filteredCategory.map((category) => (
-					<button
-						key={category}
-						className={`mr-4 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold hover:opacity-90 transform hover:-translate-y-1 transition-all duration-200 mt-4 ${
-							selectedCategory === category
-								? "bg-blue-600 text-white"
-								: "bg-gray-200 text-gray-600"
-						}`}
-						onClick={() => setSelectedCategory(category)}
-					>
-						{category}
-					</button>
-				))}
+			{/* category section like yt */}
+			<div className="flex  mb-8 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+				<ul className="flex  space-x-4  whitespace-nowrap">
+					{filteredCategory.map((category) => (
+						<li key={category} className="flex items-center ">
+							<button
+								className={`px-4 py-2 rounded-full font-medium transition-all duration-200 focus:outline-none ${
+									selectedCategory === category
+										? "bg-blue-500 text-white"
+										: "bg-gray-200 text-gray-600 hover:bg-gray-300"
+								}`}
+								onClick={() => setSelectedCategory(category)}
+							>
+								{category}
+							</button>
+						</li>
+					))}
+				</ul>
 			</div>
 
 			<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full mx-auto">

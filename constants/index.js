@@ -138,19 +138,19 @@ export const apiRoutes = {
     },
     comments: {
         get_all: {
-            url: (blogId) => `${apiRoutes.app.url}/api/blogs/${blogId}/comments`,
+            url: (blogId) => `${apiRoutes.app.url}/api/blogs/comments/${blogId}`,
             method: "GET"
         },
         create: {
-            url: (blogId) => `${apiRoutes.app.url}/api/blogs/${blogId}/comments`,
+            url: (blogId) => `${apiRoutes.app.url}/api/blogs/comments/${blogId}`,
             method: "POST"
         },
         update: {
-            url: (commentId) => `${apiRoutes.app.url}/api/comments/${commentId}`,
+            url: (commentId) => `${apiRoutes.app.url}/api/blogs/comments/${commentId}`,
             method: "PUT"
         },
         delete: {
-            url: (commentId) => `${apiRoutes.app.url}/api/comments/${commentId}`,
+            url: (commentId) => `${apiRoutes.app.url}/api/blogs/comments/${commentId}`,
             method: "DELETE"
         }
     },
