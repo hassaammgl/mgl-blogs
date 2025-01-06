@@ -69,7 +69,7 @@ const Comments = ({ blogId }) => {
 
 			<div className="space-y-6">
 				{allComment.map((comment) => (
-					<div className="flex space-x-4">
+					<div key={comment._id} className="flex space-x-4">
 						<img
 							src={comment.user.imageUrl}
 							alt="Commenter"

@@ -36,6 +36,11 @@ const links = [
 		href: "/blog",
 		_id: crypto.randomUUID(),
 	},
+	{
+		label: "User",
+		href: "/user",
+		_id: crypto.randomUUID(),
+	},
 ];
 
 const poppins = Poppins({
