@@ -42,7 +42,19 @@ export const postComment = async (data) => {
         },
         body: JSON.stringify(data),
     });
-    console.log("response:", response);
+    // console.log("response:", response);
+    const res = response.json();
+    return res;
+}
+
+export const getComments = async (id) => {
+    const response = await fetch(apiRoutes.comments.get_all.url(id), {
+        method: apiRoutes.comments.get_all.method,
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    // console.log("response:", response);
     const res = response.json();
     return res;
 }

@@ -5,10 +5,8 @@ import { getBlogData } from "@/actions/blog.action";
 const Page = async ({ params }) => {
 	const { slug } = await params;
 
-	console.log("slug:", slug);
 	try {
 		const blog = await getBlogData(slug);
-		console.log(blog);
 
 		return (
 			<div className="min-h-screen bg-gray-50 dark:bg-gray-900">
