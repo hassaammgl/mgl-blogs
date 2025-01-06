@@ -48,13 +48,6 @@ const Comments = ({ blogId }) => {
 
 			<form className="mb-12">
 				<div className="flex items-start space-x-4">
-					<Image
-						src={user?.profileImageUrl}
-						alt={user?.fullName}
-						width={40}
-						height={40}
-						className="w-10 h-10 rounded-full"
-					/>
 					<div className="flex-1">
 						<textarea
 							className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
@@ -96,20 +89,7 @@ const Comments = ({ blogId }) => {
 							</p>
 							<div className="flex items-center space-x-4 mt-2">
 								<button className="flex items-center space-x-1 text-gray-500 hover:text-blue-600">
-									<svg
-										className="w-5 h-5"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth="2"
-											d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-										/>
-									</svg>
-									<span>Like</span>
+									Like
 								</button>
 								<button className="text-gray-500 hover:text-blue-600">
 									Reply
