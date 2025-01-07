@@ -27,6 +27,11 @@ const links = [
 		_id: crypto.randomUUID(),
 	},
 	{
+		label: "User",
+		href: "/user",
+		_id: crypto.randomUUID(),
+	},
+	{
 		label: "Contact",
 		href: "/contact",
 		_id: crypto.randomUUID(),
@@ -34,11 +39,6 @@ const links = [
 	{
 		label: "Blog",
 		href: "/blog",
-		_id: crypto.randomUUID(),
-	},
-	{
-		label: "User",
-		href: "/user",
 		_id: crypto.randomUUID(),
 	},
 ];
