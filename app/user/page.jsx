@@ -1,19 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-	BarChart,
-	Bar,
-	XAxis,
-	YAxis,
-	Tooltip,
-	Legend,
-	ResponsiveContainer,
-} from "recharts";
 import { getAllBlogs } from "@/actions/blog.action";
+import Charts from "@/components/Charts";
+import BlogForm from "@/components/Add_Blog";
+import BlogList from "@/components/ListBlogs";
 
 const Dashboard = () => {
 	const [blogs, setBlogs] = useState([]);
-	const [activeTab, setActiveTab] = useState("Dashboard");
+	const [activeTab, setActiveTab] = useState("dashboard");
 
 	useEffect(() => {
 		const fetchBlogs = async () => {
@@ -34,67 +28,16 @@ const Dashboard = () => {
 		<div className="flex h-screen overflow-hidden overscroll-none">
 			<Sidebar setActiveTab={setActiveTab} />
 			{activeTab === "dashboard" && <Charts blogs={blogs} />}
-			{activeTab === "blogs" && <Charts blogs={blogs} />}
-			{activeTab === "create-blog" && <Charts blogs={blogs} />}
-			{activeTab === "update-blog" && <Charts blogs={blogs} />}
-			{activeTab === "delete-blog" && <Charts blogs={blogs} />}
-		</div>
-	);
-};
-
-const Charts = ({ blogs }) => {
-	return (
-		<div className="mt-20 w-full overflow-auto">
-			<h2 className="text-2xl pl-10 mb-5 font-bold">Dashboard</h2>
-			<hr />
-			<div className="p-5">
-				<h3 className="text-lg font-semibold mb-4">Blog Views</h3>
-				<ResponsiveContainer width="100%" height={300}>
-					<BarChart data={blogs}>
-						<XAxis dataKey="slug" />
-						<YAxis />
-						<Tooltip dataKey="slug" />
-						<Legend />
-						<Bar dataKey="viewCount" fill="#8d8" />
-					</BarChart>
-				</ResponsiveContainer>
-			</div>
-			<div className="p-5">
-				<h3 className="text-lg font-semibold mb-4">Blog Likes</h3>
-				<ResponsiveContainer width="100%" height={300}>
-					<BarChart data={blogs}>
-						<XAxis dataKey="slug" />
-						<YAxis />
-						<Tooltip dataKey="slug" />
-						<Legend />
-						<Bar dataKey="viewCount" fill="pink" />
-					</BarChart>
-				</ResponsiveContainer>
-			</div>
-			<div className="p-5">
-				<h3 className="text-lg font-semibold mb-4">Blog Comments</h3>
-				<ResponsiveContainer width="100%" height={300}>
-					<BarChart data={blogs}>
-						<XAxis dataKey="slug" />
-						<YAxis />
-						<Tooltip dataKey="slug" />
-						<Legend />
-						<Bar dataKey="viewCount" fill="skyblue" />
-					</BarChart>
-				</ResponsiveContainer>
-			</div>
-			<div className="p-5">
-				<h3 className="text-lg font-semibold mb-4">Blog Favourites</h3>
-				<ResponsiveContainer width="100%" height={300}>
-					<BarChart data={blogs}>
-						<XAxis dataKey="slug" />
-						<YAxis />
-						<Tooltip dataKey="slug" />
-						<Legend />
-						<Bar dataKey="viewCount" fill="yellow" />
-					</BarChart>
-				</ResponsiveContainer>
-			</div>
+			{activeTab === "blogs" && (
+				<BlogList blogs={blogs} tab={activeTab} />
+			)}
+			{activeTab === "create-blog" && <BlogForm />}
+			{activeTab === "update-blog" && (
+				<BlogList blogs={blogs} tab={activeTab} />
+			)}
+			{activeTab === "delete-blog" && (
+				<BlogList blogs={blogs} tab={activeTab} />
+			)}
 		</div>
 	);
 };

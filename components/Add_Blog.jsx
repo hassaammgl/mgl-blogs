@@ -121,7 +121,7 @@ export default function BlogForm() {
 	};
 
 	return (
-		<div className="container mt-20 mx-auto w-2/4 py-8 px-4">
+		<div className="container mt-20 mx-auto w-2/4 py-8 px-4 overflow-auto overscroll-hidden scrollbar-hide">
 			<form onSubmit={handleSubmit} className="space-y-8">
 				<div>
 					<h2 className="text-green-500 text-2xl font-semibold mb-4 text-center">
