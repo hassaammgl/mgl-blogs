@@ -175,13 +175,11 @@ export const apiRoutes = {
         }
     },
     likes: {
-        like_blog: {
-            url: (id) => `${apiRoutes.app.url}/api/blogs/${id}/like`,
-            method: "POST"
-        },
-        remove_like: {
-            url: (id) => `${apiRoutes.app.url}/api/blogs/${id}/like`,
-            method: "DELETE"
-        }
+        url: () => `${apiRoutes.app.url}/api/blogs/like`,
+        method: "POST"
+    },
+    fav: {
+        url: () => `${apiRoutes.app.url}/api/blogs/fav`,
+        method: "POST"
     }
 };

@@ -58,3 +58,17 @@ export const getComments = async (id) => {
     const res = response.json();
     return res;
 }
+
+export const likeBlog = async (_id, user_id) => {
+    console.log(_id);
+    const response = await fetch(apiRoutes.likes.url(), {
+        method: apiRoutes.likes.method,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ _id, user_id }),
+    });
+    // console.log("response:", response);
+    const res = response.json();
+    return res;
+}

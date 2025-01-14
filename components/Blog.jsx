@@ -4,8 +4,24 @@ import Like from "@/components/svgs/Like";
 import View from "@/components/svgs/View";
 import React, { Suspense } from "react";
 import moment from "moment";
+import { likeBlog } from "@/actions/blog.action";
+import { useUser } from "@clerk/nextjs";
 
 const Blog = ({ data }) => {
+	const { isLoaded, user } = useUser();
+
+	if (!isLoaded) return null;
+	const handleLike = async () => {
+		console.log("Like clicked");
+		console.log(user);
+
+		await likeBlog(data._id, user.id);
+	};
+
+	const handleFavourite = () => {
+		console.log("Favourite clicked");
+	};
+
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
 			{/* Header Section */}
@@ -35,16 +51,22 @@ const Blog = ({ data }) => {
 						</div>
 					</div>
 					<div className="flex items-center space-x-4">
-						<button className="flex items-center justify-center space-x-2 border rounded-full px-4 py-1.5 text-sm font-medium transition-colors bg-red-500 border-red-500 text-white">
+						<button
+							onClick={handleLike}
+							className="flex items-center justify-center space-x-2 border border-red-500 rounded-full px-4 py-1.5 text-sm font-medium text-red-500 hover:text-white hover:bg-red-600 transition-colors"
+						>
 							<Like />
 							<span className="hidden md:inline-block">
-								{data?.likes?.length} Likes
+								{data?.likes?.length}
 							</span>
 						</button>
-						<button className="flex items-center justify-center space-x-2 border border-blue-500 rounded-full px-4 py-1.5 text-sm font-medium text-blue-500 hover:text-white hover:bg-blue-600 transition-colors">
+						<button
+							onClick={handleFavourite}
+							className="flex items-center justify-center space-x-2 border border-blue-500 rounded-full px-4 py-1.5 text-sm font-medium text-blue-500 hover:text-white hover:bg-blue-600 transition-colors"
+						>
 							<Favourite />
 							<span className="hidden md:inline-block">
-								{data?.favorites?.length} Favorites
+								{data?.favorites?.length}
 							</span>
 						</button>
 					</div>
