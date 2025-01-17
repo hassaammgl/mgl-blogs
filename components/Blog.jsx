@@ -15,7 +15,9 @@ const Blog = ({ data }) => {
 		console.log("Like clicked");
 		console.log(user);
 
-		await likeBlog(data._id, user.id);
+		const response = await likeBlog(data._id, user.id);
+
+		console.log(response);
 	};
 
 	const handleFavourite = () => {

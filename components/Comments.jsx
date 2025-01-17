@@ -1,25 +1,15 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { useUser } from "@clerk/clerk-react";
 import Image from "next/image";
 import { postComment, getComments } from "@/actions/blog.action";
 import moment from "moment";
 
-const Comments = ({ blogId }) => {
+const Comments = ({ comments, blogId }) => {
 	const { isLoaded, user } = useUser();
 
 	const [comment, setComment] = useState("");
-	const [isCommentUpload, setIsCommentUpload] = useState(false);
-	const [allComment, setAllComment] = useState([]);
-
-	useEffect(() => {
-		const getAllComments = async () => {
-			const res = await getComments(blogId);
-			console.log(res.comments);
-			setAllComment(res.comments);
-		};
-		getAllComments();
-	}, [isCommentUpload]);
+	const [allComment, setAllComment] = useState(comments || []);
 
 	const handleComment = async (e) => {
 		e.preventDefault();
@@ -34,7 +24,7 @@ const Comments = ({ blogId }) => {
 		const res = await postComment(data);
 		console.log(res.comment);
 		if (res.comment) {
-			setIsCommentUpload(!isCommentUpload);
+			setAllComment([...allComment, res.comment]);
 			setComment("");
 		}
 	};
@@ -71,14 +61,14 @@ const Comments = ({ blogId }) => {
 				{allComment.map((comment) => (
 					<div key={comment._id} className="flex space-x-4">
 						<img
-							src={comment.user.imageUrl}
+							src={comment.userImg}
 							alt="Commenter"
 							className="w-10 h-10 rounded-full"
 						/>
 						<div>
 							<div className="flex items-center space-x-2">
 								<h4 className="font-semibold text-gray-900 dark:text-white">
-									{`${comment.user.firstname} ${comment.user.lastname}`}
+									{comment.userName}
 								</h4>
 								<span className="text-sm text-gray-500">
 									{moment(comment.createdAt).fromNow()}

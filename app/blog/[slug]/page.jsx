@@ -13,7 +13,7 @@ const Page = async ({ params }) => {
 				<div className="container mx-auto px-4 py-12">
 					<article className="max-w-5xl mx-auto mt-12">
 						<Blog data={blog} />
-						<Comments blogId={blog._id} />
+						<Comments blogId={blog._id} comments={blog.comment} />
 					</article>
 				</div>
 			</div>

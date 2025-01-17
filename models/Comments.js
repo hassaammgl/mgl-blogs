@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
 
 const commentSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Reference to User model
-        required: true
+    userImg: {
+        type: String, required: true
+    },
+    userName: {
+        type: String,
+        required: [true, 'User name is required'],
     },
     blog: {
         type: mongoose.Schema.Types.ObjectId,

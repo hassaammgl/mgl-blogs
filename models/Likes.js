@@ -1,9 +1,8 @@
 import mongoose from 'mongoose';
 
 const likeSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Reference to User model
+    user_id: {
+        type: String,
         required: true
     },
     blog: {
@@ -16,6 +15,6 @@ const likeSchema = new mongoose.Schema({
 // Create a unique index to prevent a user from liking the same blog multiple times
 likeSchema.index({ user: 1, blog: 1 }, { unique: true });
 
-const Like = mongoose.model('Like', likeSchema);
+const Like = mongoose.model('Likes', likeSchema);
 
 export default Like;

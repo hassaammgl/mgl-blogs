@@ -48,15 +48,27 @@ export async function POST(req, { params }) {
             );
         }
 
+        const author = await User.findById(blog.author._id);
+        if (!author) {
+            return NextResponse.json(
+                { error: 'Author not found' },
+                { status: 404 }
+            );
+        }
+
 
         const comment = new Comments({
             blog: blog._id,
             comment: data.comment,
-            user: blog.author._id
+            userImg: author.imageUrl,
+            userName: `${author.firstname} ${author.lastname}`,
         });
 
-        await comment.save();
         console.log("comment:", comment);
+
+        blog.comment.push(comment._id);
+        await blog.save();
+        await comment.save();
 
 
         return NextResponse.json({ comment }, { status: 200 });

@@ -2,58 +2,8 @@ import { connectDB, disconnectDB } from '@/lib/db/db';
 import Blog from '@/models/Blog';
 import { User } from '@/models/User';
 import { NextResponse } from 'next/server'
-import { auth } from "@clerk/nextjs/server";
 import Like from '@/models/Likes';
 
-// export async function POST(req) {
-//     const authResult = await auth()
-//     try {
-//         await connectDB();
-//         const { _id, user_id } = await req.json();
-//         const blog = await Blog.findById(_id);
-//         if (!blog) {
-//             return NextResponse.json(
-//                 { error: 'Blog not found' },
-//                 { status: 404 }
-//             );
-//         }
-
-
-//         const userExists = await User.findOne({ user_id })
-//         console.log(userExists);
-
-//         if (!userExists) {
-//             return NextResponse.json(
-//                 { error: 'User not found' },
-//                 { status: 404 }
-//             );
-//         }
-
-//         const like = new Like({
-//             blog: blog._id,
-//             user: userExists._id
-//         });
-//         blog.likes.push(like._id);
-//         console.log(blog.likes);
-//         console.log(blog);
-//         await Blog.findByIdAndUpdate(_id, { likes: blog.likes }, { new: true });
-//         await blog.save();
-//         await like.save();
-
-
-//         return NextResponse.json({
-//             like: true
-//         }, { status: 200 });
-//     } catch (error) {
-//         return NextResponse.json(
-//             { error: error.message },
-//             { status: 500 }
-//         );
-//     } finally {
-//         await disconnectDB()
-//     }
-
-// }
 
 
 
@@ -84,7 +34,7 @@ export async function POST(req) {
         // Check if the user has already liked the blog
         const existingLike = await Like.findOne({
             blog: blog._id,
-            user: userExists._id,
+            user_id: userExists.user_id,
         });
 
         if (existingLike) {
@@ -103,7 +53,7 @@ export async function POST(req) {
         // Create a new like
         const like = new Like({
             blog: blog._id,
-            user: userExists._id,
+            user_id: userExists.user_id,
         });
 
         // Add the new like to the blog's likes array

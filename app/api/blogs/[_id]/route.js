@@ -1,6 +1,8 @@
 import { connectDB, disconnectDB } from '@/lib/db/db';
 import Blog from '@/models/Blog';
+import Likes from '@/models/Likes';
 import User from '@/models/User';
+import Comments from '@/models/Comments';
 import { NextResponse } from 'next/server';
 
 // GET single blog
@@ -9,7 +11,10 @@ export async function GET(_, { params }) {
         await connectDB();
         const _id = (await params)._id
         console.log("_id:", _id);
-        const blog = await Blog.findById({ _id }).populate('author');
+        const blog = await Blog.findById({ _id })
+            .populate('author')
+            .populate('comment')
+            .populate('likes');
 
         console.log(blog);
 
@@ -28,6 +33,8 @@ export async function GET(_, { params }) {
         return NextResponse.json(blog);
 
     } catch (error) {
+        console.log("error:", error);
+
         return NextResponse.json(
             { error: error.message },
             { status: 500 }

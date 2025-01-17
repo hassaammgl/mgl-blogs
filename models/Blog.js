@@ -57,10 +57,10 @@ const blogSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Favourites',
     }],
-    comment: {
+    comment: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comments'
-    },
+    }],
     isPublished: {
         type: Boolean,
         default: false

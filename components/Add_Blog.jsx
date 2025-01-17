@@ -5,8 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { categoryBlog } from "@/constants";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+import { convertToBase64 } from "@/lib/funcs";
 
 export default function BlogForm() {
+	const { isLoaded, user } = useUser();
+
 	const router = useRouter();
 	const [formData, setFormData] = useState({
 		image: null,
@@ -37,19 +41,6 @@ export default function BlogForm() {
 		setFormData({
 			...formData,
 			tags: formData.tags.filter((tag) => tag !== tagToRemove),
-		});
-	};
-
-	const convertToBase64 = (file) => {
-		return new Promise((resolve, reject) => {
-			const fileReader = new FileReader();
-			fileReader.readAsDataURL(file);
-			fileReader.onload = () => {
-				resolve(fileReader.result);
-			};
-			fileReader.onerror = (error) => {
-				reject(error);
-			};
 		});
 	};
 
@@ -89,6 +80,7 @@ export default function BlogForm() {
 					image: formData.imageBase64,
 					status: formData.status,
 					tags: formData.tags,
+					user_id: user.id,
 					isPublished: formData.isPublished,
 					publishedAt: formData.isPublished
 						? new Date().toISOString()
@@ -119,6 +111,8 @@ export default function BlogForm() {
 			console.error("Error creating blog post:", error);
 		}
 	};
+
+	if (!isLoaded) return null;
 
 	return (
 		<div className="container mt-20 mx-auto w-2/4 py-8 px-4 overflow-auto overscroll-hidden scrollbar-hide">

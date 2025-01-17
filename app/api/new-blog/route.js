@@ -2,14 +2,12 @@
 import { connectDB, disconnectDB } from '@/lib/db/db';
 import Blog from '@/models/Blog';
 import { NextResponse } from 'next/server';
-import { currentUser } from "@clerk/nextjs/server";
 import { User } from "@/models/User";
 
 
 export async function POST(request) {
     try {
         await connectDB();
-        const user = await currentUser()
         const body = await request.json();
 
         // Add publishedAt date if blog is being published
@@ -17,8 +15,8 @@ export async function POST(request) {
             body.publishedAt = new Date();
         }
         console.log(body);
-        const userExists = await User.findOne({ email: user.emailAddresses[0].emailAddress })
-        const { title, description, content, category, image, status, tags } = body;
+        const { title, description, content, category, image, status, tags, user_id } = body;
+        const userExists = await User.findOne({ user_id })
         const blog = new Blog({
             title,
             description,
