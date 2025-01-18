@@ -4,9 +4,6 @@ import { User } from '@/models/User';
 import { NextResponse } from 'next/server'
 import Like from '@/models/Likes';
 
-
-
-
 export async function POST(req) {
     try {
         await connectDB();

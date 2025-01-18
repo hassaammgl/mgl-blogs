@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { categoryBlog } from "@/constants";
+import { blogNicheCategories as categoryBlog } from "@/constants";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { convertToBase64 } from "@/lib/funcs";
@@ -93,7 +93,7 @@ export default function BlogForm() {
 			}
 
 			const data = await response.json();
-			router.push(`/blog/${data._id}`);
+			router.refresh(`/blog/${data._id}`);
 
 			setFormData({
 				image: null,
@@ -156,9 +156,27 @@ export default function BlogForm() {
 						className="w-full rounded-md border border-gray-300 p-2"
 					>
 						{categoryBlog.map((category, i) => (
-							<option value={category} key={i}>
-								{category}
-							</option>
+							<optgroup label={category.category} key={i}>
+								{category.subcategories.map(
+									(subCategory, j) => (
+										<optgroup
+											label={subCategory.name}
+											key={j}
+										>
+											{subCategory.options.map(
+												(option, k) => (
+													<option
+														value={option}
+														key={k}
+													>
+														{option}
+													</option>
+												)
+											)}
+										</optgroup>
+									)
+								)}
+							</optgroup>
 						))}
 					</select>
 				</div>
@@ -232,7 +250,7 @@ export default function BlogForm() {
 									onClick={() => handleRemoveTag(tag)}
 									className="ml-2 text-blue-600 hover:text-blue-800"
 								>
-									×
+									{"×"}
 								</button>
 							</span>
 						))}

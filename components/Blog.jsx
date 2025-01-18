@@ -2,13 +2,16 @@
 import Favourite from "@/components/svgs/Favourite";
 import Like from "@/components/svgs/Like";
 import View from "@/components/svgs/View";
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import moment from "moment";
 import { likeBlog } from "@/actions/blog.action";
 import { useUser } from "@clerk/nextjs";
 
 const Blog = ({ data }) => {
 	const { isLoaded, user } = useUser();
+
+	const [likes, setLikes] = useState(data?.likes?.length);
+	const [favorites, setFavorites] = useState(data?.favorites?.length);
 
 	if (!isLoaded) return null;
 	const handleLike = async () => {
@@ -17,7 +20,13 @@ const Blog = ({ data }) => {
 
 		const response = await likeBlog(data._id, user.id);
 
-		console.log(response);
+		console.log(response.like);
+
+		if (response.like) {
+			setLikes(likes + 1);
+		} else {
+			setLikes(likes - 1);
+		}
 	};
 
 	const handleFavourite = () => {
@@ -59,7 +68,7 @@ const Blog = ({ data }) => {
 						>
 							<Like />
 							<span className="hidden md:inline-block">
-								{data?.likes?.length}
+								{likes}
 							</span>
 						</button>
 						<button
@@ -68,7 +77,7 @@ const Blog = ({ data }) => {
 						>
 							<Favourite />
 							<span className="hidden md:inline-block">
-								{data?.favorites?.length}
+								{favorites}
 							</span>
 						</button>
 					</div>

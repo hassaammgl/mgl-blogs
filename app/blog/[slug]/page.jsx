@@ -1,6 +1,6 @@
+import { getBlogData } from "@/actions/blog.action";
 import Blog from "@/components/Blog";
 import Comments from "@/components/Comments";
-import { getBlogData } from "@/actions/blog.action";
 
 const Page = async ({ params }) => {
 	const { slug } = await params;

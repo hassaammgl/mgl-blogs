@@ -17,6 +17,7 @@ const Comments = ({ comments, blogId }) => {
 		const data = {
 			_id: blogId,
 			comment,
+			user_id: user.id,
 		};
 
 		console.log(data);
@@ -58,36 +59,42 @@ const Comments = ({ comments, blogId }) => {
 			</form>
 
 			<div className="space-y-6">
-				{allComment.map((comment) => (
-					<div key={comment._id} className="flex space-x-4">
-						<img
-							src={comment.userImg}
-							alt="Commenter"
-							className="w-10 h-10 rounded-full"
-						/>
-						<div>
-							<div className="flex items-center space-x-2">
-								<h4 className="font-semibold text-gray-900 dark:text-white">
-									{comment.userName}
-								</h4>
-								<span className="text-sm text-gray-500">
-									{moment(comment.createdAt).fromNow()}
-								</span>
-							</div>
-							<p className="text-gray-700 dark:text-gray-300 mt-1">
-								{comment.comment}
-							</p>
-							<div className="flex items-center space-x-4 mt-2">
-								<button className="flex items-center space-x-1 text-gray-500 hover:text-blue-600">
-									Like
-								</button>
-								<button className="text-gray-500 hover:text-blue-600">
-									Reply
-								</button>
+				{allComment.length === 0 ? (
+					<h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+						No comments yet
+					</h1>
+				) : (
+					allComment.map((comment) => (
+						<div key={comment._id} className="flex space-x-4">
+							<img
+								src={comment.userImg}
+								alt="Commenter"
+								className="w-10 h-10 rounded-full"
+							/>
+							<div>
+								<div className="flex items-center space-x-2">
+									<h4 className="font-semibold text-gray-900 dark:text-white">
+										{comment.userName}
+									</h4>
+									<span className="text-sm text-gray-500">
+										{moment(comment.createdAt).fromNow()}
+									</span>
+								</div>
+								<p className="text-gray-700 dark:text-gray-300 mt-1">
+									{comment.comment}
+								</p>
+								<div className="flex items-center space-x-4 mt-2">
+									<button className="flex items-center space-x-1 text-gray-500 hover:text-blue-600">
+										Like
+									</button>
+									<button className="text-gray-500 hover:text-blue-600">
+										Reply
+									</button>
+								</div>
 							</div>
 						</div>
-					</div>
-				))}
+					))
+				)}
 			</div>
 		</div>
 	);
