@@ -76,7 +76,7 @@ export default function BlogForm() {
 					title: formData.title,
 					description: formData.description,
 					content: formData.content,
-					category: formData.category,
+					category: formData.category || "Personal",
 					image: formData.imageBase64,
 					status: formData.status,
 					tags: formData.tags,
@@ -93,7 +93,7 @@ export default function BlogForm() {
 			}
 
 			const data = await response.json();
-			router.refresh(`/blog/${data._id}`);
+			router.push(`/blog/${data._id}`);
 
 			setFormData({
 				image: null,
@@ -154,31 +154,7 @@ export default function BlogForm() {
 						value={formData.category}
 						onChange={handleChange}
 						className="w-full rounded-md border border-gray-300 p-2"
-					>
-						{categoryBlog.map((category, i) => (
-							<optgroup label={category.category} key={i}>
-								{category.subcategories.map(
-									(subCategory, j) => (
-										<optgroup
-											label={subCategory.name}
-											key={j}
-										>
-											{subCategory.options.map(
-												(option, k) => (
-													<option
-														value={option}
-														key={k}
-													>
-														{option}
-													</option>
-												)
-											)}
-										</optgroup>
-									)
-								)}
-							</optgroup>
-						))}
-					</select>
+					></select>
 				</div>
 
 				<div>

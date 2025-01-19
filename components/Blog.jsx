@@ -6,6 +6,7 @@ import React, { Suspense, useState } from "react";
 import moment from "moment";
 import { likeBlog } from "@/actions/blog.action";
 import { useUser } from "@clerk/nextjs";
+import DOMPurify from "dompurify";
 
 const Blog = ({ data }) => {
 	const { isLoaded, user } = useUser();
@@ -31,6 +32,10 @@ const Blog = ({ data }) => {
 
 	const handleFavourite = () => {
 		console.log("Favourite clicked");
+	};
+
+	const removeEscapeCharacters = (text) => {
+		return DOMPurify.sanitize(text.replace(/\\n/g, "\n"));
 	};
 
 	return (
@@ -118,7 +123,11 @@ const Blog = ({ data }) => {
 			{/* Content */}
 			<div className="prose prose-lg md:prose-xl dark:prose-invert mx-auto">
 				<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-					{data?.content}
+					<span
+						dangerouslySetInnerHTML={{
+							__html: removeEscapeCharacters(data?.content),
+						}}
+					/>
 				</p>
 			</div>
 		</Suspense>
