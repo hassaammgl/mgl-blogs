@@ -16,11 +16,31 @@ export async function POST(request) {
         }
         console.log(body);
         const { title, description, content, category, image, status, tags, user_id } = body;
+
         const userExists = await User.findOne({ user_id })
+
+        if (!userExists) {
+            return NextResponse.json(
+                { error: 'User not found' },
+                { status: 404 }
+            );
+        }
+
+        const updatedContent = await fetch('http://localhost:3000/api/ai', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content })
+        })
+
+        const updatedContentJson = await updatedContent.json()
+        console.log("updatedContentJson:", updatedContentJson);
+
         const blog = new Blog({
             title,
             description,
-            content,
+            content: updatedContentJson.result.html,
             category,
             image,
             status,
