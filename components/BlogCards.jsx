@@ -3,6 +3,15 @@ import moment from "moment";
 import Link from "next/link";
 
 const BlogCards = ({ blog }) => {
+	function getReadTime(blogContent) {
+		const wordsPerMinute = 200; // Average reading speed
+		const wordCount = blogContent
+			.split(/\s+/)
+			.filter((word) => word).length; // Count words
+		const readTimeMinutes = Math.ceil(wordCount / wordsPerMinute); // Calculate read time
+		return `${readTimeMinutes} min read`; // Format result
+	}
+
 	return (
 		<div className="group bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-200">
 			<div className="relative overflow-hidden rounded-t-2xl">
@@ -11,7 +20,7 @@ const BlogCards = ({ blog }) => {
 					alt={blog.title}
 					className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-200"
 				/>
-				{blog.publishedAt &&
+				{blog.createdAt &&
 					moment().diff(moment(blog.createdAt), "days") <= 7 && (
 						<div className="absolute top-4 right-4 bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
 							New
@@ -22,6 +31,11 @@ const BlogCards = ({ blog }) => {
 				<span className="text-blue-600 dark:text-blue-400 text-sm font-semibold">
 					{blog.category}
 				</span>
+				<span className="float-right text-blue-600 dark:text-blue-400 text-sm font-semibold">
+					{getReadTime(blog.content)}
+				</span>
+
+				{/* Display title and description */}
 				<h3 className="text-xl font-bold text-gray-900 dark:text-white mt-2">
 					{blog.title}
 				</h3>

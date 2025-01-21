@@ -7,6 +7,7 @@ import moment from "moment";
 import { likeBlog } from "@/actions/blog.action";
 import { useUser } from "@clerk/nextjs";
 import DOMPurify from "dompurify";
+import MetaData from "./MetaData";
 
 const Blog = ({ data }) => {
 	const { isLoaded, user } = useUser();
@@ -45,6 +46,7 @@ const Blog = ({ data }) => {
 				<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
 					{data?.title}
 				</h1>
+				<MetaData title={data?.title} description={data?.description} />
 				<span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 text-sm font-medium px-4 py-1.5 rounded-full mb-4">
 					{data?.category}
 				</span>
