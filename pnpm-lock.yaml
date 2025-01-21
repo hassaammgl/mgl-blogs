@@ -51,7 +51,7 @@ importers:
         specifier: ^3.2.3
         version: 3.2.3
       framer-motion:
-        specifier: ^11.13.3
+        specifier: ^11.15.0
         version: 11.15.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       gridfs-stream:
         specifier: ^1.1.1
