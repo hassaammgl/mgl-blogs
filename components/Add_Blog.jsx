@@ -10,6 +10,7 @@ import { convertToBase64 } from "@/lib/funcs";
 
 export default function BlogForm() {
 	const { isLoaded, user } = useUser();
+	const [loading, setLoading] = useState(false);
 
 	const router = useRouter();
 	const [formData, setFormData] = useState({
@@ -65,7 +66,7 @@ export default function BlogForm() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
+		setLoading(true);
 		try {
 			const response = await fetch("/api/new-blog", {
 				method: "POST",
@@ -107,8 +108,10 @@ export default function BlogForm() {
 				isPublished: false,
 			});
 			setTagInput("");
+			setLoading(false);
 		} catch (error) {
 			console.error("Error creating blog post:", error);
+			setLoading(false);
 		}
 	};
 
@@ -266,7 +269,7 @@ export default function BlogForm() {
 				</div>
 
 				<Button type="submit" className="w-full">
-					Create Blog Post
+					{loading ? "Loading..." : "Create Blog Post"}
 				</Button>
 			</form>
 		</div>

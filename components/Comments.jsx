@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect, use } from "react";
 import { useUser } from "@clerk/clerk-react";
-import Image from "next/image";
 import { postComment, getComments } from "@/actions/blog.action";
 import moment from "moment";
 
@@ -10,8 +9,10 @@ const Comments = ({ comments, blogId }) => {
 
 	const [comment, setComment] = useState("");
 	const [allComment, setAllComment] = useState(comments || []);
+	const [loading, setLoading] = useState(false);
 
 	const handleComment = async (e) => {
+		setLoading(true);
 		e.preventDefault();
 		console.log("Commented");
 		const data = {
@@ -27,7 +28,9 @@ const Comments = ({ comments, blogId }) => {
 		if (res.comment) {
 			setAllComment([...allComment, res.comment]);
 			setComment("");
+			setLoading(false);
 		}
+		setLoading(false);
 	};
 	if (!isLoaded) return null;
 
@@ -42,7 +45,7 @@ const Comments = ({ comments, blogId }) => {
 					<div className="flex-1">
 						<textarea
 							className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
-							rows="3"
+							rows="2"
 							value={comment}
 							onChange={(e) => setComment(e.target.value)}
 							name="comment"
@@ -52,7 +55,7 @@ const Comments = ({ comments, blogId }) => {
 							onClick={handleComment}
 							className="mt-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
 						>
-							Comment
+							{loading ? "Loading..." : "Comment"}
 						</button>
 					</div>
 				</div>
