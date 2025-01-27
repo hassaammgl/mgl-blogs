@@ -1,13 +1,11 @@
 import {
-    BarChart,
-    PieChart,
-    Pie,
-    Bar,
-    XAxis,
-    YAxis,
-    Tooltip,
-    Legend,
-    ResponsiveContainer,
+	BarChart,
+	Bar,
+	XAxis,
+	YAxis,
+	Tooltip,
+	Legend,
+	ResponsiveContainer,
 } from "recharts";
 
 const Charts = ({ blogs }) => {
@@ -31,11 +29,11 @@ const Charts = ({ blogs }) => {
 				<h3 className="text-lg font-semibold mb-4">Blog Likes</h3>
 				<ResponsiveContainer width="100%" height={300}>
 					<BarChart data={blogs}>
-						<XAxis dataKey="slug" />
+						<XAxis dataKey="likes" />
 						<YAxis />
-						<Tooltip dataKey="slug" />
+						<Tooltip dataKey="likes" />
 						<Legend />
-						<Bar dataKey="viewCount" fill="pink" />
+						<Bar dataKey="likes" fill="pink" />
 					</BarChart>
 				</ResponsiveContainer>
 			</div>
@@ -43,11 +41,11 @@ const Charts = ({ blogs }) => {
 				<h3 className="text-lg font-semibold mb-4">Blog Comments</h3>
 				<ResponsiveContainer width="100%" height={300}>
 					<BarChart data={blogs}>
-						<XAxis dataKey="slug" />
+						<XAxis dataKey="comment" />
 						<YAxis />
-						<Tooltip dataKey="slug" />
+						<Tooltip dataKey="comment" />
 						<Legend />
-						<Bar dataKey="viewCount" fill="skyblue" />
+						<Bar dataKey="comment" fill="skyblue" />
 					</BarChart>
 				</ResponsiveContainer>
 			</div>
@@ -55,11 +53,11 @@ const Charts = ({ blogs }) => {
 				<h3 className="text-lg font-semibold mb-4">Blog Favourites</h3>
 				<ResponsiveContainer width="100%" height={300}>
 					<BarChart data={blogs}>
-						<XAxis dataKey="slug" />
+						<XAxis dataKey="favorites" />
 						<YAxis />
-						<Tooltip dataKey="slug" />
+						<Tooltip dataKey="favorites" />
 						<Legend />
-						<Bar dataKey="viewCount" fill="yellow" />
+						<Bar dataKey="favorites" fill="yellow" />
 					</BarChart>
 				</ResponsiveContainer>
 			</div>

@@ -64,7 +64,9 @@ const Navbar = () => {
 							<Link
 								href="/"
 								className="text-xl font-bold dark:text-white text-gray-800 hover:text-green-500 dark:hover:text-green-400 transition-colors"
-							></Link>
+							>
+								MGL_BLOGS
+							</Link>
 						</div>
 
 						<div className="hidden md:flex items-center space-x-4">
@@ -81,7 +83,7 @@ const Navbar = () => {
 							<SignedOut>
 								<SignInButton
 									mode="modal"
-									signInFallbackRedirectUrl="/register"
+									signInFallbackRedirectUrl="/api"
 								/>
 							</SignedOut>
 							<SignedIn>
