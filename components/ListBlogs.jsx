@@ -6,12 +6,12 @@ import Image from "next/image";
 
 const BlogList = ({ blogs }) => {
 	return (
-		<div className="min-h-screen py-8 pt-20">
+		<div className="min-h-screen py-8 pt-20 overflow-x-scroll w-full">
 			<div className="max-w-4xl mx-auto">
 				<h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
 					Blog List
 				</h1>
-				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full mx-auto">
+				<div className=" w-full">
 					{!blogs || blogs.length === 0 ? (
 						<h1 className="text-3xl md:text-4xl font-extrabold text-gray-600 dark:text-gray-300 text-center w-full">
 							No blogs found yet
@@ -28,6 +28,8 @@ const BlogList = ({ blogs }) => {
 };
 
 const GradientCard = ({ blog }) => {
+	console.log(blog);
+
 	function getReadTime(blogContent) {
 		const wordsPerMinute = 200; // Average reading speed
 		const wordCount = blogContent
@@ -38,30 +40,61 @@ const GradientCard = ({ blog }) => {
 	}
 
 	return (
-		<BackgroundGradient className="rounded-[22px] p-4 sm:p-10 bg-white dark:bg-zinc-900">
-			<Image
-				src={`/jordans.webp`}
-				alt="jordans"
-				height="400"
-				width="400"
-				className="object-contain"
-			/>
-			<p className="text-base sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">
-				Air Jordan 4 Retro Reimagined
-			</p>
+		<div className="group bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-200 flex flex-row h-40 w-full ">
+			<div className="relative overflow-hidden rounded-t-2xl">
+				<img
+					src={blog.image}
+					alt={blog.title}
+					className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-200"
+				/>
+				{blog.createdAt &&
+					moment().diff(moment(blog.createdAt), "days") <= 7 && (
+						<div className="absolute top-4 right-4 bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
+							New
+						</div>
+					)}
+			</div>
+			<div className="p-6 flex">
 
-			<p className="text-sm text-neutral-600 dark:text-neutral-400">
-				The Air Jordan 4 Retro Reimagined Bred will release on Saturday,
-				February 17, 2024. Your best opportunity to get these right now
-				is by entering raffles and waiting for the official releases.
-			</p>
-			<button className="rounded-full pl-4 pr-1 py-1 text-white flex items-center space-x-1 bg-black mt-4 text-xs font-bold dark:bg-zinc-800">
-				<span>Buy now </span>
-				<span className="bg-zinc-700 rounded-full text-[0.6rem] px-2 py-0 text-white">
-					$100
+				{/* Display title and description */}
+				<h3 className="text-xl font-bold text-gray-900 dark:text-white mt-2">
+					{blog.title}
+				</h3>
+				<p className="mt-3 text-gray-600 dark:text-gray-300 line-clamp-3">
+					{blog.description}
+				</p>
+				<span className="text-blue-600 dark:text-blue-400 text-sm font-semibold">
+					{blog.category}
 				</span>
-			</button>
-		</BackgroundGradient>
+				<span className="float-right text-blue-600 dark:text-blue-400 text-sm font-semibold">
+					{getReadTime(blog.content)}
+				</span>
+				<div className="flex items-center mt-4">
+					<img
+						src={blog.author.imageUrl}
+						alt={`${blog.author.firstName} Avatar`}
+						className="w-8 h-8 rounded-full"
+					/>
+					<div className="ml-3">
+						<p className="text-sm font-semibold text-gray-900 dark:text-white">
+							{blog.author.firstname + " " + blog.author.lastname}
+						</p>
+						<p className="text-sm text-gray-500 dark:text-gray-400">
+							{moment(blog.createdAt).fromNow()}
+						</p>
+					</div>
+				</div>
+				{/* Display view count */}
+				<p className="mt-2 text-gray-500 dark:text-gray-400 text-sm">
+					{blog.viewCount} {blog.viewCount === 1 ? "view" : "views"}
+				</p>
+				<Link href={`/blog/${blog._id}`}>
+					<button className="w-full px-4 md:px-6 py-3 md:py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-bold hover:opacity-90 transform hover:-translate-y-1 transition-all duration-200 mt-4">
+						Read More
+					</button>
+				</Link>
+			</div>
+		</div>
 	);
 };
 
