@@ -36,7 +36,7 @@ const Blog = ({ data }) => {
 	};
 
 	const removeEscapeCharacters = (text) => {
-		return DOMPurify.sanitize(text.replace(/\\n/g, "\n"));
+		return DOMPurify.sanitize(text?.replace(/\\n/g, "\n"));
 	};
 
 	return (

@@ -72,3 +72,15 @@ export const likeBlog = async (_id, user_id) => {
     const res = response.json();
     return res;
 }
+
+export const deleteBlog = async (id) => {
+    const response = await fetch(apiRoutes.blogs.delete.url(id), {
+        method: apiRoutes.blogs.delete.method,
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    // console.log("response:", response);
+    const res = response.json();
+    return res;
+}
