@@ -56,6 +56,9 @@ importers:
       gridfs-stream:
         specifier: ^1.1.1
         version: 1.1.1
+      gsap:
+        specifier: ^3.12.7
+        version: 3.12.7
       lexical:
         specifier: ^0.21.0
         version: 0.21.0
@@ -1747,6 +1750,9 @@ packages:
   gridfs-stream@1.1.1:
     resolution: {integrity: sha512-EcELdPIjC7tpZUiZA/8trfmszLbcsZlFyDQ8DhMtyJIMDmuLi5Vzt/056OO6FqfvY/zwiTCo1eZAqwtqrhBGMQ==}
     engines: {node: '>= 0.4.2'}
+
+  gsap@3.12.7:
+    resolution: {integrity: sha512-V4GsyVamhmKefvcAKaoy0h6si0xX7ogwBoBSs2CTJwt7luW0oZzC0LhdkyuKV8PJAXr7Yaj8pMjCKD4GJ+eEMg==}
 
   has-bigints@1.1.0:
     resolution: {integrity: sha512-R3pbpkcIqv2Pm3dUwgjclDRVmWpTJW2DcMzcIhEXEx1oh/CEMObMm3KLmRJOdvhM7o4uQBnwr8pzRK2sJWIqfg==}
@@ -4790,6 +4796,8 @@ snapshots:
   gridfs-stream@1.1.1:
     dependencies:
       flushwritable: 1.0.0
+
+  gsap@3.12.7: {}
 
   has-bigints@1.1.0: {}
 

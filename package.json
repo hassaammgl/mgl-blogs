@@ -26,6 +26,7 @@
 		"dompurify": "^3.2.3",
 		"framer-motion": "^11.15.0",
 		"gridfs-stream": "^1.1.1",
+		"gsap": "^3.12.7",
 		"lexical": "^0.21.0",
 		"lucide-react": "^0.468.0",
 		"moment": "^2.30.1",
