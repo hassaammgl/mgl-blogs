@@ -1,12 +1,12 @@
 import UpdateBlog from "@/components/UpdateBlog";
-import { fetchBlogData } from "@/actions/blog.action";
+import { getBlogData } from "@/actions/blog.action";
 
 export default async function Page({ params }) {
 	const { _id } = await params;
 
 	console.log(_id);
 
-	const blog = await fetchBlogData(_id);
+	const blog = await getBlogData(_id);
 
 	console.log(blog);
 	if (!blog) {

@@ -86,7 +86,6 @@ export async function PUT(req, { params }) {
         }
 
         return NextResponse.json(blog);
-
     } catch (error) {
         console.log("error:", error);
 

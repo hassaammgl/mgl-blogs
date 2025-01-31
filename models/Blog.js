@@ -22,6 +22,10 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Content is required']
     },
+    realContent: {
+        type: String,
+        required: [true, 'Real content is required']
+    },
     category: {
         type: String,
         required: [true, 'Category is required'],

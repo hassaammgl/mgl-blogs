@@ -41,6 +41,7 @@ export async function POST(request) {
             title,
             description,
             content: updatedContentJson.result.html,
+            realContent: content,
             category,
             image,
             status,

@@ -1,8 +1,10 @@
 "use client";
-import React, { useState, useEffect, use } from "react";
+import React, { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { postComment, getComments } from "@/actions/blog.action";
 import moment from "moment";
+import { BiLike as Like } from "react-icons/bi";
+import { LuMessageSquareReply as Reply } from "react-icons/lu";
 
 const Comments = ({ comments, blogId }) => {
 	const { isLoaded, user } = useUser();
@@ -88,10 +90,10 @@ const Comments = ({ comments, blogId }) => {
 								</p>
 								<div className="flex items-center space-x-4 mt-2">
 									<button className="flex items-center space-x-1 text-gray-500 hover:text-blue-600">
-										Like
+										<Like />
 									</button>
 									<button className="text-gray-500 hover:text-blue-600">
-										Reply
+										<Reply />
 									</button>
 								</div>
 							</div>

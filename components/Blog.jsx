@@ -1,13 +1,15 @@
 "use client";
-import Favourite from "@/components/svgs/Favourite";
-import Like from "@/components/svgs/Like";
-import View from "@/components/svgs/View";
 import React, { Suspense, useState } from "react";
 import moment from "moment";
 import { likeBlog } from "@/actions/blog.action";
 import { useUser } from "@clerk/nextjs";
 import DOMPurify from "dompurify";
 import MetaData from "./MetaData";
+import { BiLike as Like } from "react-icons/bi";
+// import { BiSolidLike } from "react-icons/bi";
+import { FaRegStar as Favourite } from "react-icons/fa";
+// import { FaStar } from "react-icons/fa";
+import { MdOutlineRemoveRedEye as View } from "react-icons/md";
 
 const Blog = ({ data }) => {
 	const { isLoaded, user } = useUser();

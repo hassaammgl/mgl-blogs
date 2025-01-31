@@ -1,6 +1,8 @@
+"use client";
 import moment from "moment";
 import Link from "next/link";
 import { deleteBlog } from "@/actions/blog.action";
+import { useRouter } from "next/navigation";
 
 const BlogCards = ({ blog }) => {
 	function getReadTime(blogContent) {
@@ -66,6 +68,8 @@ const BlogCards = ({ blog }) => {
 };
 
 export const UserBlogCards = ({ blog, pageType }) => {
+	const router = useRouter();
+
 	function getReadTime(blogContent) {
 		const wordsPerMinute = 200;
 		const wordCount = blogContent
@@ -93,8 +97,6 @@ export const UserBlogCards = ({ blog, pageType }) => {
 							New
 						</div>
 					)}
-
-				{}
 			</div>
 			<div className="p-6">
 				<div className="flex justify-between items-center text-sm font-semibold text-blue-600 dark:text-blue-400">
@@ -135,7 +137,7 @@ export const UserBlogCards = ({ blog, pageType }) => {
 					</button>
 				) : pageType === "update-blog" ? (
 					<button
-						onClick={() => updateBlog(blog._id)}
+						onClick={() => router.push(`/update-blog/${blog._id}`)}
 						className="w-full mt-5 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold text-lg rounded-xl shadow-md hover:opacity-90 transform hover:-translate-y-1 transition-all duration-300"
 					>
 						Update Blog
