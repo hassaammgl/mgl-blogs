@@ -50,7 +50,7 @@ const Blog = ({ data }) => {
 				</h1>
 				<MetaData title={data?.title} description={data?.description} />
 				<span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 text-sm font-medium px-4 py-1.5 rounded-full mb-4">
-					{`${data?.category} ${data?.subcategory} ${data?.subcategoryoption}`}
+					{`${data?.category}/${data?.subcategory}/${data?.subcategoryoption}`}
 				</span>
 				<div className="flex items-center justify-between space-x-4">
 					<div className="flex items-center space-x-4">

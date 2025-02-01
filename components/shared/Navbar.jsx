@@ -19,27 +19,27 @@ const links = [
 	{
 		label: "Home",
 		href: "/",
-		_id: crypto.randomUUID(),
+		_id:1,
 	},
 	{
 		label: "About",
 		href: "/about",
-		_id: crypto.randomUUID(),
+		_id: 2,
 	},
 	{
 		label: "User",
 		href: "/user",
-		_id: crypto.randomUUID(),
+		_id: 3,
 	},
 	{
 		label: "Contact",
 		href: "/contact",
-		_id: crypto.randomUUID(),
+		_id:4,
 	},
 	{
 		label: "Blog",
 		href: "/blog",
-		_id: crypto.randomUUID(),
+		_id: 4,
 	},
 ];
 
