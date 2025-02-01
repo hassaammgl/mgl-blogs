@@ -31,6 +31,12 @@ const blogSchema = new mongoose.Schema({
         required: [true, 'Category is required'],
         trim: true
     },
+    summary: {
+        type: String,
+        required: [true, 'Summary is required'],
+        trim: true,
+        maxLength: [500, 'Summary cannot be more than 500 characters']
+    },
     subcategory: {
         type: String,
         required: [true, 'Subcategory is required'],

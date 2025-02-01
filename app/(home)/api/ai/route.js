@@ -9,7 +9,7 @@ export async function POST(req) {
     {
         "content": "${content}"
     }
-        Transform this object context to SEO - Friendly html and if there is some code  so dont remove it and with no plain text and response is in json
+        Transform this object context to SEO - Friendly html and also add summary of the article and if there is some code  so dont remove it and with no plain text and response is in json
     `;
     console.log("prompt:", prompt);
 

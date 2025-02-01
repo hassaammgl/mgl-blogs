@@ -48,12 +48,15 @@ export async function POST(request) {
             image,
             status,
             tags,
+            summary: updatedContentJson.result.summary,
             author: userExists._id
         });
         await blog.save();
 
         return NextResponse.json(blog, { status: 201 });
     } catch (error) {
+        console.log("error:", error);
+
         return NextResponse.json(
             { error: error.message },
             { status: 400 }
