@@ -7,7 +7,7 @@ export const blogNicheCategories = [
                 options: [
                     "Budget Travel",
                     "Solo Travel",
-                    "Luxury Travel",
+                    "Luxury Travel", 
                     "Adventure Travel",
                     "Family Travel",
                     "Digital Nomading",

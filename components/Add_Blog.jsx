@@ -17,6 +17,8 @@ export default function BlogForm() {
 		image: null,
 		imageBase64: "",
 		category: "",
+		subcategory: "",
+		subcategoryoption: "",
 		title: "",
 		description: "",
 		content: "",
@@ -78,6 +80,8 @@ export default function BlogForm() {
 					description: formData.description,
 					content: formData.content,
 					category: formData.category || "Personal",
+					subcategory: formData.subcategory || "Personal",
+					subcategoryoption: formData.subcategoryoption || "Personal",
 					image: formData.imageBase64,
 					status: formData.status,
 					tags: formData.tags,
@@ -100,6 +104,8 @@ export default function BlogForm() {
 				image: null,
 				imageBase64: "",
 				category: "",
+				subcategory: "",
+				subcategoryoption: "",
 				title: "",
 				description: "",
 				content: "",
@@ -156,8 +162,65 @@ export default function BlogForm() {
 						name="category"
 						value={formData.category}
 						onChange={handleChange}
-						className="w-full rounded-md border border-gray-300 p-2"
-					></select>
+						className="w-full rounded-md border border-gray-300 p-2 my-2"
+					>
+						<option value="">Select a category</option>
+						{categoryBlog.map((category, i) => (
+							<option value={category.category} key={i}>
+								{category.category}
+							</option>
+						))}
+					</select>
+					{formData.category !== "" ? (
+						<select
+							name="subcategory"
+							value={formData.subcategory}
+							onChange={handleChange}
+							className="w-full rounded-md border border-gray-300 p-2 my-2"
+						>
+							<option value="">Select a Subcategory</option>
+							{categoryBlog.map(
+								(category, i) =>
+									formData.category === category.category &&
+									category.subcategories.map(
+										(subcategory, i) => (
+											<option
+												value={subcategory.name}
+												key={i}
+											>
+												{subcategory.name}
+											</option>
+										)
+									)
+							)}
+						</select>
+					) : (
+						""
+					)}
+					{formData.category !== "" && formData.subcategory !== "" ? (
+						<select
+							name="subcategoryoption"
+							value={formData.subcategoryoption}
+							onChange={handleChange}
+							className="w-full rounded-md border border-gray-300 p-2 my-2"
+						>
+							<option value="">Select a options</option>
+							{categoryBlog.map((category, i) =>
+								category.subcategories.map(
+									(subcategory, i) =>
+										formData.subcategory ===
+											subcategory.name &&
+										subcategory.options.map((option, i) => (
+											<option value={option} key={i}>
+												{option}
+											</option>
+										))
+								)
+							)}
+						</select>
+					) : (
+						""
+					)}
 				</div>
 
 				<div>

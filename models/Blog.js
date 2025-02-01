@@ -31,6 +31,14 @@ const blogSchema = new mongoose.Schema({
         required: [true, 'Category is required'],
         trim: true
     },
+    subcategory: {
+        type: String,
+        required: [true, 'Subcategory is required'],
+    },
+    subcategoryoption: {
+        type: String,
+        required: [true, 'Subcategory option is required'],
+    },
     image: {
         type: String, // This will store the base64 string
         required: [true, 'Featured image is required']

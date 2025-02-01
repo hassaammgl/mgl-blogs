@@ -15,7 +15,7 @@ export async function POST(request) {
             body.publishedAt = new Date();
         }
         console.log(body);
-        const { title, description, content, category, image, status, tags, user_id } = body;
+        const { title, description, content, category, subcategory, subcategoryoption, image, status, tags, user_id } = body;
 
         const userExists = await User.findOne({ user_id })
 
@@ -43,6 +43,8 @@ export async function POST(request) {
             content: updatedContentJson.result.html,
             realContent: content,
             category,
+            subcategory,
+            subcategoryoption,
             image,
             status,
             tags,
