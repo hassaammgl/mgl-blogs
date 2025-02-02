@@ -1,10 +1,10 @@
-import { getAllBlogs } from "@/actions/blog.action";
+import { getNewBlogs } from "@/actions/blog.action";
 import BlogCards from "@/components/BlogCards";
 import Link from "next/link";
 
 export default async function Home() {
 	try {
-		const blogs = await getAllBlogs(3);
+		const blogs = await getNewBlogs();
 
 		console.log(blogs);
 		return (

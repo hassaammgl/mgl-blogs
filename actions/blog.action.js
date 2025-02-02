@@ -20,6 +20,18 @@ export const getBlogData = async (id) => {
     return res;
 }
 
+export const getNewBlogs = async () => {
+    const response = await fetch("http://localhost:3000/api/blogs/new", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    // console.log("response:", response);
+    const res = response.json();
+    return res;
+}
+
 export const getAllBlogs = async (limit = 1300) => {
 
     const response = await fetch(apiRoutes.blogs.get_all.url(limit), {

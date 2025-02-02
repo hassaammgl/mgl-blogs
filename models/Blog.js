@@ -16,7 +16,7 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Description is required'],
         trim: true,
-        maxLength: [500, 'Description cannot be more than 500 characters']
+        // maxLength: [500, 'Description cannot be more than 500 characters']
     },
     content: {
         type: String,
@@ -35,7 +35,7 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Summary is required'],
         trim: true,
-        maxLength: [500, 'Summary cannot be more than 500 characters']
+        // maxLength: [500, 'Summary cannot be more than 500 characters']
     },
     subcategory: {
         type: String,

@@ -31,7 +31,7 @@ const BlogCards = ({ blog }) => {
 			<div className="p-6">
 				<div className="flex justify-between items-center text-sm font-semibold text-blue-600 dark:text-blue-400">
 					<span>{blog.category}</span>
-					<span>{getReadTime(blog.content)}</span>
+					<span>{getReadTime(blog.realContent)}</span>
 				</div>
 				<h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-3 line-clamp-2">
 					{blog.title}

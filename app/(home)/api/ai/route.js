@@ -9,8 +9,9 @@ export async function POST(req) {
     {
         "content": "${content}"
     }
-        Transform this object context to SEO - Friendly html and also add summary of the article and if there is some code  so dont remove it and with no plain text and response is in json
+    Convert the entire content into an SEO-friendly HTML format **without modifying, truncating, or removing any part of the content**. Ensure all text, images, and code remain intact and properly structured for SEO. Also, generate a summary of the article. The response must be in JSON format with no plain text output.
     `;
+
     console.log("prompt:", prompt);
 
 
