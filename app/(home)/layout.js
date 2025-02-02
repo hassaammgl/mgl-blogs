@@ -5,6 +5,7 @@ import {
 import './globals.css'
 import { ThemeProvider } from "@/components/shared/theme-provider"
 import Footer from "@/components/shared/Footer";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
           >
             <NavBar />
             {children}
+            <Toaster />
             <Footer />
           </body>
         </ThemeProvider>

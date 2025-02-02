@@ -4,7 +4,6 @@ import Blog from '@/models/Blog';
 import { NextResponse } from 'next/server';
 import { User } from "@/models/User";
 
-
 export async function POST(request) {
     try {
         await connectDB();
@@ -40,7 +39,7 @@ export async function POST(request) {
         const blog = new Blog({
             title,
             description,
-            content: updatedContentJson.result.html,
+            content: updatedContentJson.result.markdown || updatedContentJson.result.html,
             realContent: content,
             category,
             subcategory,

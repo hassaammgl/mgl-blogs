@@ -5,6 +5,7 @@ import { postComment, getComments } from "@/actions/blog.action";
 import moment from "moment";
 import { BiLike as Like } from "react-icons/bi";
 import { LuMessageSquareReply as Reply } from "react-icons/lu";
+import { toast } from "react-hot-toast";
 
 const Comments = ({ comments, blogId }) => {
 	const { isLoaded, user } = useUser();
@@ -15,7 +16,18 @@ const Comments = ({ comments, blogId }) => {
 
 	const handleComment = async (e) => {
 		setLoading(true);
+		toast.loading("Creating comment post...", {
+			id: "addingComment",
+			position: "bottom-center",
+			style: {
+				background: "#333",
+				color: "#fff",
+				padding: "16px",
+				borderRadius: "8px",
+			},
+		});
 		e.preventDefault();
+
 		console.log("Commented");
 		const data = {
 			_id: blogId,
@@ -29,6 +41,9 @@ const Comments = ({ comments, blogId }) => {
 		console.log(res.comment);
 		if (res.comment) {
 			setAllComment([...allComment, res.comment]);
+			toast.success("Comment added successfully", {
+				id: "addingComment",
+			});
 			setComment("");
 			setLoading(false);
 		}

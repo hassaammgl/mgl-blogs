@@ -10,9 +10,11 @@ import { BiLike as Like } from "react-icons/bi";
 import { FaRegStar as Favourite } from "react-icons/fa";
 // import { FaStar } from "react-icons/fa";
 import { MdOutlineRemoveRedEye as View } from "react-icons/md";
+import showdown from "showdown";
 
 const Blog = ({ data }) => {
 	const { isLoaded, user } = useUser();
+	const converter = new showdown.Converter();
 
 	const [likes, setLikes] = useState(data?.likes?.length);
 	const [favorites, setFavorites] = useState(data?.favorites?.length);
@@ -117,22 +119,20 @@ const Blog = ({ data }) => {
 
 			{/* Featured Image */}
 			<div className="rounded-xl overflow-hidden shadow-2xl mb-12">
-				<img
-					src={data?.image}
-					alt={data?.title}
-					className="w-full h-[500px] md:h-[600px] object-cover"
-				/>
+				<img src={data?.image} alt={data?.title} className="w-full " />
 			</div>
 
 			{/* Content */}
 			<div className="prose prose-lg md:prose-xl dark:prose-invert mx-auto">
-				<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-					<span
+				<div className="prose prose-lg md:prose-xl dark:prose-invert mx-auto max-w-4xl">
+					<div
 						dangerouslySetInnerHTML={{
-							__html: removeEscapeCharacters(data?.content),
+							__html: DOMPurify.sanitize(
+								converter.makeHtml(data?.content)
+							),
 						}}
 					/>
-				</p>
+				</div>
 			</div>
 		</Suspense>
 	);

@@ -9,7 +9,7 @@ export async function POST(req) {
     {
         "content": "${content}"
     }
-    Convert the entire content into an SEO-friendly HTML format **without modifying, truncating, or removing any part of the content**. Ensure all text, images, and code remain intact and properly structured for SEO. Also, generate a summary of the article. The response must be in JSON format with no plain text output.
+    Convert the entire content into an SEO-friendly markdown format **without modifying, truncating, or removing any part of the content**. Ensure all text, images, and code remain intact and properly structured for SEO. Also, generate a summary of the article. The response must be in JSON format with no plain text output.
     `;
 
     console.log("prompt:", prompt);

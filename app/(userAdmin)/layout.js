@@ -4,6 +4,7 @@ import {
 } from '@clerk/nextjs'
 import './globals.css'
 import { ThemeProvider } from "@/components/shared/theme-provider"
+import { Toaster } from "react-hot-toast";
 
 
 export const metadata = {
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
           >
             <NavBar />
             {children}
+            <Toaster />
           </body>
         </ThemeProvider>
       </html>

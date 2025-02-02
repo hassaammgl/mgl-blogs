@@ -18,7 +18,7 @@ export default function About() {
 
 				{/* Company Description */}
 				<section className="mb-16">
-					<div className="grid md:grid-cols-2 gap-8 items-center">
+					<div className="grid md:grid-cols-2 gap-8 items-center h-fit">
 						<div>
 							<h2 className="text-3xl font-semibold mb-4 dark:text-white">
 								Our Blog Journey
@@ -31,7 +31,7 @@ export default function About() {
 								enthusiasts stay updated with the latest trends.
 							</p>
 						</div>
-						<div className="relative h-[300px]">
+						<div className="relative h-[600px]">
 							<Image
 								src="/blog-image.jpg"
 								alt="Blog Team"

@@ -225,7 +225,7 @@ const Blogs = ({ blogs }) => {
 					</p>
 				</div>
 
-				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full mx-auto">
+				<div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
 					{!blogs || blogs.length === 0 ? (
 						<h1 className="text-3xl md:text-4xl font-extrabold text-gray-600 dark:text-gray-300 text-center w-full">
 							No blogs found yet

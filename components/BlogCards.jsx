@@ -14,12 +14,12 @@ const BlogCards = ({ blog }) => {
 	}
 
 	return (
-		<div className="group bg-white dark:bg-gray-900 rounded-3xl shadow-lg hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300 overflow-hidden">
-			<div className="relative">
+		<div className="group h-fit bg-white dark:bg-gray-900 rounded-3xl shadow-lg hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300 overflow-hidden">
+			<div className="relative ">
 				<img
 					src={blog.image}
 					alt={blog.title}
-					className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
+					className="w-full  object-cover transition-transform duration-300 group-hover:scale-105"
 				/>
 				{blog.createdAt &&
 					moment().diff(moment(blog.createdAt), "days") <= 7 && (

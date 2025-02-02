@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server'
 export async function GET(req) {
     try {
         await connectDB();
-        const blogs = await Blog.find().populate("author").sort({ createdAt: -1 }).limit(4)
+        const blogs = await Blog.find().populate("author").sort({ createdAt: -1 }).limit(8)
         console.log(blogs);
         return NextResponse.json({
             blogs,

@@ -7,6 +7,7 @@ import { blogNicheCategories as categoryBlog } from "@/constants";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { convertToBase64 } from "@/lib/funcs";
+import { toast } from "react-hot-toast";
 
 export default function BlogForm() {
 	const { isLoaded, user } = useUser();
@@ -69,6 +70,17 @@ export default function BlogForm() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setLoading(true);
+		toast.loading("Creating blog post...", {
+			// duration: 10000,
+			id: "createBlog",
+			position: "bottom-center",
+			style: {
+				background: "#333",
+				color: "#fff",
+				padding: "16px",
+				borderRadius: "8px",
+			},
+		});
 		try {
 			const response = await fetch("/api/new-blog", {
 				method: "POST",
@@ -97,7 +109,11 @@ export default function BlogForm() {
 				throw new Error("Failed to create blog post");
 			}
 
+			console.log("Blog post created:", response);
 			const data = await response.json();
+			toast.success("Blog post created successfully!", {
+				id: "createBlog",
+			});
 			router.push(`/blog/${data._id}`);
 
 			setFormData({
@@ -117,6 +133,9 @@ export default function BlogForm() {
 			setLoading(false);
 		} catch (error) {
 			console.error("Error creating blog post:", error);
+			toast.error("Error creating blog post", {
+				id: "createBlog",
+			});
 			setLoading(false);
 		}
 	};
