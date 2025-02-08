@@ -1,13 +1,18 @@
-"use client"
-
-import { useEffect } from "react";
+"use client";
+import { useState, useEffect } from "react";
+import PageTransition from "@/components/PageTransition";
 
 export default function Template({ children }) {
-    useEffect(() => { }, []);
-    return (
-        <>
+	const [showTransition, setShowTransition] = useState(true);
 
-            {children}
-        </>
-    );
+	useEffect(() => {
+		setTimeout(() => setShowTransition(false), 3000); // Wait for animation
+	}, []);
+
+	return (
+		<>
+			{showTransition && <PageTransition onComplete={() => setShowTransition(false)} />}
+			{!showTransition && children}
+		</>
+	);
 }
