@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { motion } from "motion/react";
+import { fonts } from "@/app/fonts";
 
 const PageTransition = ({ onComplete }) => {
 	const [isExiting, setIsExiting] = useState(false);
@@ -57,17 +58,20 @@ const PageTransition = ({ onComplete }) => {
 		}
 	}, [isExiting, onComplete]);
 
-    return (
-        <motion.div className="fixed inset-0 flex items-center justify-center bg-black text-green-600 z-50 container h-screen w-screen">
-            <h1 className="text-5xl font-bold tracking-wide flex space-x-1">
-                {text.map((char, index) => (
-                    <motion.span key={index} className="inline-block letter">
-                        {char}
-                    </motion.span>
-                ))}
-            </h1>
-        </motion.div>
-    );
+	return (
+		<motion.div className="fixed inset-0 flex items-center justify-center bg-black text-green-600 z-50  h-screen w-screen">
+			<h1 className="text-5xl font-bold tracking-wide flex space-x-1">
+				{text.map((char, index) => (
+					<motion.span
+						key={index}
+						className={`inline-block letter ${fonts.Kumar_One.className}`}
+					>
+						{char}
+					</motion.span>
+				))}
+			</h1>
+		</motion.div>
+	);
 };
 
 export default PageTransition;
