@@ -1,7 +1,7 @@
 import "./globals.css";
 import CustomCursor from "@/components/shared/Cursor";
 import Navbar from "@/components/shared/Navbar";
-import { fonts } from "./fonts";
+import { fonts } from "../fonts";
 import {
   ClerkProvider
 } from "@clerk/nextjs";
