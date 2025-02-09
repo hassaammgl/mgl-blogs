@@ -19,7 +19,7 @@ const links = [
 	{
 		label: "Home",
 		href: "/",
-		_id:1,
+		_id: 1,
 	},
 	{
 		label: "About",
@@ -34,7 +34,7 @@ const links = [
 	{
 		label: "Contact",
 		href: "/contact",
-		_id:4,
+		_id: 4,
 	},
 	{
 		label: "Blog",

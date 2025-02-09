@@ -1,16 +1,13 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/shared/Cursor";
+import Navbar from "@/components/shared/Navbar";
+import { fonts } from "./fonts";
+import {
+  ClerkProvider
+} from "@clerk/nextjs";
+import Scroll from "@/components/Scroll";
+import { ThemeProvider } from "@/components/shared/theme-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata = {
   title: "Create Next App",
@@ -19,13 +16,28 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <CustomCursor />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider
+      signInFallbackRedirectUrl="/api"
+      signInForceRedirectUrl="/api"
+    >
+      <html lang="en">
+        <body
+          className={`${fonts.Amatic_SC.variable}  antialiased`}
+        >
+          <Scroll >
+            <CustomCursor />
+            <Navbar />
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+            >
+              {children}
+            </ThemeProvider>
+          </Scroll>
+        </body>
+      </html>
+    </ClerkProvider>
+
   );
 }
