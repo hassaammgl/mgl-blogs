@@ -16,7 +16,7 @@ const Scroll = ({ children, ...props }) => {
 	return (
 		<motion.body
 			style={{
-				y: -y * 0.1, // Adjust for a smoother effect
+				y: -y * 0.3, // Adjust for a smoother effect
 				transition: "transform 0.2s ease-out",
 			}}
 			{...props}

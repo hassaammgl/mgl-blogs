@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { currentUser, auth } from "@clerk/nextjs/server";
+import { currentUser, auth, } from "@clerk/nextjs/server";
 import { User } from "@/models/User";
-import { apiRoutes } from "@/constants";
-import { connectDB, disconnectDB } from "@/lib/db/db";
+import { connectDB, disconnectDB } from "@/lib/db";
+
 
 
 export async function GET(_) {
@@ -10,14 +10,14 @@ export async function GET(_) {
     const authResult = await auth()
 
     if (!authResult.userId) {
-        return NextResponse.redirect(apiRoutes.app.url)
+        return authResult.redirectToSignIn()
     }
     try {
         await connectDB()
         const ifuserExists = await User.findOne({ email: user.emailAddresses[0].emailAddress })
 
         if (ifuserExists) {
-            return NextResponse.redirect(apiRoutes.app.url)
+            return NextResponse.redirect(process.env.APP_URL)
         }
 
         const newUser = new User({
