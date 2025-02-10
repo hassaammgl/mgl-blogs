@@ -27,19 +27,19 @@ const links = [
 		_id: 2,
 	},
 	{
-		label: "User",
-		href: "/user",
-		_id: 3,
-	},
-	{
 		label: "Contact",
 		href: "/contact",
 		_id: 4,
 	},
 	{
-		label: "Blog",
-		href: "/blog",
+		label: "Blogs",
+		href: "/blogs",
 		_id: 5,
+	},
+	{
+		label: "Dashboard",
+		href: "/dashboard",
+		_id: 3,
 	},
 ];
 
