@@ -14,14 +14,13 @@ const CustomCursor = () => {
 	}, []);
 
 	return (
-		// <div
-		// 	className="custom-cursor"
-		// 	style={{
-		// 		left: `${position.x}px`,
-		// 		top: `${position.y}px`,
-		// 	}}
-		// />
-		<> </>
+		<div
+			className="custom-cursor"
+			style={{
+				left: `${position.x}px`,
+				top: `${position.y}px`,
+			}}
+		/>
 	);
 };
 

@@ -388,6 +388,17 @@ const Yellowtail = localFont({
         },
     ],
 });
+
+const Imperial_Script = localFont({
+    src: [
+        {
+            path: './Imperial_Script/ImperialScript-Regular.ttf',
+            weight: '400',
+            style: 'normal',
+        },
+    ],
+});
+
 // Export all fonts
 export const fonts = {
     Amatic_SC,
@@ -407,4 +418,5 @@ export const fonts = {
     Satisfy,
     Triodion,
     Yellowtail,
+    Imperial_Script,
 };
