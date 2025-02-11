@@ -15,7 +15,7 @@ const Hero = () => {
 			<div className="fixed  top-[5rem] text-[10rem] left-[15rem]">
 				<div className={`font-bold ${fonts.Lobster.className}`}>
 					Welcome
-					<div>
+					<div className="mix-blend-difference text-white">
 						to{" "}
 						<span
 							className={`text-green-600 font-extralight ${fonts.Dancing_Script.className}`}
@@ -32,7 +32,13 @@ const Hero = () => {
 				looking for fresh insights, you'll find guides, tutorials, and
 				thought-provoking articles here.
 			</p>
-			<Image src="/stand.webp" alt="stand" width={500} height={500} />
+			<Image
+				// className="mix-blend-difference"
+				src="/stand.webp"
+				alt="stand"
+				width={500}
+				height={500}
+			/>
 		</main>
 	);
 };
