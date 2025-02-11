@@ -59,6 +59,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      react-glitch-animation:
+        specifier: ^1.0.0
+        version: 1.0.0(react@19.0.0)
       react-hot-toast:
         specifier: ^2.5.1
         version: 2.5.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1891,6 +1894,11 @@ packages:
     resolution: {integrity: sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==}
     peerDependencies:
       react: ^19.0.0
+
+  react-glitch-animation@1.0.0:
+    resolution: {integrity: sha512-DY0BaKFRoODdq4NgxHnjBPqtKFZziN24XfIwavWvaARPVuNEE+gyamk//sXyp1WjL0HachwW0W3lFn4SKix13A==}
+    peerDependencies:
+      react: ^16.13.1
 
   react-hot-toast@2.5.1:
     resolution: {integrity: sha512-54Gq1ZD1JbmAb4psp9bvFHjS7lje+8ubboUmvKZkCsQBLH6AOpZ9JemfRvIdHcfb9AZXRaFLrb3qUobGYDJhFQ==}
@@ -4178,6 +4186,10 @@ snapshots:
     dependencies:
       react: 19.0.0
       scheduler: 0.25.0
+
+  react-glitch-animation@1.0.0(react@19.0.0):
+    dependencies:
+      react: 19.0.0
 
   react-hot-toast@2.5.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:

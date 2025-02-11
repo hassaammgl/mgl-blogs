@@ -10,16 +10,20 @@ body {
 
 .custom-cursor {
 	position: fixed;
-	width: 20px;
-	height: 20px;
-	background-color: rgb(255, 255, 255);
+	width: 40px;
+	height: 40px;
+	background-color: #ffffff;
 	border-radius: 50%;
 	pointer-events: none;
 	transform: translate(-50%, -50%);
-	transition: transform 0.1s ease-out, background-color 0.1s ease-out;
+	transition: transform 0.1s ease-out, background-color 0.1s ease-out, width 0.1s ease-out, height 0.1s ease-out;
 	z-index: 9999;
 	transition-delay: 0.8s;
+	mix-blend-mode: difference;
 }
+
+
+
 
 @layer base {
 	:root {
@@ -142,3 +146,5 @@ body {
 		--chart-5: 340 75% 55%;
 	}
 }
+
+
