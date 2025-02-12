@@ -16,14 +16,12 @@ body {
 	border-radius: 50%;
 	pointer-events: none;
 	transform: translate(-50%, -50%);
-	transition: transform 0.1s ease-out, background-color 0.1s ease-out, width 0.1s ease-out, height 0.1s ease-out;
+	transition: transform 0.1s ease-out, background-color 0.1s ease-out,
+		width 0.1s ease-out, height 0.1s ease-out;
 	z-index: 9999;
 	transition-delay: 0.8s;
 	mix-blend-mode: difference;
 }
-
-
-
 
 @layer base {
 	:root {
@@ -147,4 +145,6 @@ body {
 	}
 }
 
-
+.site-name {
+	-webkit-text-stroke: 3px #16a34a;
+}
