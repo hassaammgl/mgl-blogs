@@ -147,4 +147,16 @@ body {
 
 .site-name {
 	-webkit-text-stroke: 3px #16a34a;
+	position: absolute;
+	color: transparent;
+	font-size: 8rem; /* text-9xl */
+	font-weight: 800; /* font-extrabold */
+	letter-spacing: -0.1em; /* -tracking-widest */
+	transform: rotate(-90deg);
+	width: fit-content;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 35%;
+	left: -60%;
 }

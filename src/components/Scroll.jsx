@@ -1,29 +1,14 @@
 "use client";
-
-import { useEffect, useState } from "react";
-import { motion, useScroll } from "motion/react";
+import { ReactLenis, useLenis } from "lenis/react";
 
 const Scroll = ({ children, ...props }) => {
-	const { scrollYProgress } = useScroll();
-	const [y, setY] = useState(0);
+	const lenis = useLenis(({ scroll }) => {
+		// called every scroll
+		console.log(scroll);
+	});
+	console.log(lenis);
 
-	useEffect(() => {
-		return scrollYProgress.onChange((latest) => {
-			setY(window.scrollY);
-		});
-	}, [scrollYProgress]);
-
-	return (
-		<motion.body
-			style={{
-				y: -y * 0.3, // Adjust for a smoother effect
-				transition: "transform 0.2s ease-out",
-			}}
-			{...props}
-		>
-			{children}
-		</motion.body>
-	);
+	return <ReactLenis root>{children}</ReactLenis>;
 };
 
 export default Scroll;
