@@ -1,12 +1,25 @@
 "use client";
 import { fonts } from "@/app/fonts";
-
 import SiteName from "../shared/SIteName";
 import Image from "next/image";
 import { TextGenerateEffect } from "../ui/text-generate-effect";
 import { BackgroundLines } from "../ui/background-lines";
+import { useUserStore } from "@/stores/store";
+import { useUser } from "@clerk/nextjs";
 
 const Hero = () => {
+	const { isSignedIn, user, isLoaded } = useUser();
+
+	if (!isLoaded) {
+		return <div>Loading...</div>;
+	}
+
+	if (!isSignedIn) {
+		return <div>Sign in to view this page</div>;
+	}
+
+	console.log(user);
+
 	return (
 		<BackgroundLines className={"-z-30 sticky top-0"}>
 			<section className="w-full h-screen relative flex max-h-screen overflow-hidden">
