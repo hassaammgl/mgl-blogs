@@ -3,16 +3,12 @@ import { currentUser } from '@clerk/nextjs/server'
 
 const domain = process.env.APP_URL;
 
-const tryCatch = async (callback) => {
-    try {
-        return await callback();
-    } catch (error) {
-        return error;
-    }
-}
 
 export const getUserData = async () => {
     const user = await currentUser()
+
+    console.log("🚀 ~ blog.action.js:10 ~ getUserData ~ user:", user);
+
     const res = await fetch(`${domain}/api/user/${user.emailAddresses[0].emailAddress}`, {
         method: 'GET',
         headers: {
@@ -20,5 +16,10 @@ export const getUserData = async () => {
         }
     });
     const data = await res.json();
+
+    console.log("🚀 ~ blog.action.js:20 ~ getUserData ~ data:", data);
+
+
+
     return data
 }

@@ -5,14 +5,15 @@
 body {
 	font-family: Arial, Helvetica, sans-serif;
 	background-color: black;
-	scroll-behavior: smooth;
+	cursor: none;
 }
 
 .custom-cursor {
 	position: fixed;
 	width: 40px;
+	border: 1px solid #ffffff;
 	height: 40px;
-	background-color: #ffffff;
+	background-color: #ffffff00;
 	border-radius: 50%;
 	pointer-events: none;
 	transform: translate(-50%, -50%);
@@ -20,6 +21,7 @@ body {
 		width 0.1s ease-out, height 0.1s ease-out;
 	z-index: 9999;
 	transition-delay: 0.8s;
+	backdrop-filter: blur(3px);
 	mix-blend-mode: difference;
 }
 
@@ -159,4 +161,8 @@ body {
 	justify-content: center;
 	top: 35%;
 	left: -60%;
+}
+
+.special-border {
+	clip-path: polygon(11% 0, 89% 0, 80% 100%, 20% 100%);
 }

@@ -1,32 +1,37 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
 import { User } from "@/models/User";
 import { connectDB, disconnectDB } from "@/lib/db";
 
 export async function GET(_, { params }) {
-    const authResult = await auth()
-    const email = (await params).email
-
-    if (!authResult.userId) {
-        return authResult.redirectToSignIn()
-    }
     try {
-        console.log(email);
+        const email = (await params).email
+
+        console.log("🚀 ~ route.js:10 ~ GET ~ email:", email);
         await connectDB()
-        // const ifuserExists = await User.findOne({ email: email })
+        const ifuserExists = await User.findOne({ email: email })
 
-        // if (ifuserExists) {
-        //     return NextResponse.json({
-        //         success: true,
-        //         data: ifuserExists,
+        console.log("🚀 ~ route.js:21 ~ GET ~ ifuserExists:", ifuserExists);
 
-        //     }, { status: 200 })
-        // }
-        // else {
-        //     return authResult.redirectToSignIn()
-        // }
+        if (ifuserExists) {
+            return NextResponse.json({
+                success: true,
+                data: ifuserExists,
+
+            }, { status: 200 })
+        }
+        else {
+            return NextResponse.json({
+                success: false,
+                error: "User not found"
+            }, { status: 404 })
+
+        }
     } catch (error) {
-        return NextResponse.error(new Error(error));
+        console.error(error);
+        return NextResponse.json({
+            success: false,
+            error: error.message
+        }, { status: 500 });
     } finally {
         await disconnectDB()
     }
