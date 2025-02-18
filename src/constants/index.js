@@ -216,3 +216,97 @@ export const blogNicheCategories = [
         ],
     },
 ];
+
+
+export const blogs = [
+    {
+        _id: 1,
+        blogID: "afdhsjfjka<fsdfsfsgdjkdsjkfkjd",
+        img: "https://example.com/image1.jpg",
+        blogName: "This is my name of blog"
+    },
+    {
+        _id: 2,
+        blogID: "bcdkfjg84nfjksdhf9324nsdf",
+        img: "https://example.com/image2.jpg",
+        blogName: "Web Development Basics"
+    },
+    {
+        _id: 3,
+        blogID: "xckvj4593fgnsd8432kjsdf",
+        img: "https://example.com/image3.png",
+        blogName: "React Tips & Tricks"
+    },
+    {
+        _id: 4,
+        blogID: "pqowie1029384lkjhgfdsa",
+        img: "https://example.com/css-grid.jpg",
+        blogName: "CSS Grid Mastery"
+    },
+    {
+        _id: 5,
+        blogID: "zxcvbnm123456789",
+        img: "https://example.com/nodejs-guide.jpg",
+        blogName: "Node.js Beginner's Guide"
+    },
+    {
+        _id: 6,
+        blogID: "asdfghjkl987654321",
+        img: "https://example.com/advanced-js.jpg",
+        blogName: "Advanced JavaScript Concepts"
+    },
+    {
+        _id: 7,
+        blogID: "qwertyuiop567890",
+        img: "https://example.com/ui-ux-design.jpg",
+        blogName: "UI/UX Design Principles"
+    },
+    {
+        _id: 8,
+        blogID: "poiuytrewq123456",
+        img: "https://example.com/api-restful.jpg",
+        blogName: "Building RESTful APIs"
+    },
+    {
+        _id: 9,
+        blogID: "lkjhgfdsazxcvbnm",
+        img: "https://example.com/nextjs-guide.jpg",
+        blogName: "Mastering Next.js"
+    },
+    {
+        _id: 10,
+        blogID: "mnbvcxz123456789",
+        img: "https://example.com/database-design.jpg",
+        blogName: "Database Design Best Practices"
+    },
+    {
+        _id: 11,
+        blogID: "a1s2d3f4g5h6j7k8l9",
+        img: "https://example.com/tailwind-css.jpg",
+        blogName: "Tailwind CSS for Beginners"
+    },
+    {
+        _id: 12,
+        blogID: "z9x8c7v6b5n4m3l2k1",
+        img: "https://example.com/graphql-api.jpg",
+        blogName: "GraphQL vs REST APIs"
+    },
+    {
+        _id: 13,
+        blogID: "qazwsxedcrfvtgbyhnujm",
+        img: "https://example.com/python-automation.jpg",
+        blogName: "Automating Tasks with Python"
+    },
+    {
+        _id: 14,
+        blogID: "poiuytrewqlkjhgfdsamnbvcxz",
+        img: "https://example.com/devops.jpg",
+        blogName: "DevOps Best Practices"
+    },
+    {
+        _id: 15,
+        blogID: "zxcvbnmlkjhgfdsaqwertyuiop",
+        img: "https://example.com/cybersecurity.jpg",
+        blogName: "Cybersecurity Fundamentals"
+    }
+];
