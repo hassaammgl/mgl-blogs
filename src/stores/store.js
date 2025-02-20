@@ -5,7 +5,7 @@ export const useUserStore = create((set) => ({
     data: null,
 
     setUserData: async () => {
-        if (data === null) {
+        if (this.data === null) {
             const res = await getUserData();
             console.log(res); // Debugging log
             set({ data: res.data });
