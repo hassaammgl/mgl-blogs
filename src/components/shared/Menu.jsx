@@ -120,7 +120,7 @@ const Menu = () => {
 							<a href="#">Behance &#8599;</a>
 							<a href="#">Dribble &#8599;</a>
 						</div>
-						<div className="menu-info-col">
+						<div className="menu-info-col w-fit flex-start flex-1">
 							<p>&copy; 2025 MGLBLOGS. All rights reserved.</p>
 						</div>
 					</div>
