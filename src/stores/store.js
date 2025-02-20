@@ -5,9 +5,12 @@ export const useUserStore = create((set) => ({
     data: null,
 
     setUserData: async () => {
-        const res = await getUserData();
-        console.log(res); // Debugging log
-        set({ data: res.data });
+        if (data === null) {
+            const res = await getUserData();
+            console.log(res); // Debugging log
+            set({ data: res.data });
+        }
+        else return
     },
 }));
 
