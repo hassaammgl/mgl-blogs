@@ -1,6 +1,6 @@
 import "./globals.css";
 import CustomCursor from "@/components/shared/Cursor";
-import Navbar from "@/components/shared/Navbar";
+import Navbar from "@/components/shared/Menu";
 import { fonts } from "../fonts";
 import {
   ClerkProvider
