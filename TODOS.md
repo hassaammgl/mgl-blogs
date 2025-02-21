@@ -13,3 +13,4 @@ Photo by eberhard grossgasteiger: https://www.pexels.com/photo/photo-of-foggy-fo
 Photo by Sebastiaan Stam: https://www.pexels.com/photo/person-wearing-red-hoodie-1097456/
 
 Photo by Rahul: https://www.pexels.com/photo/lighted-candle-695644/
+Photo by Lisa Fotios: https://www.pexels.com/photo/person-holding-white-ceramci-be-happy-painted-mug-851213/

@@ -464,7 +464,7 @@ export const testimonials = [
     {
         name: "Writing",
         quote: "Words have the power to change the world.",
-        src: "",
+        src: "/testimonials/writer.jpg",
         designation: "Author",
     },
     {
