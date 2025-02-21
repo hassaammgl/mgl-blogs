@@ -310,3 +310,215 @@ export const blogs = [
         blogName: "Cybersecurity Fundamentals"
     }
 ];
+
+
+// export const testimonials = [
+//     {
+//         name: "Travel",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Food",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Lifestyle",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Technology",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Business",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Finance",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Photography",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Writing",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Anime",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Movies & TV",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Video Gaming",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Web Development",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Mobile Development",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Software Engineering",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Programming Languages",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Machine Learning & AI",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+//     {
+//         name: "Cybersecurity",
+//         quote: "",
+//         src: "",
+//         designation: "",
+//     },
+// ];
+
+
+export const testimonials = [
+    {
+        name: "Travel",
+        quote: "Traveling – it leaves you speechless, then turns you into a storyteller.",
+        src: "",
+        designation: "Globetrotter",
+    },
+    {
+        name: "Food",
+        quote: "Good food is the foundation of genuine happiness.",
+        src: "",
+        designation: "Food Enthusiast",
+    },
+    {
+        name: "Lifestyle",
+        quote: "Your lifestyle is your signature – make it worth remembering.",
+        src: "",
+        designation: "Life Coach",
+    },
+    {
+        name: "Technology",
+        quote: "Technology is best when it brings people together.",
+        src: "",
+        designation: "Tech Innovator",
+    },
+    {
+        name: "Business",
+        quote: "Opportunities don't happen. You create them.",
+        src: "",
+        designation: "Entrepreneur",
+    },
+    {
+        name: "Finance",
+        quote: "The best investment you can make is in yourself.",
+        src: "",
+        designation: "Financial Analyst",
+    },
+    {
+        name: "Photography",
+        quote: "A photograph is the pause button of life.",
+        src: "",
+        designation: "Professional Photographer",
+    },
+    {
+        name: "Writing",
+        quote: "Words have the power to change the world.",
+        src: "",
+        designation: "Author",
+    },
+    {
+        name: "Anime",
+        quote: "Anime is not just a cartoon; it's an emotion.",
+        src: "/testimonials/anime.png",
+        designation: "Otaku",
+    },
+    {
+        name: "Movies & TV",
+        quote: "A great story can change the way we see the world.",
+        src: "",
+        designation: "Film Critic",
+    },
+    {
+        name: "Video Gaming",
+        quote: "Gaming is not a hobby, it's a way of life.",
+        src: "",
+        designation: "Pro Gamer",
+    },
+    {
+        name: "Web Development",
+        quote: "A great website is not just about code, but about experience.",
+        src: "",
+        designation: "Web Developer",
+    },
+    {
+        name: "Mobile Development",
+        quote: "Apps are the future, and the future is in your hands.",
+        src: "",
+        designation: "App Developer",
+    },
+    {
+        name: "Software Engineering",
+        quote: "Programming isn’t about what you know; it’s about what you can figure out.",
+        src: "",
+        designation: "Software Engineer",
+    },
+    {
+        name: "Programming Languages",
+        quote: "A programming language is your paintbrush for digital art.",
+        src: "",
+        designation: "Coder",
+    },
+    {
+        name: "Machine Learning & AI",
+        quote: "AI is not about machines replacing humans, but humans evolving with machines.",
+        src: "",
+        designation: "AI Researcher",
+    },
+    {
+        name: "Cybersecurity",
+        quote: "Security isn’t a product, it’s a mindset.",
+        src: "",
+        designation: "Ethical Hacker",
+    },
+];
