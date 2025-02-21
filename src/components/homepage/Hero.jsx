@@ -66,7 +66,7 @@ const Hero = () => {
 					looking for fresh insights, you'll find guides, tutorials, and
 					thought-provoking articles here."
 							className="text-2xl font-light pr-2"
-							duration={1}
+							duration={.2}
 						/>
 					</div>
 				</div>

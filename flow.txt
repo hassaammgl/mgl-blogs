@@ -1,0 +1,228 @@
+title Blog Website Flowchart
+
+// Groups and nodes
+Start [shape: oval, icon: home, color: lightblue]
+Home Page [icon: home, color: lightblue, line-color: red]
+Article Page [icon: file-text, color: lightgreen, line-color: green]
+User Authentication [icon: user, color: lightcoral, line-color: blue]
+User Dashboard [icon: user-check, color: lightyellow, line-color: orange]
+Writing and Editing [icon: edit-3, color: lightpurple, line-color: purple]
+Admin Panel [icon: settings, color: lightgray, line-color: pink]
+Search and Filtering [icon: search, color: lightpink, line-color: brown]
+Notifications [icon: bell, color: lightorange, line-color: cyan]
+SEO Optimization [icon: globe, color: lightcyan, line-color: magenta]
+Performance and Security [icon: shield, color: lightbrown, line-color: teal]
+API Routes [icon: server, color: lightolive, line-color: navy]
+Subscription Model [icon: dollar-sign, color: lightgold, line-color: olive]
+Comment System [icon: message-circle, color: lightteal, line-color: maroon]
+Mobile Responsiveness [icon: smartphone, color: lightnavy, line-color: lime]
+SEO Strategies [icon: search, color: lightcyan, line-color: magenta] {
+  Keyword Research [icon:search]
+  On-Page SEO [icon:file-text]
+  Off-Page SEO [icon:link]
+  Technical SEO [icon:settings]
+  Content Optimization [icon:edit]
+  Metadata Examples [icon:tag]
+}
+API Endpoints [icon: server, color: lightolive, line-color: navy] {
+  Get Articles [icon:download-cloud]
+  Post Article [icon:upload-cloud]
+  Get User [icon:user]
+  Post User [icon:user-plus]
+  Get Comments [icon:message-circle]
+  Post Comment [icon:message-square]
+}
+MongoDB Models [icon: database, color: lightgreen, line-color: green] {
+  Article Schema [icon:file-text]
+  User Schema [icon:user]
+  Comment Schema [icon:message-circle]
+}
+Page Content [icon: layout, color: lightblue, line-color: red] {
+  Navigation Bar [icon:menu]
+  Footer [icon:layout]
+  Home Content [icon:home]
+  Article Content [icon:file-text]
+  User Dashboard Content [icon:user-check]
+}
+About Page [icon: info, color: lightblue, line-color: silver]
+Contact Page [icon: phone, color: lightgreen, line-color: gold]
+FAQ Page [icon: help-circle, color: lightcoral, line-color: coral]
+Terms and Conditions Page [icon: file-text, color: lightyellow, line-color: indigo]
+Privacy Policy Page [icon: lock, color: lightpurple, line-color: violet]
+About Content [icon:info]
+Contact Form [icon:mail]
+FAQ Content [icon:help-circle]
+Terms Content [icon:file-text]
+Privacy Content [icon:lock]
+
+// Relationships
+Start > Home Page
+Home Page > Article Page
+Home Page > User Authentication
+Home Page > User Dashboard
+Home Page > Writing and Editing
+Home Page > Admin Panel
+Home Page > Search and Filtering
+Home Page > Notifications
+Home Page > SEO Optimization
+Home Page > Performance and Security
+Home Page > API Routes
+Home Page > Subscription Model
+Home Page > Comment System
+Home Page > Mobile Responsiveness
+
+// Detailed Routing Strategy
+User Authentication > Login [icon: log-in]
+User Authentication > Signup [icon: user-plus]
+User Authentication > OAuth Integration [icon: key]
+
+User Dashboard > Profile Management [icon: user]
+User Dashboard > Saved Articles [icon: bookmark]
+User Dashboard > Reading History [icon: book-open]
+
+Writing and Editing > Rich Text Editor [icon: edit]
+Writing and Editing > Markdown Support [icon: code]
+Writing and Editing > Image Uploads [icon: image]
+Writing and Editing > Draft Saving [icon: save]
+
+Admin Panel > Manage Users [icon: users]
+Admin Panel > Manage Articles [icon: file-text]
+Admin Panel > Manage Categories [icon: folder]
+
+Search and Filtering > Tag Filters [icon: tag]
+Search and Filtering > Category Filters [icon: folder]
+Search and Filtering > Author-Based Searches [icon: user]
+
+Notifications > Real-Time Comments [icon: message-square]
+Notifications > Likes [icon: thumbs-up]
+Notifications > Mentions [icon: at-sign]
+
+Performance and Security > Caching [icon: database]
+Performance and Security > Lazy Loading [icon: download]
+Performance and Security > Rate Limiting [icon: activity]
+Performance and Security > CSRF Protection [icon: shield-off]
+
+API Routes > Data Fetching [icon: download-cloud]
+API Routes > Backend Operations [icon: server]
+
+Subscription Model > Exclusive Content [icon: lock]
+
+Comment System > Nested Comments [icon: message-square]
+Comment System > Likes [icon: thumbs-up]
+Comment System > Reply Threads [icon: corner-down-right]
+
+Mobile Responsiveness > Mobile Views [icon: smartphone]
+Mobile Responsiveness > Tablet Views [icon: tablet]
+SEO Optimization > SEO Strategies
+SEO Strategies > Keyword Research
+SEO Strategies > On-Page SEO
+SEO Strategies > Off-Page SEO
+SEO Strategies > Technical SEO
+SEO Strategies > Content Optimization
+SEO Strategies > Metadata Examples
+API Routes > API Endpoints
+API Endpoints > Get Articles
+API Endpoints > Post Article
+API Endpoints > Get User
+API Endpoints > Post User
+API Endpoints > Get Comments
+API Endpoints > Post Comment
+API Endpoints > MongoDB Models
+MongoDB Models > Article Schema
+MongoDB Models > User Schema
+MongoDB Models > Comment Schema
+Home Page > Page Content
+Page Content > Navigation Bar
+Page Content > Footer
+Page Content > Home Content
+Article Page > Article Content
+User Dashboard > User Dashboard Content
+Home Page > About Page
+Home Page > Contact Page
+Home Page > FAQ Page
+Home Page > Terms and Conditions Page
+Home Page > Privacy Policy Page
+About Page > About Content
+Contact Page > Contact Form
+FAQ Page > FAQ Content
+Terms and Conditions Page > Terms Content
+Privacy Policy Page > Privacy Content
+Start > Home Page
+Home Page > Article Page
+Home Page > User Authentication
+Home Page > User Dashboard
+Home Page > Writing and Editing
+Home Page > Admin Panel
+Home Page > Search and Filtering
+Home Page > Notifications
+Home Page > SEO Optimization
+Home Page > Performance and Security
+Home Page > API Routes
+Home Page > Subscription Model
+Home Page > Comment System
+Home Page > Mobile Responsiveness
+User Authentication > Login [icon: log-in]
+User Authentication > Signup [icon: user-plus]
+User Authentication > OAuth Integration [icon: key]
+User Dashboard > Profile Management [icon: user]
+User Dashboard > Saved Articles [icon: bookmark]
+User Dashboard > Reading History [icon: book-open]
+Writing and Editing > Rich Text Editor [icon: edit]
+Writing and Editing > Markdown Support [icon: code]
+Writing and Editing > Image Uploads [icon: image]
+Writing and Editing > Draft Saving [icon: save]
+Admin Panel > Manage Users [icon: users]
+Admin Panel > Manage Articles [icon: file-text]
+Admin Panel > Manage Categories [icon: folder]
+Search and Filtering > Tag Filters [icon: tag]
+Search and Filtering > Category Filters [icon: folder]
+Search and Filtering > Author-Based Searches [icon: user]
+Notifications > Real-Time Comments [icon: message-square]
+Notifications > Likes [icon: thumbs-up]
+Notifications > Mentions [icon: at-sign]
+Performance and Security > Caching [icon: database]
+Performance and Security > Lazy Loading [icon: download]
+Performance and Security > Rate Limiting [icon: activity]
+Performance and Security > CSRF Protection [icon: shield-off]
+API Routes > Data Fetching [icon: download-cloud]
+API Routes > Backend Operations [icon: server]
+Subscription Model > Exclusive Content [icon: lock]
+Comment System > Nested Comments [icon: message-square]
+Comment System > Likes [icon: thumbs-up]
+Comment System > Reply Threads [icon: corner-down-right]
+Mobile Responsiveness > Mobile Views [icon: smartphone]
+Mobile Responsiveness > Tablet Views [icon: tablet]
+SEO Optimization > SEO Strategies
+SEO Strategies > Keyword Research
+SEO Strategies > On-Page SEO
+SEO Strategies > Off-Page SEO
+SEO Strategies > Technical SEO
+SEO Strategies > Content Optimization
+SEO Strategies > Metadata Examples
+API Routes > API Endpoints
+API Endpoints > Get Articles
+API Endpoints > Post Article
+API Endpoints > Get User
+API Endpoints > Post User
+API Endpoints > Get Comments
+API Endpoints > Post Comment
+API Endpoints > MongoDB Models
+MongoDB Models > Article Schema
+MongoDB Models > User Schema
+MongoDB Models > Comment Schema
+Home Page > Page Content
+Page Content > Navigation Bar
+Page Content > Footer
+Page Content > Home Content
+Article Page > Article Content
+User Dashboard > User Dashboard Content
+Home Page > About Page
+Home Page > Contact Page
+Home Page > FAQ Page
+Home Page > Terms and Conditions Page
+Home Page > Privacy Policy Page
+About Page > About Content
+Contact Page > Contact Form
+FAQ Page > FAQ Content
+Terms and Conditions Page > Terms Content
+Privacy Policy Page > Privacy Content

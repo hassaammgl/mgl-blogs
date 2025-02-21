@@ -27,12 +27,12 @@ const Marquee = ({ items, baseSpeed = 2 }) => {
 	}, [speed, baseSpeed]);
 
 	return (
-		<div className="overflow-hidden relative w-full bg-gray-200 py-4">
+		<div className="overflow-hidden relative w-full bg-black py-4">
 			<div ref={marqueeRef} className="flex space-x-8 w-max">
 				{items.concat(items).map((item, index) => (
 					<div
 						key={index}
-						className="text-lg font-bold px-4 whitespace-nowrap"
+						className="text-lg font-bold px-4 whitespace-nowrap text-white"
 					>
 						{item}
 					</div>
