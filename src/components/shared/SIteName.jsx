@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { motion } from "motion/react";
 
 const SiteName = () => {
-	const text = "MGLBLOGS".split("");
+	const text = "M6787065".split("");
 
 	useEffect(() => {
 		// Entrance animation

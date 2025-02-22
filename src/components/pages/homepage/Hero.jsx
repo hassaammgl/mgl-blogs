@@ -1,8 +1,8 @@
 "use client";
 import { fonts } from "@/app/fonts";
-import SiteName from "../shared/SIteName";
-import { TextGenerateEffect } from "../ui/text-generate-effect";
-import { BackgroundLines } from "../ui/background-lines";
+import SiteName from "@/components/shared/SIteName";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import { BackgroundLines } from "@/components/ui/background-lines";
 import { useUserStore } from "@/stores/store";
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useRef, useState } from "react";
@@ -33,9 +33,7 @@ const Hero = () => {
 
 	return (
 		<BackgroundLines className={"-z-30 sticky top-0"}>
-			<section
-				className="scroll-snap-center w-full h-screen relative flex max-h-screen overflow-hidden"
-			>
+			<section className="scroll-snap-center w-full h-screen relative flex max-h-screen overflow-hidden">
 				<div className=" top-0 left-0 absolute -z-20">
 					<img
 						src="/stand.png"
@@ -66,7 +64,7 @@ const Hero = () => {
 					looking for fresh insights, you'll find guides, tutorials, and
 					thought-provoking articles here."
 							className="text-2xl font-light pr-2"
-							duration={.2}
+							duration={0.2}
 						/>
 					</div>
 				</div>

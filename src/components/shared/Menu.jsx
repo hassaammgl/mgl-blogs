@@ -7,7 +7,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const menuLinks = [
-	{
+	{ 
 		label: "Home",
 		href: "/",
 		_id: crypto.randomUUID(),

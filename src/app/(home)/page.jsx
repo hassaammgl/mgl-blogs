@@ -1,6 +1,6 @@
-import BlogsCategory from "@/components/homepage/BlogsCategory";
-import Hero from "@/components/homepage/Hero";
-import Testimonials from "@/components/homepage/Testimonials";
+import BlogsCategory from "@/components/pages/homepage/BlogsCategory";
+import Hero from "@/components/pages/homepage/Hero";
+import Testimonials from "@/components/pages/homepage/Testimonials";
 
 export default function Home() {
 	return (
