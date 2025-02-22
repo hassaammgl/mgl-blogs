@@ -7,6 +7,7 @@ import {
 } from "@clerk/nextjs";
 import Scroll from "@/components/Scroll";
 import { ThemeProvider } from "@/components/shared/theme-provider";
+import {  MantineProvider } from '@mantine/core';
 
 
 export const metadata = {
@@ -24,6 +25,8 @@ export default function RootLayout({ children }) {
         <body
           className={`${fonts.Amatic_SC.variable}  antialiased`}
         >
+          <MantineProvider>
+
           <Scroll >
             <CustomCursor />
             <Navbar />
@@ -35,6 +38,7 @@ export default function RootLayout({ children }) {
               {children}
             </ThemeProvider>
           </Scroll>
+          </MantineProvider>
         </body>
       </html>
     </ClerkProvider>

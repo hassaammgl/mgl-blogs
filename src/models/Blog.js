@@ -46,7 +46,7 @@ const blogSchema = new mongoose.Schema({
         required: [true, 'Subcategory option is required'],
     },
     image: {
-        type: String, // This will store the base64 string
+        type: String,
         required: [true, 'Featured image is required']
     },
     author: {
@@ -87,10 +87,9 @@ const blogSchema = new mongoose.Schema({
         type: Date
     },
 }, {
-    timestamps: true // This will add createdAt and updatedAt fields automatically
+    timestamps: true
 });
 
-// Pre-save hook to set publishedAt date
 blogSchema.pre('save', function (next) {
     if (this.isPublished && !this.publishedAt) {
         this.publishedAt = new Date();
@@ -99,28 +98,24 @@ blogSchema.pre('save', function (next) {
 });
 
 
-// Create slug from title before saving
 blogSchema.pre('save', function (next) {
     this.slug = this.title
         .toLowerCase()
-        .replace(/[^\w\s-]/g, '') // Remove special characters
-        .replace(/\s+/g, '-')     // Replace spaces with -
-        .replace(/-+/g, '-');     // Replace multiple - with single -
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+
     next();
 });
 
-// Add any instance methods if needed
 blogSchema.methods = {
-    // Example method to update view count
     updateViewCount: function () {
         this.viewCount += 1;
         return this.save();
     }
 };
 
-// Add any static methods if needed
 blogSchema.statics = {
-    // Example method to find published blogs
     findPublished: function () {
         return this.find({ isPublished: true });
     }

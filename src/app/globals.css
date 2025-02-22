@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: black;
+	cursor: none;
+}
+
+.custom-cursor {
+	position: fixed;
+	width: 40px;
+	border: 1px solid #ffffff;
+	height: 40px;
+	background-color: #ffffff00;
+	border-radius: 50%;
+	pointer-events: none;
+	transform: translate(-50%, -50%);
+	transition: transform 0.1s ease-out, background-color 0.1s ease-out,
+		width 0.1s ease-out, height 0.1s ease-out;
+	z-index: 9999;
+	transition-delay: 0.8s;
+	backdrop-filter: blur(3px);
+	mix-blend-mode: difference;
+}
+
+@layer utilities {
+	.clip-path-closed {
+		clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+	}
+
+	.clip-path-full {
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+	}
+}
+
+
+.site-name {
+	-webkit-text-stroke: 3px #16a34a;
+	position: absolute;
+	color: transparent;
+	font-size: 8rem; /* text-9xl */
+	font-weight: 800; /* font-extrabold */
+	letter-spacing: -0.1em; /* -tracking-widest */
+	transform: rotate(-90deg);
+	width: fit-content;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 30%;
+	left: -55%;
+}
+
+.special-border {
+	clip-path: polygon(11% 0, 89% 0, 80% 100%, 20% 100%);
+}
+
+
+
+@layer base {}
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+	}
+  body {
+    @apply bg-background text-foreground;
+	}
+}

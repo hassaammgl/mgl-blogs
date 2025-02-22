@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    interests: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Interests"
+    }],
     createdAt: {
         type: Date,
         default: Date.now

@@ -1,9 +1,13 @@
+"Home Page"
 [+] creating animated page transition
 [+] creating animated cursor
 [+] creating animated Hero section
 [+] working on zustand data storage of usr
 [-] creating Blogs category section
 [-] creating animations in Blogs category section
+
+"Create Blogs"
+[-]
 
 credits
 Photo by Valeriia Miller: https://www.pexels.com/photo/pink-roses-in-clear-glass-vase-3910065/
