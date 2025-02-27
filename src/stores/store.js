@@ -20,3 +20,8 @@ export const useBlogStore = create((set) => ({
         // Define API call and state update here
     },
 }));
+
+export const useBlogFormStore = create((set) => ({
+    step: 1,
+    setStep: (step) => set({ step }),
+}));
