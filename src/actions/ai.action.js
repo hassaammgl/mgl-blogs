@@ -1,6 +1,8 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { HfInference } from "@huggingface/inference";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_SECRET_KEY);
+const clientHF = new HfInference(process.env.HF_API_KEY);
 
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -10,3 +12,15 @@ export const getFromAi = async (prompt) => {
 
     return result.response.text();
 };
+
+export const imgGenrator = async (prompt) => {
+
+    const image = await clientHF.textToImage({
+        model: "black-forest-labs/FLUX.1-dev",
+        inputs: prompt,
+        parameters: { num_inference_steps: 5 },
+        provider: "replicate",
+    });
+    // Use the generated image (it's a Blob)
+
+}

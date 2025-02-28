@@ -26,8 +26,10 @@ export const useBlogFormStore = create((set) => ({
     title: "",
     description: "",
     image: "",
+    imgByAi: null,
     setStep: (step) => set({ step }),
     setTitle: (title) => set({ title }),
     setDescription: (description) => set({ description }),
     setImage: (image) => set({ image }),
+    setImgByAi: (imgByAi) => set({ imgByAi }),
 }));

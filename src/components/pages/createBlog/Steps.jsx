@@ -136,7 +136,8 @@ const Step1 = () => {
 
 // used for upload image or ai based image
 const Step2 = () => {
-	const { setStep, step, setImage, image } = useBlogFormStore();
+	const { setStep, step, setImage, image, imgByAi, setImgByAi } =
+		useBlogFormStore();
 
 	const handleFileChange = (e) => {
 		console.log(e[0]);
@@ -161,26 +162,51 @@ const Step2 = () => {
 				initial={{ opacity: 0 }}
 				transition={{ duration: 0.5 }}
 				animate={{ opacity: 1 }}
+				className="mb-4 text-center font-bold text-2xl gap-5 flex justify-center"
 			>
-				<button className="mb-4 text-center font-bold text-2xl">
+				<button
+					onClick={(e) => {
+						e.preventDefault();
+						setImgByAi(false);
+					}}
+					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+				>
 					Upload Image
 				</button>
-				<button className="mb-4">
+				<button
+					onClick={(e) => {
+						e.preventDefault();
+						setImgByAi(true);
+					}}
+					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+				>
 					or creating by ai
 				</button>
 			</m.div>
 
-			<div className="mb-4 text-center font-bold text-2xl">
-				Upload Image
-			</div>
-			<div className="mb-4">
-				<FileUpload accept="image/*" onChange={handleFileChange} />
-			</div>
-			{image === "" ? null : (
-				<div className="mb-4 w-full justify-center items-center h-auto gap-4 border-2 border-dashed border-gray-500 rounded-lg p-4 flex">
-					<img src={image} alt="Blog Img" />
-				</div>
+			{imgByAi ? (
+				<>
+				
+				</>
+			) : (
+				<>
+					<div className="mb-4 text-center font-bold text-2xl">
+						Upload Image
+					</div>
+					<div className="mb-4">
+						<FileUpload
+							accept="image/*"
+							onChange={handleFileChange}
+						/>
+					</div>
+					{image === "" ? null : (
+						<div className="mb-4 w-full justify-center items-center h-auto gap-4 border-2 border-dashed border-gray-500 rounded-lg p-4 flex">
+							<img src={image} alt="Blog Img" />
+						</div>
+					)}
+				</>
 			)}
+
 			<div className="w-full flex justify-end">
 				<div className="mb-4 flex justify-between gap-4">
 					<Button
