@@ -17,6 +17,9 @@ importers:
       '@gsap/react':
         specifier: ^2.1.2
         version: 2.1.2(gsap@3.12.7)(react@19.0.0)
+      '@huggingface/inference':
+        specifier: ^3.4.1
+        version: 3.4.1
       '@mantine/core':
         specifier: ^7.17.0
         version: 7.17.0(@mantine/hooks@7.17.0(react@19.0.0))(@types/react@18.3.18)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -264,6 +267,13 @@ packages:
     peerDependencies:
       gsap: ^3.12.5
       react: '>=17'
+
+  '@huggingface/inference@3.4.1':
+    resolution: {integrity: sha512-Ij9aeMoqa5kt0/V3qx6xB6I+xtcP5KConVOQNuW4vCncr+fhf6CrpGHHoYpKeYFgX0S/TO1S8rYHCHiCl+CXQw==}
+    engines: {node: '>=18'}
+
+  '@huggingface/tasks@0.16.5':
+    resolution: {integrity: sha512-Tn43OQFQ3MTMFxNqAWkHCheo2893fC01cu+GowBNyPWWClhyXnVHavA698tzx3MRGxtXgomxJnXoZLs+ah+EjA==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2981,6 +2991,12 @@ snapshots:
     dependencies:
       gsap: 3.12.7
       react: 19.0.0
+
+  '@huggingface/inference@3.4.1':
+    dependencies:
+      '@huggingface/tasks': 0.16.5
+
+  '@huggingface/tasks@0.16.5': {}
 
   '@humanfs/core@0.19.1': {}
 

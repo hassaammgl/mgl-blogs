@@ -4,6 +4,7 @@ import { AnimatePresence, motion as m } from "motion/react";
 import { useBlogFormStore } from "@/stores/store";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
+import { FileUpload } from "@/components/ui/file-upload";
 
 const Steps = () => {
 	const { step } = useBlogFormStore();
@@ -33,6 +34,18 @@ const Steps = () => {
 					<Step4 />
 				</AnimatedWrapper>
 			);
+		case 5:
+			return (
+				<AnimatedWrapper>
+					<Step5 />
+				</AnimatedWrapper>
+			);
+		case 6:
+			return (
+				<AnimatedWrapper>
+					<Step6 />
+				</AnimatedWrapper>
+			);
 
 		default:
 			return <div>Steps {step}</div>;
@@ -41,17 +54,18 @@ const Steps = () => {
 
 // used for title and description
 const Step1 = () => {
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
+	const { setStep, step, setTitle, setDescription, title, description } =
+		useBlogFormStore();
 
 	return (
 		<m.div
 			initial={{ opacity: 0 }}
-			transition={{ duration: 0.5 }}
+			transition={{ duration: 1.5 }}
 			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
 		>
-			<div className="mb-4 text-center font-bold">
-				{title.replace(/\s+/g, "-")}
+			<div className="mb-4 text-center font-bold text-2xl">
+				Set Blog Title and Description
 			</div>
 			<div className="mb-4">
 				<label
@@ -65,8 +79,9 @@ const Step1 = () => {
 					type="text"
 					id="title"
 					name="title"
-					value={title}
-					onChange={(e) => setTitle(e.target.value)}
+					onChange={(e) => {
+						setTitle(e.target.value);
+					}}
 				/>
 			</div>
 			<div className="mb-4">
@@ -80,64 +95,123 @@ const Step1 = () => {
 					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
 					id="description"
 					name="description"
-					value={description}
 					onChange={(e) => setDescription(e.target.value)}
 				/>
 			</div>
 			<div className="w-full flex justify-end">
-				<NextPrev />
+				<div className="mb-4 flex justify-between gap-4">
+					<Button
+						onClick={() => {
+							setStep(step - 1);
+						}}
+						disabled={step === 1}
+						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+					>
+						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+							<FaAngleLeft />
+							Prev
+						</span>
+					</Button>
+					{title !== "" && description !== "" && (
+						<Button
+							onClick={() => {
+								setStep(step + 1);
+							}}
+							disabled={step === 4}
+							className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+						>
+							<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+							<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+								Next
+								<FaAngleRight />
+							</span>
+						</Button>
+					)}
+				</div>
 			</div>
 		</m.div>
 	);
 };
 
-// used for content and image
+// used for upload image or ai based image
 const Step2 = () => {
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
+	const { setStep, step, setImage, image } = useBlogFormStore();
+
+	const handleFileChange = (e) => {
+		console.log(e[0]);
+		const file = e[0];
+		const reader = new FileReader();
+		reader.onloadend = () => {
+			const base64String = reader.result;
+			console.log(base64String);
+			setImage(base64String);
+		};
+		reader.readAsDataURL(file);
+	};
 
 	return (
 		<m.div
 			initial={{ opacity: 0 }}
-			transition={{ duration: 0.5 }}
+			transition={{ duration: 1.5 }}
 			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
 		>
-			<div className="mb-4 text-center font-bold">
-				{title.replace(/ /, "-")}
+			<m.div
+				initial={{ opacity: 0 }}
+				transition={{ duration: 0.5 }}
+				animate={{ opacity: 1 }}
+			>
+				<button className="mb-4 text-center font-bold text-2xl">
+					Upload Image
+				</button>
+				<button className="mb-4">
+					or creating by ai
+				</button>
+			</m.div>
+
+			<div className="mb-4 text-center font-bold text-2xl">
+				Upload Image
 			</div>
 			<div className="mb-4">
-				<label
-					className="block text-gray-300 text-sm font-bold mb-2"
-					htmlFor="title"
-				>
-					Title
-				</label>
-				<input
-					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-					type="text"
-					id="title"
-					name="title"
-					value={title}
-					onChange={(e) => setTitle(e.target.value)}
-				/>
+				<FileUpload accept="image/*" onChange={handleFileChange} />
 			</div>
-			<div className="mb-4">
-				<label
-					className="block text-gray-300 text-sm font-bold mb-2"
-					htmlFor="description"
-				>
-					Description
-				</label>
-				<textarea
-					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-					id="description"
-					name="description"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
-				/>
-			</div>
+			{image === "" ? null : (
+				<div className="mb-4 w-full justify-center items-center h-auto gap-4 border-2 border-dashed border-gray-500 rounded-lg p-4 flex">
+					<img src={image} alt="Blog Img" />
+				</div>
+			)}
 			<div className="w-full flex justify-end">
-				<NextPrev />
+				<div className="mb-4 flex justify-between gap-4">
+					<Button
+						onClick={() => {
+							setStep(step - 1);
+						}}
+						disabled={step === 1}
+						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+					>
+						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+							<FaAngleLeft />
+							Prev
+						</span>
+					</Button>
+					{image === "" ? null : (
+						<Button
+							onClick={() => {
+								setStep(step + 1);
+							}}
+							disabled={step === 4}
+							className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+						>
+							<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+							<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+								Next
+								<FaAngleRight />
+							</span>
+						</Button>
+					)}
+				</div>
 			</div>
 		</m.div>
 	);
@@ -195,7 +269,7 @@ const Step3 = () => {
 	);
 };
 
-// used for tags and publish
+// used for content category ai based or custom
 const Step4 = () => {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
@@ -247,9 +321,114 @@ const Step4 = () => {
 	);
 };
 
+// used for form for ai or custom content
+const Step5 = () => {
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
+
+	return (
+		<m.div
+			initial={{ opacity: 0 }}
+			transition={{ duration: 0.5 }}
+			animate={{ opacity: 1 }}
+		>
+			<div className="mb-4 text-center font-bold text-2xl">{title}</div>
+			<div className="mb-4">
+				<label
+					className="block text-gray-300 text-sm font-bold mb-2"
+					htmlFor="title"
+				>
+					Title
+				</label>
+				<input
+					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+					type="text"
+					id="title"
+					name="title"
+					value={title}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+			</div>
+			<div className="mb-4">
+				<label
+					className="block text-gray-300 text-sm font-bold mb-2"
+					htmlFor="description"
+				>
+					Description
+				</label>
+				<textarea
+					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+					id="description"
+					name="description"
+					value={description}
+					onChange={(e) => setDescription(e.target.value)}
+				/>
+			</div>
+			<div className="w-full flex justify-end">
+				<NextPrev />
+			</div>
+		</m.div>
+	);
+};
+
+// used for tags and publish
+const Step6 = () => {
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
+
+	return (
+		<m.div
+			initial={{ opacity: 0 }}
+			transition={{ duration: 0.5 }}
+			animate={{ opacity: 1 }}
+		>
+			<div className="mb-4 text-center font-bold text-2xl">{title}</div>
+			<div className="mb-4">
+				<label
+					className="block text-gray-300 text-sm font-bold mb-2"
+					htmlFor="title"
+				>
+					Title
+				</label>
+				<input
+					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+					type="text"
+					id="title"
+					name="title"
+					value={title}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+			</div>
+			<div className="mb-4">
+				<label
+					className="block text-gray-300 text-sm font-bold mb-2"
+					htmlFor="description"
+				>
+					Description
+				</label>
+				<textarea
+					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+					id="description"
+					name="description"
+					value={description}
+					onChange={(e) => setDescription(e.target.value)}
+				/>
+			</div>
+			<div className="w-full flex justify-end">
+				<NextPrev />
+			</div>
+		</m.div>
+	);
+};
+
 const AnimatedWrapper = ({ children }) => {
 	return (
-		<AnimatePresence mode="popLayout" initial exitBeforeEnter>
+		<AnimatePresence
+			mode="popLayout"
+			initial
+			exitBeforeEnter
+			exit={{ opacity: 0 }}
+		>
 			{children}
 		</AnimatePresence>
 	);
@@ -258,22 +437,32 @@ const AnimatedWrapper = ({ children }) => {
 const NextPrev = () => {
 	const { setStep, step } = useBlogFormStore();
 	return (
-		<div className="mb-4">
+		<div className="mb-4 flex justify-between gap-4">
 			<Button
 				onClick={() => {
 					setStep(step - 1);
 				}}
 				disabled={step === 1}
+				className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
 			>
-				<FaAngleLeft />
+				<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+				<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+					<FaAngleLeft />
+					Prev
+				</span>
 			</Button>
 			<Button
 				onClick={() => {
 					setStep(step + 1);
 				}}
 				disabled={step === 4}
+				className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
 			>
-				<FaAngleRight />
+				<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+				<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+					Next
+					<FaAngleRight />
+				</span>
 			</Button>
 		</div>
 	);
@@ -283,7 +472,6 @@ export default Steps;
 
 // import Editor from "@/components/shared/Editor";
 // import { useState } from "react";
-// import { FileUpload } from "@/components/ui/file-upload";
 // import { Switch } from "@/components/ui/switch";
 
 // const Steps = () => {

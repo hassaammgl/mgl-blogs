@@ -23,5 +23,11 @@ export const useBlogStore = create((set) => ({
 
 export const useBlogFormStore = create((set) => ({
     step: 1,
+    title: "",
+    description: "",
+    image: "",
     setStep: (step) => set({ step }),
+    setTitle: (title) => set({ title }),
+    setDescription: (description) => set({ description }),
+    setImage: (image) => set({ image }),
 }));
