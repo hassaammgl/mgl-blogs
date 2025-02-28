@@ -22,5 +22,5 @@ export const imgGenrator = async (prompt) => {
         provider: "replicate",
     });
     // Use the generated image (it's a Blob)
-
+    console.log(image);
 }
