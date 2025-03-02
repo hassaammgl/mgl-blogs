@@ -64,9 +64,6 @@ const Step1 = () => {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 		>
-			<div className="mb-4 text-center font-bold text-2xl">
-				Set Blog Title and Description
-			</div>
 			<div className="mb-4">
 				<label
 					className="block text-gray-300 text-sm font-bold mb-2"
@@ -100,19 +97,21 @@ const Step1 = () => {
 			</div>
 			<div className="w-full flex justify-end">
 				<div className="mb-4 flex justify-between gap-4">
-					<Button
-						onClick={() => {
-							setStep(step - 1);
-						}}
-						disabled={step === 1}
-						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-					>
-						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-							<FaAngleLeft />
-							Prev
-						</span>
-					</Button>
+					{step !== 1 && (
+						<Button
+							onClick={() => {
+								setStep(step - 1);
+							}}
+							disabled={step === 1}
+							className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+						>
+							<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+							<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+								<FaAngleLeft />
+								Prev
+							</span>
+						</Button>
+					)}
 					{title !== "" && description !== "" && (
 						<Button
 							onClick={() => {
@@ -184,11 +183,9 @@ const Step2 = () => {
 				</button>
 			</m.div>
 
-			{imgByAi ? (
-				<>
-				
-				</>
-			) : (
+			{imgByAi === null ? (
+				<></>
+			) : imgByAi === true ?"": (
 				<>
 					<div className="mb-4 text-center font-bold text-2xl">
 						Upload Image
