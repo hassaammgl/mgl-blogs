@@ -5,7 +5,13 @@ import { useBlogFormStore } from "@/stores/store";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/ui/file-upload";
-import { usePollinationsImage } from '@pollinations/react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const Steps = () => {
 	const { step } = useBlogFormStore();
@@ -135,17 +141,15 @@ const Step1 = () => {
 
 // used for upload image or ai based image
 const Step2 = () => {
-	const { setStep, step, setImage, image, imgByAi, setImgByAi } =
+	const { setStep, step, setImage, image, imgByAi, setImgByAi, aiLoading, setAiLoading } =
 		useBlogFormStore();
 
 	const [prompt, setPrompt] = useState("");
+	const [model, setModel] = useState("");
+	const [height, setHeight] = useState("");
+	const [width, setWidth] = useState("");
+	const [seed, setSeed] = useState("");
 
-	const imageUrl = usePollinationsImage(prompt, {
-		width: 1024,
-		height: 1024,
-		seed: 42,
-		model: 'flux'
-	});
 
 	const handleFileChange = (e) => {
 		console.log(e[0]);
@@ -159,7 +163,9 @@ const Step2 = () => {
 		reader.readAsDataURL(file);
 	};
 
+  const handleGenrateImg = async () => {
 
+}
 
 	return (
 		<m.div
@@ -201,33 +207,33 @@ const Step2 = () => {
 					Create Image By AI
 				</div>
 				<div className="mb-4">
-					{imageUrl ? (
-						<>
-							<img src={imageUrl} alt="Blog Img" />
-							<button onClick={handlePromptImg}>Use Img...</button>
-						</>
-					) : (
-						<div className="mb-4 w-full justify-center items-center h-auto gap-4 border-2 border-dashed border-gray-500 rounded-lg p-4 flex">
-							<h1>Loading...</h1>
-						</div>
-					)}
-
+					{/* <img src={imageUrl} alt="Blog Img" /> */}
+					{/* <button onClick={handlePromptImg}>Use Img...</button> */}
 				</div>
-				<div className="mb-4">
-					<label
-						className="block text-gray-300 text-sm font-bold mb-2"
-						htmlFor="prompt"
-					>
-						Prompt
-					</label>
+				<div className="mb-4 flex justify-center gap-3">
 					<textarea
 						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
 						id="prompt"
 						placeholder="Write your Prompts here it will genrate realtime imgs....."
 						name="prompt"
 						onChange={(e) => setPrompt(e.target.value)}
-						/>
-						<button>Generate</button>
+					/>
+					<Button onClick={handleGenrateImg} className="px-12 rounded-lg h-full m-auto py-4 bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200">
+						{aiLoading ? "Genrating...": "Genrate"}
+          </Button>
+          <div className="mb-4 " >
+          <Select>
+           <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Theme" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="light">Light</SelectItem>
+            <SelectItem value="dark">Dark</SelectItem>
+             <SelectItem value="system">System</SelectItem>
+         </SelectContent>
+</Select>
+
+          </div>
 				</div>
 
 			</> : (
