@@ -5,6 +5,7 @@ import { useBlogFormStore } from "@/stores/store";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/ui/file-upload";
+import { usePollinationsImage } from '@pollinations/react';
 
 const Steps = () => {
 	const { step } = useBlogFormStore();
@@ -46,7 +47,6 @@ const Steps = () => {
 					<Step6 />
 				</AnimatedWrapper>
 			);
-
 		default:
 			return <div>Steps {step}</div>;
 	}
@@ -112,21 +112,21 @@ const Step1 = () => {
 							</span>
 						</Button>
 					)}
-					{title !== "" && description !== "" && (
-						<Button
-							onClick={() => {
-								setStep(step + 1);
-							}}
-							disabled={step === 4}
-							className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-						>
-							<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-							<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-								Next
-								<FaAngleRight />
-							</span>
-						</Button>
-					)}
+
+					<Button
+						onClick={() => {
+							setStep(step + 1);
+						}}
+						disabled={title === "" || description === ""}
+						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+					>
+						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+							Next
+							<FaAngleRight />
+						</span>
+					</Button>
+
 				</div>
 			</div>
 		</m.div>
@@ -137,6 +137,15 @@ const Step1 = () => {
 const Step2 = () => {
 	const { setStep, step, setImage, image, imgByAi, setImgByAi } =
 		useBlogFormStore();
+
+	const [prompt, setPrompt] = useState("");
+
+	const imageUrl = usePollinationsImage(prompt, {
+		width: 1024,
+		height: 1024,
+		seed: 42,
+		model: 'flux'
+	});
 
 	const handleFileChange = (e) => {
 		console.log(e[0]);
@@ -149,6 +158,8 @@ const Step2 = () => {
 		};
 		reader.readAsDataURL(file);
 	};
+
+
 
 	return (
 		<m.div
@@ -185,7 +196,41 @@ const Step2 = () => {
 
 			{imgByAi === null ? (
 				<></>
-			) : imgByAi === true ?"": (
+			) : imgByAi === true ? <>
+				<div className="mb-4 text-center font-bold text-2xl">
+					Create Image By AI
+				</div>
+				<div className="mb-4">
+					{imageUrl ? (
+						<>
+							<img src={imageUrl} alt="Blog Img" />
+							<button onClick={handlePromptImg}>Use Img...</button>
+						</>
+					) : (
+						<div className="mb-4 w-full justify-center items-center h-auto gap-4 border-2 border-dashed border-gray-500 rounded-lg p-4 flex">
+							<h1>Loading...</h1>
+						</div>
+					)}
+
+				</div>
+				<div className="mb-4">
+					<label
+						className="block text-gray-300 text-sm font-bold mb-2"
+						htmlFor="prompt"
+					>
+						Prompt
+					</label>
+					<textarea
+						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+						id="prompt"
+						placeholder="Write your Prompts here it will genrate realtime imgs....."
+						name="prompt"
+						onChange={(e) => setPrompt(e.target.value)}
+						/>
+						<button>Generate</button>
+				</div>
+
+			</> : (
 				<>
 					<div className="mb-4 text-center font-bold text-2xl">
 						Upload Image
@@ -239,6 +284,8 @@ const Step2 = () => {
 		</m.div>
 	);
 };
+
+
 
 // used for category and subcategory
 const Step3 = () => {
