@@ -5,9 +5,17 @@ import React, { useState, useEffect, useRef } from "react";
 import "@/styles/Menu.css";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import {
+	ClerkProvider,
+	SignInButton,
+	SignUpButton,
+	SignedIn,
+	SignedOut,
+	UserButton,
+} from '@clerk/nextjs'
 
 const menuLinks = [
-	{ 
+	{
 		label: "Home",
 		href: "/",
 		_id: crypto.randomUUID(),
@@ -95,6 +103,15 @@ const Menu = () => {
 					</div>
 					<div className="menu-close" onClick={toggleMenu}>
 						<p>CLOSE</p>
+					</div>
+					<div className="menu-close" >
+						<SignedOut>
+							<SignInButton />
+							<SignUpButton />
+						</SignedOut>
+						<SignedIn>
+							<UserButton />
+						</SignedIn>
 					</div>
 				</div>
 				<div className="menu-copy">
