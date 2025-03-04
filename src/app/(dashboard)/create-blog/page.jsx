@@ -1,17 +1,12 @@
 "use client";
 import Steps from "@/components/pages/createBlog/Steps";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { useBlogFormStore } from "@/stores/store";
+import {Card, CardContent, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
+import {useBlogFormStore} from "@/stores/store";
 
 const page = () => {
 	const { setStep, step, setTitle, setDescription, title, description } =
 		useBlogFormStore();
+
 
 	return (
 		<div className="w-full min-h-screen flex justify-start items-center flex-col bg-black p-4">
