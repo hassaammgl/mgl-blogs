@@ -410,3 +410,38 @@ export const testimonials = [
         designation: "Ethical Hacker",
     },
 ];
+
+
+export const genImgModel = [
+    {
+        model: "Flux",
+        label: "flux"
+    },
+    {
+        model: "Flux-pro",
+        label: "flux-pro"
+    },
+    {
+        model: "Flux-realism",
+        label: "flux-realism"
+    },
+    {
+        model: "Flux-anime",
+        label: "flux-anime"
+    },
+    {
+        model: "Flux-3d",
+        label: "flux-3d"
+    },
+    {
+        model: "Flux-cablyai",
+        label: "flux-cablyai"
+    },
+    {
+        model: "Turbo",
+        label: "turbo"
+    }
+]
+
+
+

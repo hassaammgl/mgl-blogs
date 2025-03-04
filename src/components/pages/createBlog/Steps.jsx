@@ -6,12 +6,15 @@ import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/ui/file-upload";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
 } from "@/components/ui/select"
+import { genImgModel } from "@/constants"
+import { Input } from "@/components/ui/input"
+
 
 const Steps = () => {
 	const { step } = useBlogFormStore();
@@ -145,10 +148,10 @@ const Step2 = () => {
 		useBlogFormStore();
 
 	const [prompt, setPrompt] = useState("");
-	const [model, setModel] = useState("");
-	const [height, setHeight] = useState("");
-	const [width, setWidth] = useState("");
-	const [seed, setSeed] = useState("");
+	const [model, setModel] = useState("flux");
+	const [height, setHeight] = useState(1024);
+	const [width, setWidth] = useState(1024);
+	const [seed, setSeed] = useState(768823111);
 
 
 	const handleFileChange = (e) => {
@@ -163,9 +166,20 @@ const Step2 = () => {
 		reader.readAsDataURL(file);
 	};
 
-  const handleGenrateImg = async () => {
-
-}
+	const handleGenrateImg = async () => {
+		setAiLoading(true);
+		const res = await fetch(`${process.env.APP_URL}/api/img-gen`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ prompt, model, height, width, seed }),
+		});
+		const data = await res.json();
+		console.log(data);
+		setImage(data);
+		setAiLoading(false);
+	}
 
 	return (
 		<m.div
@@ -210,30 +224,34 @@ const Step2 = () => {
 					{/* <img src={imageUrl} alt="Blog Img" /> */}
 					{/* <button onClick={handlePromptImg}>Use Img...</button> */}
 				</div>
-				<div className="mb-4 flex justify-center gap-3">
-					<textarea
-						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-						id="prompt"
-						placeholder="Write your Prompts here it will genrate realtime imgs....."
-						name="prompt"
-						onChange={(e) => setPrompt(e.target.value)}
-					/>
-					<Button onClick={handleGenrateImg} className="px-12 rounded-lg h-full m-auto py-4 bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200">
-						{aiLoading ? "Genrating...": "Genrate"}
-          </Button>
-          <div className="mb-4 " >
-          <Select>
-           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Theme" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-             <SelectItem value="system">System</SelectItem>
-         </SelectContent>
-</Select>
-
-          </div>
+				<div className="mb-4">
+					<div className="mb-4 flex justify-center gap-3">
+						<textarea
+							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+							id="prompt"
+							placeholder="Write your Prompts here it will genrate realtime imgs....."
+							name="prompt"
+							onChange={(e) => setPrompt(e.target.value)}
+						/>
+						<Button onClick={handleGenrateImg} className="px-12 rounded-lg h-full m-auto py-4 bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200">
+							{aiLoading ? "Genrating..." : "Genrate"}
+						</Button>
+					</div>
+					<div className="mb-4 flex gap-5" >
+						<Select onValueChange={(e) => setModel(e)} className="w-[180px] bg-black">
+							<SelectTrigger className="w-[180px]">
+								<SelectValue placeholder="Model" />
+							</SelectTrigger>
+							<SelectContent>
+								{genImgModel.map((model, i) => (
+									<SelectItem key={i} value={model.label}>{model.model}</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+						<Input type="number" onChange={(e) => setSeed(e.target.value)} placeholder={"Enter Seed"} />
+						<Input type="number" onChange={(e) => setHeight(e.target.value)} placeholder={"Enter Height"} />
+						<Input type="number" onChange={(e) => setWidth(e.target.value)} placeholder={"Enter Width"} />
+					</div>
 				</div>
 
 			</> : (
