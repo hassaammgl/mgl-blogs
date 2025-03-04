@@ -1,19 +1,13 @@
 "use client";
-import React, { useState } from "react";
-import { AnimatePresence, motion as m } from "motion/react";
-import { useBlogFormStore } from "@/stores/store";
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
-import { FileUpload } from "@/components/ui/file-upload";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select"
-import { genImgModel } from "@/constants"
-import { Input } from "@/components/ui/input"
+import React, {useState} from "react";
+import {AnimatePresence, motion as m} from "motion/react";
+import {useBlogFormStore} from "@/stores/store";
+import {FaAngleLeft, FaAngleRight} from "react-icons/fa";
+import {Button} from "@/components/ui/button";
+import {FileUpload} from "@/components/ui/file-upload";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
+import {genImgModel} from "@/constants"
+import {Input} from "@/components/ui/input"
 
 
 const Steps = () => {
@@ -250,7 +244,7 @@ const Step2 = () => {
 						</Select>
 						<Input type="number" onChange={(e) => setSeed(e.target.value)} placeholder={"Enter Seed"} />
 						<Input type="number" onChange={(e) => setHeight(e.target.value)} placeholder={"Enter Height"} />
-						<Input type="number" onChange={(e) => setWidth(e.target.value)} placeholder={"Enter Width"} />
+						<Input type="number" onChange={(e) => setWidth(e.target.value)} placeholder={"Enter Width"}/>
 					</div>
 				</div>
 
