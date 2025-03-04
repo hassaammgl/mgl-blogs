@@ -247,7 +247,6 @@ const Step2 = () => {
 						<Input type="number" onChange={(e) => setWidth(e.target.value)} placeholder={"Enter Width"}/>
 					</div>
 				</div>
-
 			</> : (
 				<>
 					<div className="mb-4 text-center font-bold text-2xl">
