@@ -23,9 +23,12 @@ async function downloadImage(imageUrl) {
 
 export const POST = async (req) => {
     const { prompt, width, height, seed, model } = await req.body;
+    
+
+
     const imageUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=${width}&height=${height}&seed=${seed}&model=${model}`;
     console.log(prompt, width, height, seed, model);
 
     downloadImage(imageUrl);
-return  NextResponse.json({ prompt, width, height, seed, model });
+    return NextResponse.json({ imageUrl });
 }
