@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import fetch from 'node-fetch';
 import { NextResponse } from 'next/server';
+import { connectDB, disconnectDB } from '@/lib/db';
+import { Image } from '@/models/Image';
 
 
 async function downloadImage(imageUrl) {
@@ -15,19 +17,37 @@ async function downloadImage(imageUrl) {
 }
 
 export const POST = async (req) => {
-    const { prompt, width, height, seed, model } = await req.json();
+    const { prompt, seed, model } = await req.json();
 
-    if (!prompt || width < 200 || height < 200 || seed < 20) {
+    await connectDB();
+
+    if (!prompt || seed < 20) {
         return NextResponse.json({ error: 'All fields is required' }, { status: 400 });
     }
 
     try {
-        const imageUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=${width || 1024}&height=${height || 1024}&seed=${seed || 761}&model=${model || "flux"}`;
-        console.log(prompt, width, height, seed, model);
-        const path = downloadImage(imageUrl);
-        return NextResponse.json({ imageUrl, path }, { status: 200 });
+        const imageUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=${1200}&height=${630}&seed=${seed || 7661}&model=${model || "flux"}&nologo=${true}`;
+        console.log(prompt, seed, model);
+        const path = await downloadImage(imageUrl);
+        const base64String = Buffer.from(fs.readFileSync(path)).toString('base64');
+        console.log(base64String);
+        const fileType = 'image/jpeg'; // Change this according to your file type
+        const base64WithPrefix = `data:${fileType};base64,${base64String}`;
+
+        console.log(base64WithPrefix);
+
+        const image = new Image({
+            imagePath: path,
+            base64: base64WithPrefix,
+            url: imageUrl
+        });
+        await image.save();
+        return NextResponse.json(image, { status: 200 });
     } catch (error) {
         console.error(error);
         return NextResponse.json({ error: 'An error occurred' }, { status: 500 });
+    }
+    finally {
+        await disconnectDB();
     }
 }

@@ -1,13 +1,14 @@
 "use client";
-import React, {useState} from "react";
-import {AnimatePresence, motion as m} from "motion/react";
-import {useBlogFormStore} from "@/stores/store";
-import {FaAngleLeft, FaAngleRight} from "react-icons/fa";
-import {Button} from "@/components/ui/button";
-import {FileUpload} from "@/components/ui/file-upload";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
-import {genImgModel} from "@/constants"
-import {Input} from "@/components/ui/input"
+import React, { useState } from "react";
+import { AnimatePresence, motion as m } from "motion/react";
+import { useBlogFormStore } from "@/stores/store";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import { FileUpload } from "@/components/ui/file-upload";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
+import { genImgModel, blogCategory } from "@/constants"
+import { Input } from "@/components/ui/input"
+
 
 
 const Steps = () => {
@@ -143,8 +144,6 @@ const Step2 = () => {
 
 	const [prompt, setPrompt] = useState("");
 	const [model, setModel] = useState("flux");
-	const [height, setHeight] = useState(1024);
-	const [width, setWidth] = useState(1024);
 	const [seed, setSeed] = useState(768823111);
 
 
@@ -167,7 +166,7 @@ const Step2 = () => {
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ prompt, model, height, width, seed }),
+			body: JSON.stringify({ prompt, model, seed }),
 		});
 		const data = await res.json();
 		console.log(data);
@@ -215,8 +214,7 @@ const Step2 = () => {
 					Create Image By AI
 				</div>
 				<div className="mb-4">
-					{/* <img src={imageUrl} alt="Blog Img" /> */}
-					{/* <button onClick={handlePromptImg}>Use Img...</button> */}
+					{image && <img src={image.base64} className="w-max h-fit" alt="Blog Img" />}
 				</div>
 				<div className="mb-4">
 					<div className="mb-4 flex justify-center gap-3">
@@ -243,8 +241,6 @@ const Step2 = () => {
 							</SelectContent>
 						</Select>
 						<Input type="number" onChange={(e) => setSeed(e.target.value)} placeholder={"Enter Seed"} />
-						<Input type="number" onChange={(e) => setHeight(e.target.value)} placeholder={"Enter Height"} />
-						<Input type="number" onChange={(e) => setWidth(e.target.value)} placeholder={"Enter Width"}/>
 					</div>
 				</div>
 			</> : (
@@ -291,7 +287,7 @@ const Step2 = () => {
 						>
 							<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
 							<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-								Next 
+								Use Image
 								<FaAngleRight />
 							</span>
 						</Button>
@@ -304,10 +300,9 @@ const Step2 = () => {
 
 
 
-// used for category and subcategory
+// used for step 3 interests
 const Step3 = () => {
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
+	const { setStep, step, setCategory } = useBlogFormStore();
 
 	return (
 		<m.div
@@ -315,42 +310,50 @@ const Step3 = () => {
 			transition={{ duration: 0.5 }}
 			animate={{ opacity: 1 }}
 		>
-			<div className="mb-4 text-center font-bold">
-				{title.replace(/ /, "-")}
+			<div className="mb-4 text-center font-bold text-2xl">
+				Select a Category
 			</div>
-			<div className="mb-4">
-				<label
-					className="block text-gray-300 text-sm font-bold mb-2"
-					htmlFor="title"
-				>
-					Title
-				</label>
-				<input
-					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-					type="text"
-					id="title"
-					name="title"
-					value={title}
-					onChange={(e) => setTitle(e.target.value)}
-				/>
-			</div>
-			<div className="mb-4">
-				<label
-					className="block text-gray-300 text-sm font-bold mb-2"
-					htmlFor="description"
-				>
-					Description
-				</label>
-				<textarea
-					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-					id="description"
-					name="description"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
-				/>
+			<div className="mb-4 flex justify-center">
+				<Select onValueChange={(e) => setCategory(e)} className="w-[300px] bg-black">
+					<SelectTrigger className="w-[300px]">
+						<SelectValue placeholder="Category" />
+					</SelectTrigger>
+					<SelectContent>
+						{blogCategory.map((category, i) => (
+							<SelectItem key={i} value={category}>{category}</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
 			</div>
 			<div className="w-full flex justify-end">
-				<NextPrev />
+				<div className="mb-4 flex justify-between gap-4">
+					<Button
+						onClick={() => {
+							setStep(step - 1);
+						}}
+						disabled={step === 1}
+						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+					>
+						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+							<FaAngleLeft />
+							Prev
+						</span>
+					</Button>
+					<Button
+						onClick={() => {
+							setStep(step + 1);
+						}}
+						disabled={step === 4}
+						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+					>
+						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+							Next
+							<FaAngleRight />
+						</span>
+					</Button>
+				</div>
 			</div>
 		</m.div>
 	);
@@ -358,8 +361,7 @@ const Step3 = () => {
 
 // used for content category ai based or custom
 const Step4 = () => {
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
+	const { setStep, step, setContentByAi, contentByAi } = useBlogFormStore();
 
 	return (
 		<m.div
@@ -367,39 +369,28 @@ const Step4 = () => {
 			transition={{ duration: 0.5 }}
 			animate={{ opacity: 1 }}
 		>
-			<div className="mb-4 text-center font-bold">
-				{title.replace(/ /, "-")}
+			<div className="mb-4 text-center font-bold text-2xl">
+				Choose Content Type
 			</div>
-			<div className="mb-4">
-				<label
-					className="block text-gray-300 text-sm font-bold mb-2"
-					htmlFor="title"
+			<div className="mb-4 text-center font-bold text-2xl gap-5 flex justify-center">
+				<button
+					onClick={(e) => {
+						e.preventDefault();
+						setContentByAi(false);
+					}}
+					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
 				>
-					Title
-				</label>
-				<input
-					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-					type="text"
-					id="title"
-					name="title"
-					value={title}
-					onChange={(e) => setTitle(e.target.value)}
-				/>
-			</div>
-			<div className="mb-4">
-				<label
-					className="block text-gray-300 text-sm font-bold mb-2"
-					htmlFor="description"
+					Custom Content
+				</button>
+				<button
+					onClick={(e) => {
+						e.preventDefault();
+						setContentByAi(true);
+					}}
+					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
 				>
-					Description
-				</label>
-				<textarea
-					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-					id="description"
-					name="description"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
-				/>
+					Content by AI
+				</button>
 			</div>
 			<div className="w-full flex justify-end">
 				<NextPrev />
