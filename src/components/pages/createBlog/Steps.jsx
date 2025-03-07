@@ -5,11 +5,16 @@ import { useBlogFormStore } from "@/stores/store";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/ui/file-upload";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
-import { genImgModel, blogCategory } from "@/constants"
-import { Input } from "@/components/ui/input"
-
-
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import { genImgModel, blogCategory } from "@/constants";
+import { Input } from "@/components/ui/input";
+import Editor from "@/components/shared/Editor";
 
 const Steps = () => {
 	const { step } = useBlogFormStore();
@@ -130,7 +135,6 @@ const Step1 = () => {
 							<FaAngleRight />
 						</span>
 					</Button>
-
 				</div>
 			</div>
 		</m.div>
@@ -139,13 +143,20 @@ const Step1 = () => {
 
 // used for upload image or ai based image
 const Step2 = () => {
-	const { setStep, step, setImage, image, imgByAi, setImgByAi, aiLoading, setAiLoading } =
-		useBlogFormStore();
+	const {
+		setStep,
+		step,
+		setImage,
+		image,
+		imgByAi,
+		setImgByAi,
+		aiLoading,
+		setAiLoading,
+	} = useBlogFormStore();
 
 	const [prompt, setPrompt] = useState("");
 	const [model, setModel] = useState("flux");
 	const [seed, setSeed] = useState(768823111);
-
 
 	const handleFileChange = (e) => {
 		console.log(e[0]);
@@ -172,7 +183,7 @@ const Step2 = () => {
 		console.log(data);
 		setImage(data);
 		setAiLoading(false);
-	}
+	};
 
 	return (
 		<m.div
@@ -207,43 +218,63 @@ const Step2 = () => {
 				</button>
 			</m.div>
 
-			{imgByAi === null ? (
-				<></>
-			) : imgByAi === true ? <>
-				<div className="mb-4 text-center font-bold text-2xl">
-					Create Image By AI
-				</div>
-				<div className="mb-4">
-					{image && <img src={image.base64} className="w-max h-fit" alt="Blog Img" />}
-				</div>
-				<div className="mb-4">
-					<div className="mb-4 flex justify-center gap-3">
-						<textarea
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-							id="prompt"
-							placeholder="Write your Prompts here it will genrate realtime imgs....."
-							name="prompt"
-							onChange={(e) => setPrompt(e.target.value)}
-						/>
-						<Button onClick={handleGenrateImg} className="px-12 rounded-lg h-full m-auto py-4 bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200">
-							{aiLoading ? "Genrating..." : "Genrate"}
-						</Button>
+			{imgByAi === null && <></>}
+			{imgByAi === true && (
+				<>
+					<div className="mb-4 text-center font-bold text-2xl">
+						Create Image By AI
 					</div>
-					<div className="mb-4 flex gap-5" >
-						<Select onValueChange={(e) => setModel(e)} className="w-[180px] bg-black">
-							<SelectTrigger className="w-[180px]">
-								<SelectValue placeholder="Model" />
-							</SelectTrigger>
-							<SelectContent>
-								{genImgModel.map((model, i) => (
-									<SelectItem key={i} value={model.label}>{model.model}</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-						<Input type="number" onChange={(e) => setSeed(e.target.value)} placeholder={"Enter Seed"} />
+					<div className="mb-4">
+						{image && (
+							<img
+								src={image.base64}
+								className="w-max h-fit"
+								alt="Blog Img"
+							/>
+						)}
 					</div>
-				</div>
-			</> : (
+					<div className="mb-4">
+						<div className="mb-4 flex justify-center gap-3">
+							<textarea
+								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+								id="prompt"
+								placeholder="Write your Prompts here it will genrate realtime imgs....."
+								name="prompt"
+								onChange={(e) => setPrompt(e.target.value)}
+							/>
+							<Button
+								onClick={handleGenrateImg}
+								className="px-12 rounded-lg h-full m-auto py-4 bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200"
+							>
+								{aiLoading ? "Genrating..." : "Genrate"}
+							</Button>
+						</div>
+						<div className="mb-4 flex gap-5">
+							<Select
+								onValueChange={(e) => setModel(e)}
+								className="w-[180px] bg-black"
+							>
+								<SelectTrigger className="w-[180px]">
+									<SelectValue placeholder="Model" />
+								</SelectTrigger>
+								<SelectContent>
+									{genImgModel.map((model, i) => (
+										<SelectItem key={i} value={model.label}>
+											{model.model}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<Input
+								type="number"
+								onChange={(e) => setSeed(e.target.value)}
+								placeholder={"Enter Seed"}
+							/>
+						</div>
+					</div>
+				</>
+			)}
+			{imgByAi === false && (
 				<>
 					<div className="mb-4 text-center font-bold text-2xl">
 						Upload Image
@@ -298,8 +329,6 @@ const Step2 = () => {
 	);
 };
 
-
-
 // used for step 3 interests
 const Step3 = () => {
 	const { setStep, step, setCategory } = useBlogFormStore();
@@ -314,13 +343,18 @@ const Step3 = () => {
 				Select a Category
 			</div>
 			<div className="mb-4 flex justify-center">
-				<Select onValueChange={(e) => setCategory(e)} className="w-[300px] bg-black">
+				<Select
+					onValueChange={(e) => setCategory(e)}
+					className="w-[300px] bg-black"
+				>
 					<SelectTrigger className="w-[300px]">
 						<SelectValue placeholder="Category" />
 					</SelectTrigger>
 					<SelectContent>
 						{blogCategory.map((category, i) => (
-							<SelectItem key={i} value={category}>{category}</SelectItem>
+							<SelectItem key={i} value={category}>
+								{category}
+							</SelectItem>
 						))}
 					</SelectContent>
 				</Select>
@@ -361,7 +395,22 @@ const Step3 = () => {
 
 // used for content category ai based or custom
 const Step4 = () => {
-	const { setStep, step, setContentByAi, contentByAi } = useBlogFormStore();
+	const { setStep, step, setContentByAi, contentByAi, content, setContent } =
+		useBlogFormStore();
+
+	const [prompt, setPrompt] = useState("")
+	const [res, setRes] = useState("")
+
+	const genrateContent = async (e) => {
+		e.preventDefault();
+		const res = await fetch(`/api/content-gen`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ prompt }),
+		});
+	}
 
 	return (
 		<m.div
@@ -369,9 +418,11 @@ const Step4 = () => {
 			transition={{ duration: 0.5 }}
 			animate={{ opacity: 1 }}
 		>
-			<div className="mb-4 text-center font-bold text-2xl">
-				Choose Content Type
-			</div>
+			{contentByAi === null && (
+				<div className="mb-4 text-center font-bold text-2xl">
+					Choose Content Type
+				</div>
+			)}
 			<div className="mb-4 text-center font-bold text-2xl gap-5 flex justify-center">
 				<button
 					onClick={(e) => {
@@ -392,8 +443,68 @@ const Step4 = () => {
 					Content by AI
 				</button>
 			</div>
+			{contentByAi === true && (<>
+				<div className="mb-4">
+					<label
+						className="block text-gray-300 text-sm font-bold mb-2"
+						htmlFor="content"
+					>
+						Content by AI
+					</label>
+					<div className="w-full flex justify-center gap-4">
+						<Input type="text" onChange={(e) => setPrompt(e.target.value)} placeholder="Enter AI Content" />
+						<Button onClick={genrateContent}>Generate</Button>
+					</div>
+					<div className="w-full">
+						{ res}
+					</div>
+
+				</div>
+			</>)}
+			{contentByAi === false && (
+				<>
+					<div className="mb-4">
+						<label
+							className="block text-gray-300 text-sm font-bold mb-2"
+							htmlFor="content"
+						>
+							Content
+						</label>
+						<Editor onChange={setContent} />
+					</div>
+				</>
+			)}
 			<div className="w-full flex justify-end">
-				<NextPrev />
+				<div className="mb-4 flex justify-between gap-4">
+					<Button
+						onClick={() => {
+							setStep(step - 1);
+						}}
+						disabled={step === 1}
+						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+					>
+						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+							<FaAngleLeft />
+							Prev
+						</span>
+					</Button>
+					{content !== "" && (
+						<Button
+							onClick={() => {
+								setStep(step + 1);
+							}}
+							disabled={step === 4}
+							className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+						>
+							<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+							<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+								Next
+								<FaAngleRight />
+							</span>
+						</Button>
+					)}
+				</div>
 			</div>
 		</m.div>
 	);
@@ -547,101 +658,3 @@ const NextPrev = () => {
 };
 
 export default Steps;
-
-// import Editor from "@/components/shared/Editor";
-// import { useState } from "react";
-// import { Switch } from "@/components/ui/switch";
-
-// const Steps = () => {
-// 	const [customText, setCustomText] = useState(false);
-
-// 	const [data, setData] = useState({
-// 		title: "",
-// 		content: "",
-// 		description: "",
-// 		content: "",
-// 		image: "",
-// 		category: "",
-// 		subcategory: "",
-// 		subcategoryoption: "",
-// 	});
-
-// 	const handleFileChange = (e) => {
-// 		console.log(e[0]);
-// 		const file = e[0];
-// 		const reader = new FileReader();
-// 		reader.onloadend = () => {
-// 			const base64String = reader.result
-// 				.replace("data:", "")
-// 				.replace(/^.+,/, "");
-// 			console.log(base64String);
-// 		};
-// 		reader.readAsDataURL(file);
-// 	};
-
-// 	return (
-// 		<div className="w-full min-h-screen flex justify-center items-center bg-gray-900 p-4">
-// 			<form className="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-lg">
-// 				<div className="mb-4">
-// 					<FileUpload onChange={handleFileChange} />
-// 				</div>
-// 				<div className="mb-4">
-// 					<label
-// 						className="block text-gray-300 text-sm font-bold mb-2"
-// 						htmlFor="title"
-// 					>
-// 						Title
-// 					</label>
-// 					<input
-// 						className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-// 						type="text"
-// 						id="title"
-// 						name="title"
-// 					/>
-// 				</div>
-// 				<div className="mb-4">
-// 					<input type="checkbox" name="" id="" />
-// 					<p>Custom Text</p>
-// 				</div>
-
-// 				{customText === false ? (
-// 					<div className="mb-4">
-// 						<label
-// 							className="block text-gray-300 text-sm font-bold mb-2"
-// 							htmlFor="content"
-// 						>
-// 							Content
-// 						</label>
-// 						<Editor />
-// 					</div>
-// 				) : (
-// 					<div className="mb-4">
-// 						<label
-// 							className="block text-gray-300 text-sm font-bold mb-2"
-// 							htmlFor="content"
-// 						>
-// 							Content
-// 						</label>
-// 						<textarea
-// 							name="content"
-// 							id=""
-// 							cols="30"
-// 							rows="10"
-// 						></textarea>
-// 					</div>
-// 				)}
-
-// 				<div className="flex items-center justify-between">
-// 					<button
-// 						className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-// 						type="submit"
-// 					>
-// 						Submit
-// 					</button>
-// 				</div>
-// 			</form>
-// 		</div>
-// 	);
-// };
-
-// export default Steps;
