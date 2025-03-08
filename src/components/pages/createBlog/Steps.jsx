@@ -410,6 +410,8 @@ const Step4 = () => {
 			},
 			body: JSON.stringify({ prompt }),
 		});
+		const data = await res.json();
+		console.log(data);
 	}
 
 	return (
@@ -456,7 +458,7 @@ const Step4 = () => {
 						<Button onClick={genrateContent}>Generate</Button>
 					</div>
 					<div className="w-full">
-						{ res}
+						{res}
 					</div>
 
 				</div>
