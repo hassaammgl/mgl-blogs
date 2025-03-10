@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { type } from 'os';
 
 const blogSchema = new mongoose.Schema({
     title: {
@@ -22,46 +23,23 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Content is required']
     },
-    realContent: {
-        type: String,
-        required: [true, 'Real content is required']
-    },
     category: {
         type: String,
         required: [true, 'Category is required'],
         trim: true
     },
-    summary: {
-        type: String,
-        required: [true, 'Summary is required'],
-        trim: true,
-        // maxLength: [500, 'Summary cannot be more than 500 characters']
-    },
-    subcategory: {
-        type: String,
-        required: [true, 'Subcategory is required'],
-    },
-    subcategoryoption: {
-        type: String,
-        required: [true, 'Subcategory option is required'],
-    },
     image: {
-        type: String,
+        type: String ,
         required: [true, 'Featured image is required']
+    },
+    imageID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Image'
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',  // Reference to User model if you have one
         required: false
-    },
-    tags: [{
-        type: String,
-        trim: true
-    }],
-    status: {
-        type: String,
-        enum: ['draft', 'published'],
-        default: 'draft'
     },
     viewCount: {
         type: Number,

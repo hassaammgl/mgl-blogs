@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { AnimatePresence, motion as m } from "motion/react";
-import { useBlogFormStore } from "@/stores/store";
+import { useBlogFormStore,useUserStore } from "@/stores/store";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/ui/file-upload";
@@ -26,9 +26,9 @@ const NavigationButtons = ({ onNext, onPrev, isNextDisabled, isPrevDisabled }) =
 		>
 			<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
 			<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-        <FaAngleLeft />
-        Prev
-      </span>
+				<FaAngleLeft />
+				Prev
+			</span>
 		</Button>
 		<Button
 			onClick={onNext}
@@ -37,9 +37,9 @@ const NavigationButtons = ({ onNext, onPrev, isNextDisabled, isPrevDisabled }) =
 		>
 			<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
 			<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-        Next
-        <FaAngleRight />
-      </span>
+				Next
+				<FaAngleRight />
+			</span>
 		</Button>
 	</div>
 );
@@ -109,6 +109,7 @@ const Step2 = () => {
 		setImgByAi,
 		aiLoading,
 		setAiLoading,
+		setImageID,
 	} = useBlogFormStore();
 
 	const [prompt, setPrompt] = useState("");
@@ -137,118 +138,121 @@ const Step2 = () => {
 			body: JSON.stringify({ prompt, model, seed }),
 		});
 		const data = await res.json();
-		console.log(data);
-		setImage(data);
+		console.log(data.base64);
+		setImage(data.base64);
+		console.log(data.url);
+		setImageID(data._id);
+		console.log(data._id);
 		setAiLoading(false);
 	};
 
 	return (
 		<m.div
-			 			initial={{ opacity: 0 }}
-			 			transition={{ duration: 1.5 }}
-			 			animate={{ opacity: 1 }}
-			 			exit={{ opacity: 0 }}
-			 		>
-			 			<m.div
-			 				initial={{ opacity: 0 }}
-			 				transition={{ duration: 0.5 }}
-			 				animate={{ opacity: 1 }}
-			 				className="mb-4 text-center font-bold text-2xl gap-5 flex justify-center"
-			 			>
-			 				<button
-			 					onClick={(e) => {
-			 						e.preventDefault();
-			 						setImgByAi(false);
-			 					}}
-			 					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-			 				>
-			 					Upload Image
-			 				</button>
-			 				<button
-			 					onClick={(e) => {
-			 						e.preventDefault();
-			 						setImgByAi(true);
-			 					}}
-			 					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-			 				>
-			 					or creating by ai
-			 				</button>
-			 			</m.div>
-			
-			 			{imgByAi === null && <></>}
-			 			{imgByAi === true && (
-			 				<>
-			 					<div className="mb-4 text-center font-bold text-2xl">
-			 						Create Image By AI
-			 					</div>
-			 					<div className="mb-4">
-			 						{image && (
-			 							<img
-			 								src={image.base64}
-			 								className="w-max h-fit"
-			 								alt="Blog Img"
-			 							/>
-			 						)}
-			 					</div>
-			 					<div className="mb-4">
-			 						<div className="mb-4 flex justify-center gap-3">
-			 							<textarea
-			 								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-			 								id="prompt"
-			 								placeholder="Write your Prompts here it will genrate realtime imgs....."
-			 								name="prompt"
-			 								onChange={(e) => setPrompt(e.target.value)}
-			 							/>
-			 							<Button
-			 								onClick={handleGenrateImg}
-			 								className="px-12 rounded-lg h-full m-auto py-4 bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200"
-			 							>
-			 								{aiLoading ? "Genrating..." : "Genrate"}
-			 							</Button>
-			 						</div>
-			 						<div className="mb-4 flex gap-5">
-			 							<Select
-			 								onValueChange={(e) => setModel(e)}
-			 								className="w-[180px] bg-black"
-			 							>
-			 								<SelectTrigger className="w-[180px]">
-			 									<SelectValue placeholder="Model" />
-			 								</SelectTrigger>
-			 								<SelectContent>
-			 									{genImgModel.map((model, i) => (
-			 										<SelectItem key={i} value={model.label}>
-			 											{model.model}
-			 										</SelectItem>
-			 									))}
-			 								</SelectContent>
-			 							</Select>
-			 							<Input
-			 								type="number"
-			 								onChange={(e) => setSeed(e.target.value)}
-			 								placeholder={"Enter Seed"}
-			 							/>
-			 						</div>
-			 					</div>
-			 				</>
-			 			)}
-			 			{imgByAi === false && (
-			 				<>
-			 					<div className="mb-4 text-center font-bold text-2xl">
-			 						Upload Image
-			 					</div>
-			 					<div className="mb-4">
-			 						<FileUpload
-			 							accept="image/*"
-			 							onChange={handleFileChange}
-			 						/>
-			 					</div>
-			 					{image === "" ? null : (
-			 						<div className="mb-4 w-full justify-center items-center h-auto gap-4 border-2 border-dashed border-gray-500 rounded-lg p-4 flex">
-			 							<img src={image} alt="Blog Img" />
-			 						</div>
-			 					)}
-			 				</>
-			 			)}
+			initial={{ opacity: 0 }}
+			transition={{ duration: 1.5 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
+			<m.div
+				initial={{ opacity: 0 }}
+				transition={{ duration: 0.5 }}
+				animate={{ opacity: 1 }}
+				className="mb-4 text-center font-bold text-2xl gap-5 flex justify-center"
+			>
+				<button
+					onClick={(e) => {
+						e.preventDefault();
+						setImgByAi(false);
+					}}
+					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+				>
+					Upload Image
+				</button>
+				<button
+					onClick={(e) => {
+						e.preventDefault();
+						setImgByAi(true);
+					}}
+					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+				>
+					or creating by ai
+				</button>
+			</m.div>
+
+			{imgByAi === null && <></>}
+			{imgByAi === true && (
+				<>
+					<div className="mb-4 text-center font-bold text-2xl">
+						Create Image By AI
+					</div>
+					<div className="mb-4">
+						{image && (
+							<img
+								src={image}
+								className="w-max h-fit"
+								alt="Blog Img"
+							/>
+						)}
+					</div>
+					<div className="mb-4">
+						<div className="mb-4 flex justify-center gap-3">
+							<textarea
+								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+								id="prompt"
+								placeholder="Write your Prompts here it will genrate realtime imgs....."
+								name="prompt"
+								onChange={(e) => setPrompt(e.target.value)}
+							/>
+							<Button
+								onClick={handleGenrateImg}
+								className="px-12 rounded-lg h-full m-auto py-4 bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200"
+							>
+								{aiLoading ? "Genrating..." : "Genrate"}
+							</Button>
+						</div>
+						<div className="mb-4 flex gap-5">
+							<Select
+								onValueChange={(e) => setModel(e)}
+								className="w-[180px] bg-black"
+							>
+								<SelectTrigger className="w-[180px]">
+									<SelectValue placeholder="Model" />
+								</SelectTrigger>
+								<SelectContent>
+									{genImgModel.map((model, i) => (
+										<SelectItem key={i} value={model.label}>
+											{model.model}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+							<Input
+								type="number"
+								onChange={(e) => setSeed(e.target.value)}
+								placeholder={"Enter Seed"}
+							/>
+						</div>
+					</div>
+				</>
+			)}
+			{imgByAi === false && (
+				<>
+					<div className="mb-4 text-center font-bold text-2xl">
+						Upload Image
+					</div>
+					<div className="mb-4">
+						<FileUpload
+							accept="image/*"
+							onChange={handleFileChange}
+						/>
+					</div>
+					{image === "" ? null : (
+						<div className="mb-4 w-full justify-center items-center h-auto gap-4 border-2 border-dashed border-gray-500 rounded-lg p-4 flex">
+							<img src={image} alt="Blog Img" />
+						</div>
+					)}
+				</>
+			)}
 
 			<div className="w-full flex justify-end">
 				<NavigationButtons
@@ -258,8 +262,8 @@ const Step2 = () => {
 					isPrevDisabled={step === 1}
 				/>
 			</div>
-					</m.div>
-);
+		</m.div>
+	);
 };
 
 const Step3 = () => {
@@ -290,19 +294,18 @@ const Step3 = () => {
 					</SelectContent>
 				</Select>
 			</div>
-		{/* Navigation buttons */}
-	<div className="w-full flex justify-end">
-		<NavigationButtons
-			onNext={() => setStep(step + 1)}
-			onPrev={() => setStep(step - 1)}
-			isNextDisabled={step === 4} // Replace with actual condition
-			isPrevDisabled={step === 1}
-		/>
-	</div>
+			{/* Navigation buttons */}
+			<div className="w-full flex justify-end">
+				<NavigationButtons
+					onNext={() => setStep(step + 1)}
+					onPrev={() => setStep(step - 1)}
+					isNextDisabled={step === 4} // Replace with actual condition
+					isPrevDisabled={step === 1}
+				/>
+			</div>
 		</m.div>
-)
+	)
 };
-
 
 const Step4 = () => {
 	const { setStep, step, setContentByAi, contentByAi, content, setContent } =
@@ -371,7 +374,7 @@ const Step4 = () => {
 						<Button onClick={genrateContent}>Generate</Button>
 					</div>
 					{res !== "" && (
-						<Editor onChange={setContent} blogContent={res}/>
+						<Editor onChange={setRes} blogContent={res} />
 					)}
 
 				</div>
@@ -392,7 +395,11 @@ const Step4 = () => {
 			{/* Navigation buttons */}
 			<div className="w-full flex justify-end">
 				<NavigationButtons
-					onNext={() => setStep(step + 1)}
+					onNext={() => {
+						console.log(res)
+						setContent(res)
+						setStep(step + 1)
+					}}
 					onPrev={() => setStep(step - 1)}
 					isNextDisabled={content === ""} // Replace with actual condition
 					isPrevDisabled={step === 1}
@@ -403,26 +410,25 @@ const Step4 = () => {
 };
 
 const Step5 = () => {
-	const { setStep, step, setContentByAi, contentByAi, content, setContent } =
+	const { imgByAi, contentByAi, title, description, category, image, content, imageID } =
 		useBlogFormStore();
-
-	const [prompt, setPrompt] = useState("")
-	const [res, setRes] = useState("")
-
-	const genrateContent = async (e) => {
+	const {data: user} = useUserStore();
+	
+	console.log(user);
+	
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setRes("")
-		const res = await fetch(`/api/content-gen`, {
+		console.log(user);
+		const res = await fetch(`/api/create-blog`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ prompt }),
+			body: JSON.stringify({ imgByAi, contentByAi, title, description, category, image, content, imageID, userEmail: user.emailAddresses[0].emailAddress }),
 		});
 		const data = await res.json();
 		console.log(data);
-		setRes(data.blog);
-	}
+	};
 
 	return (
 		<m.div
@@ -430,17 +436,16 @@ const Step5 = () => {
 			transition={{ duration: 0.5 }}
 			animate={{ opacity: 1 }}
 		>
-			{/* Navigation buttons */}
+			<div>{title}</div>
+			<div>{description}</div>
+			<div>{category}</div>
+			<img src={image} alt={title} />
+			<div dangerouslySetInnerHTML={{ __html: content }} />
 			<div className="w-full flex justify-end">
-				<NavigationButtons
-					onNext={() => setStep(step + 1)}
-					onPrev={() => setStep(step - 1)}
-					isNextDisabled={content === ""} // Replace with actual condition
-					isPrevDisabled={step === 1}
-				/>
+				<Button onClick={handleSubmit} >Submit</Button>
 			</div>
 		</m.div>
-	);
+	)
 };
 
 // Steps component to manage rendering of different steps
