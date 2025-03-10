@@ -16,52 +16,35 @@ import { genImgModel, blogCategory } from "@/constants";
 import { Input } from "@/components/ui/input";
 import Editor from "@/components/shared/Editor";
 
-const Steps = () => {
-	const { step } = useBlogFormStore();
+// Define a component for rendering navigation buttons (Next/Prev)
+const NavigationButtons = ({ onNext, onPrev, isNextDisabled, isPrevDisabled }) => (
+	<div className="mb-4 flex justify-between gap-4">
+		<Button
+			onClick={onPrev}
+			disabled={isPrevDisabled}
+			className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+		>
+			<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+			<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+        <FaAngleLeft />
+        Prev
+      </span>
+		</Button>
+		<Button
+			onClick={onNext}
+			disabled={isNextDisabled}
+			className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+		>
+			<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+			<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+        Next
+        <FaAngleRight />
+      </span>
+		</Button>
+	</div>
+);
 
-	switch (step) {
-		case 1:
-			return (
-				<AnimatedWrapper>
-					<Step1 />
-				</AnimatedWrapper>
-			);
-		case 2:
-			return (
-				<AnimatedWrapper>
-					<Step2 />
-				</AnimatedWrapper>
-			);
-		case 3:
-			return (
-				<AnimatedWrapper>
-					<Step3 />
-				</AnimatedWrapper>
-			);
-		case 4:
-			return (
-				<AnimatedWrapper>
-					<Step4 />
-				</AnimatedWrapper>
-			);
-		case 5:
-			return (
-				<AnimatedWrapper>
-					<Step5 />
-				</AnimatedWrapper>
-			);
-		case 6:
-			return (
-				<AnimatedWrapper>
-					<Step6 />
-				</AnimatedWrapper>
-			);
-		default:
-			return <div>Steps {step}</div>;
-	}
-};
-
-// used for title and description
+// Define individual step components (Step1, Step2, etc.)
 const Step1 = () => {
 	const { setStep, step, setTitle, setDescription, title, description } =
 		useBlogFormStore();
@@ -73,6 +56,7 @@ const Step1 = () => {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 		>
+			{/* Input fields for title and description */}
 			<div className="mb-4">
 				<label
 					className="block text-gray-300 text-sm font-bold mb-2"
@@ -104,44 +88,17 @@ const Step1 = () => {
 					onChange={(e) => setDescription(e.target.value)}
 				/>
 			</div>
-			<div className="w-full flex justify-end">
-				<div className="mb-4 flex justify-between gap-4">
-					{step !== 1 && (
-						<Button
-							onClick={() => {
-								setStep(step - 1);
-							}}
-							disabled={step === 1}
-							className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-						>
-							<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-							<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-								<FaAngleLeft />
-								Prev
-							</span>
-						</Button>
-					)}
-
-					<Button
-						onClick={() => {
-							setStep(step + 1);
-						}}
-						disabled={title === "" || description === ""}
-						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-					>
-						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-							Next
-							<FaAngleRight />
-						</span>
-					</Button>
-				</div>
-			</div>
+			{/* Navigation buttons */}
+			<NavigationButtons
+				onNext={() => setStep(step + 1)}
+				onPrev={() => setStep(step - 1)}
+				isNextDisabled={title === "" || description === ""}
+				isPrevDisabled={step === 1}
+			/>
 		</m.div>
 	);
 };
 
-// used for upload image or ai based image
 const Step2 = () => {
 	const {
 		setStep,
@@ -187,152 +144,126 @@ const Step2 = () => {
 
 	return (
 		<m.div
-			initial={{ opacity: 0 }}
-			transition={{ duration: 1.5 }}
-			animate={{ opacity: 1 }}
-			exit={{ opacity: 0 }}
-		>
-			<m.div
-				initial={{ opacity: 0 }}
-				transition={{ duration: 0.5 }}
-				animate={{ opacity: 1 }}
-				className="mb-4 text-center font-bold text-2xl gap-5 flex justify-center"
-			>
-				<button
-					onClick={(e) => {
-						e.preventDefault();
-						setImgByAi(false);
-					}}
-					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-				>
-					Upload Image
-				</button>
-				<button
-					onClick={(e) => {
-						e.preventDefault();
-						setImgByAi(true);
-					}}
-					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-				>
-					or creating by ai
-				</button>
-			</m.div>
-
-			{imgByAi === null && <></>}
-			{imgByAi === true && (
-				<>
-					<div className="mb-4 text-center font-bold text-2xl">
-						Create Image By AI
-					</div>
-					<div className="mb-4">
-						{image && (
-							<img
-								src={image.base64}
-								className="w-max h-fit"
-								alt="Blog Img"
-							/>
-						)}
-					</div>
-					<div className="mb-4">
-						<div className="mb-4 flex justify-center gap-3">
-							<textarea
-								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-								id="prompt"
-								placeholder="Write your Prompts here it will genrate realtime imgs....."
-								name="prompt"
-								onChange={(e) => setPrompt(e.target.value)}
-							/>
-							<Button
-								onClick={handleGenrateImg}
-								className="px-12 rounded-lg h-full m-auto py-4 bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200"
-							>
-								{aiLoading ? "Genrating..." : "Genrate"}
-							</Button>
-						</div>
-						<div className="mb-4 flex gap-5">
-							<Select
-								onValueChange={(e) => setModel(e)}
-								className="w-[180px] bg-black"
-							>
-								<SelectTrigger className="w-[180px]">
-									<SelectValue placeholder="Model" />
-								</SelectTrigger>
-								<SelectContent>
-									{genImgModel.map((model, i) => (
-										<SelectItem key={i} value={model.label}>
-											{model.model}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-							<Input
-								type="number"
-								onChange={(e) => setSeed(e.target.value)}
-								placeholder={"Enter Seed"}
-							/>
-						</div>
-					</div>
-				</>
-			)}
-			{imgByAi === false && (
-				<>
-					<div className="mb-4 text-center font-bold text-2xl">
-						Upload Image
-					</div>
-					<div className="mb-4">
-						<FileUpload
-							accept="image/*"
-							onChange={handleFileChange}
-						/>
-					</div>
-					{image === "" ? null : (
-						<div className="mb-4 w-full justify-center items-center h-auto gap-4 border-2 border-dashed border-gray-500 rounded-lg p-4 flex">
-							<img src={image} alt="Blog Img" />
-						</div>
-					)}
-				</>
-			)}
+			 			initial={{ opacity: 0 }}
+			 			transition={{ duration: 1.5 }}
+			 			animate={{ opacity: 1 }}
+			 			exit={{ opacity: 0 }}
+			 		>
+			 			<m.div
+			 				initial={{ opacity: 0 }}
+			 				transition={{ duration: 0.5 }}
+			 				animate={{ opacity: 1 }}
+			 				className="mb-4 text-center font-bold text-2xl gap-5 flex justify-center"
+			 			>
+			 				<button
+			 					onClick={(e) => {
+			 						e.preventDefault();
+			 						setImgByAi(false);
+			 					}}
+			 					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+			 				>
+			 					Upload Image
+			 				</button>
+			 				<button
+			 					onClick={(e) => {
+			 						e.preventDefault();
+			 						setImgByAi(true);
+			 					}}
+			 					className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+			 				>
+			 					or creating by ai
+			 				</button>
+			 			</m.div>
+			
+			 			{imgByAi === null && <></>}
+			 			{imgByAi === true && (
+			 				<>
+			 					<div className="mb-4 text-center font-bold text-2xl">
+			 						Create Image By AI
+			 					</div>
+			 					<div className="mb-4">
+			 						{image && (
+			 							<img
+			 								src={image.base64}
+			 								className="w-max h-fit"
+			 								alt="Blog Img"
+			 							/>
+			 						)}
+			 					</div>
+			 					<div className="mb-4">
+			 						<div className="mb-4 flex justify-center gap-3">
+			 							<textarea
+			 								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+			 								id="prompt"
+			 								placeholder="Write your Prompts here it will genrate realtime imgs....."
+			 								name="prompt"
+			 								onChange={(e) => setPrompt(e.target.value)}
+			 							/>
+			 							<Button
+			 								onClick={handleGenrateImg}
+			 								className="px-12 rounded-lg h-full m-auto py-4 bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200"
+			 							>
+			 								{aiLoading ? "Genrating..." : "Genrate"}
+			 							</Button>
+			 						</div>
+			 						<div className="mb-4 flex gap-5">
+			 							<Select
+			 								onValueChange={(e) => setModel(e)}
+			 								className="w-[180px] bg-black"
+			 							>
+			 								<SelectTrigger className="w-[180px]">
+			 									<SelectValue placeholder="Model" />
+			 								</SelectTrigger>
+			 								<SelectContent>
+			 									{genImgModel.map((model, i) => (
+			 										<SelectItem key={i} value={model.label}>
+			 											{model.model}
+			 										</SelectItem>
+			 									))}
+			 								</SelectContent>
+			 							</Select>
+			 							<Input
+			 								type="number"
+			 								onChange={(e) => setSeed(e.target.value)}
+			 								placeholder={"Enter Seed"}
+			 							/>
+			 						</div>
+			 					</div>
+			 				</>
+			 			)}
+			 			{imgByAi === false && (
+			 				<>
+			 					<div className="mb-4 text-center font-bold text-2xl">
+			 						Upload Image
+			 					</div>
+			 					<div className="mb-4">
+			 						<FileUpload
+			 							accept="image/*"
+			 							onChange={handleFileChange}
+			 						/>
+			 					</div>
+			 					{image === "" ? null : (
+			 						<div className="mb-4 w-full justify-center items-center h-auto gap-4 border-2 border-dashed border-gray-500 rounded-lg p-4 flex">
+			 							<img src={image} alt="Blog Img" />
+			 						</div>
+			 					)}
+			 				</>
+			 			)}
 
 			<div className="w-full flex justify-end">
-				<div className="mb-4 flex justify-between gap-4">
-					<Button
-						onClick={() => {
-							setStep(step - 1);
-						}}
-						disabled={step === 1}
-						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-					>
-						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-							<FaAngleLeft />
-							Prev
-						</span>
-					</Button>
-					{image === "" ? null : (
-						<Button
-							onClick={() => {
-								setStep(step + 1);
-							}}
-							disabled={step === 4}
-							className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-						>
-							<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-							<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-								Use Image
-								<FaAngleRight />
-							</span>
-						</Button>
-					)}
-				</div>
+				<NavigationButtons
+					onNext={() => setStep(step + 1)}
+					onPrev={() => setStep(step - 1)}
+					isNextDisabled={image === ""}
+					isPrevDisabled={step === 1}
+				/>
 			</div>
-		</m.div>
-	);
+					</m.div>
+);
 };
 
-// used for step 3 interests
 const Step3 = () => {
 	const { setStep, step, setCategory } = useBlogFormStore();
-
 	return (
 		<m.div
 			initial={{ opacity: 0 }}
@@ -359,41 +290,20 @@ const Step3 = () => {
 					</SelectContent>
 				</Select>
 			</div>
-			<div className="w-full flex justify-end">
-				<div className="mb-4 flex justify-between gap-4">
-					<Button
-						onClick={() => {
-							setStep(step - 1);
-						}}
-						disabled={step === 1}
-						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-					>
-						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-							<FaAngleLeft />
-							Prev
-						</span>
-					</Button>
-					<Button
-						onClick={() => {
-							setStep(step + 1);
-						}}
-						disabled={step === 4}
-						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-					>
-						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-							Next
-							<FaAngleRight />
-						</span>
-					</Button>
-				</div>
-			</div>
+		{/* Navigation buttons */}
+	<div className="w-full flex justify-end">
+		<NavigationButtons
+			onNext={() => setStep(step + 1)}
+			onPrev={() => setStep(step - 1)}
+			isNextDisabled={step === 4} // Replace with actual condition
+			isPrevDisabled={step === 1}
+		/>
+	</div>
 		</m.div>
-	);
+)
 };
 
-// used for content category ai based or custom
+
 const Step4 = () => {
 	const { setStep, step, setContentByAi, contentByAi, content, setContent } =
 		useBlogFormStore();
@@ -403,6 +313,7 @@ const Step4 = () => {
 
 	const genrateContent = async (e) => {
 		e.preventDefault();
+		setRes("")
 		const res = await fetch(`/api/content-gen`, {
 			method: "POST",
 			headers: {
@@ -412,6 +323,8 @@ const Step4 = () => {
 		});
 		const data = await res.json();
 		console.log(data);
+		setRes(data.blog);
+		setContent(res)
 	}
 
 	return (
@@ -457,9 +370,9 @@ const Step4 = () => {
 						<Input type="text" onChange={(e) => setPrompt(e.target.value)} placeholder="Enter AI Content" />
 						<Button onClick={genrateContent}>Generate</Button>
 					</div>
-					<div className="w-full">
-						{res}
-					</div>
+					{res !== "" && (
+						<Editor onChange={setContent} blogContent={res}/>
+					)}
 
 				</div>
 			</>)}
@@ -476,46 +389,40 @@ const Step4 = () => {
 					</div>
 				</>
 			)}
+			{/* Navigation buttons */}
 			<div className="w-full flex justify-end">
-				<div className="mb-4 flex justify-between gap-4">
-					<Button
-						onClick={() => {
-							setStep(step - 1);
-						}}
-						disabled={step === 1}
-						className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-					>
-						<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-						<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-							<FaAngleLeft />
-							Prev
-						</span>
-					</Button>
-					{content !== "" && (
-						<Button
-							onClick={() => {
-								setStep(step + 1);
-							}}
-							disabled={step === 4}
-							className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-						>
-							<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-							<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-								Next
-								<FaAngleRight />
-							</span>
-						</Button>
-					)}
-				</div>
+				<NavigationButtons
+					onNext={() => setStep(step + 1)}
+					onPrev={() => setStep(step - 1)}
+					isNextDisabled={content === ""} // Replace with actual condition
+					isPrevDisabled={step === 1}
+				/>
 			</div>
 		</m.div>
 	);
 };
 
-// used for form for ai or custom content
 const Step5 = () => {
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
+	const { setStep, step, setContentByAi, contentByAi, content, setContent } =
+		useBlogFormStore();
+
+	const [prompt, setPrompt] = useState("")
+	const [res, setRes] = useState("")
+
+	const genrateContent = async (e) => {
+		e.preventDefault();
+		setRes("")
+		const res = await fetch(`/api/content-gen`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ prompt }),
+		});
+		const data = await res.json();
+		console.log(data);
+		setRes(data.blog);
+	}
 
 	return (
 		<m.div
@@ -523,95 +430,41 @@ const Step5 = () => {
 			transition={{ duration: 0.5 }}
 			animate={{ opacity: 1 }}
 		>
-			<div className="mb-4 text-center font-bold text-2xl">{title}</div>
-			<div className="mb-4">
-				<label
-					className="block text-gray-300 text-sm font-bold mb-2"
-					htmlFor="title"
-				>
-					Title
-				</label>
-				<input
-					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-					type="text"
-					id="title"
-					name="title"
-					value={title}
-					onChange={(e) => setTitle(e.target.value)}
-				/>
-			</div>
-			<div className="mb-4">
-				<label
-					className="block text-gray-300 text-sm font-bold mb-2"
-					htmlFor="description"
-				>
-					Description
-				</label>
-				<textarea
-					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-					id="description"
-					name="description"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
-				/>
-			</div>
+			{/* Navigation buttons */}
 			<div className="w-full flex justify-end">
-				<NextPrev />
+				<NavigationButtons
+					onNext={() => setStep(step + 1)}
+					onPrev={() => setStep(step - 1)}
+					isNextDisabled={content === ""} // Replace with actual condition
+					isPrevDisabled={step === 1}
+				/>
 			</div>
 		</m.div>
 	);
 };
 
-// used for tags and publish
-const Step6 = () => {
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
+// Steps component to manage rendering of different steps
+const Steps = () => {
+	const { step } = useBlogFormStore();
 
+	// Define a mapping of step numbers to step components
+	const steps = {
+		1: <Step1 />,
+		2: <Step2 />,
+		3: <Step3 />,
+		4: <Step4 />,
+		5: <Step5 />,
+	};
+
+	// Render the appropriate step component based on the current step
 	return (
-		<m.div
-			initial={{ opacity: 0 }}
-			transition={{ duration: 0.5 }}
-			animate={{ opacity: 1 }}
-		>
-			<div className="mb-4 text-center font-bold text-2xl">{title}</div>
-			<div className="mb-4">
-				<label
-					className="block text-gray-300 text-sm font-bold mb-2"
-					htmlFor="title"
-				>
-					Title
-				</label>
-				<input
-					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-					type="text"
-					id="title"
-					name="title"
-					value={title}
-					onChange={(e) => setTitle(e.target.value)}
-				/>
-			</div>
-			<div className="mb-4">
-				<label
-					className="block text-gray-300 text-sm font-bold mb-2"
-					htmlFor="description"
-				>
-					Description
-				</label>
-				<textarea
-					className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
-					id="description"
-					name="description"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
-				/>
-			</div>
-			<div className="w-full flex justify-end">
-				<NextPrev />
-			</div>
-		</m.div>
+		<AnimatedWrapper>
+			{steps[step] || <div>Steps {step}</div>}
+		</AnimatedWrapper>
 	);
 };
 
+// AnimatedWrapper component to apply animation to step transitions
 const AnimatedWrapper = ({ children }) => {
 	return (
 		<AnimatePresence
@@ -625,38 +478,6 @@ const AnimatedWrapper = ({ children }) => {
 	);
 };
 
-const NextPrev = () => {
-	const { setStep, step } = useBlogFormStore();
-	return (
-		<div className="mb-4 flex justify-between gap-4">
-			<Button
-				onClick={() => {
-					setStep(step - 1);
-				}}
-				disabled={step === 1}
-				className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-			>
-				<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-				<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-					<FaAngleLeft />
-					Prev
-				</span>
-			</Button>
-			<Button
-				onClick={() => {
-					setStep(step + 1);
-				}}
-				disabled={step === 4}
-				className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-			>
-				<span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-				<span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-					Next
-					<FaAngleRight />
-				</span>
-			</Button>
-		</div>
-	);
-};
-
+// Export the Steps component as the default export
 export default Steps;
+

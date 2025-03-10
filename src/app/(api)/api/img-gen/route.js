@@ -10,7 +10,7 @@ async function downloadImage(imageUrl) {
     const response = await fetch(imageUrl);
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const filePath = path.join(process.cwd(), 'public', 'tmp', `flux-${Date.now().toLocaleString()}.png`);
+    const filePath = path.join(process.cwd(), 'public', 'tmp', `img-${Date.now().toLocaleString()}.png`);
     fs.writeFileSync(filePath, buffer);
     console.log('Download Completed');
     return filePath;

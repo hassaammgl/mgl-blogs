@@ -13,7 +13,7 @@ import SubScript from "@tiptap/extension-subscript";
 const content =
 	'<h1>Write Your Content here ....</h1>';
 
-export default function Editor({ onChange }) {
+export default function Editor({ onChange, blogContent }) {
 	const editor = useEditor({
 		extensions: [
 			StarterKit,
@@ -24,16 +24,16 @@ export default function Editor({ onChange }) {
 			Highlight,
 			TextAlign.configure({ types: ["heading", "paragraph"] }),
 		],
-		content,
+		content: blogContent || content,
 		onUpdate: ({ editor }) => {
 			onChange(editor.getHTML());
 		},
 	});
 
 	return (
-		<div className="h-96 w-full border border-gray-200 rounded-lg">
+		<div className="h-96 w-full border border-gray-200 rounded-lg overflow-hidden relative">
 			<RichTextEditor editor={editor}>
-				<div className="w-full flex justify-center border h-8" >
+				<div className="w-full flex justify-center border h-8 mb-2 static top-0 bg-white text-black">
 					<RichTextEditor.Toolbar sticky stickyOffset={70}>
 						<RichTextEditor.ControlsGroup className="font-bold">
 							<RichTextEditor.Bold />
@@ -80,7 +80,7 @@ export default function Editor({ onChange }) {
 					</RichTextEditor.Toolbar>
 				</div>
 
-				<RichTextEditor.Content  />
+				<RichTextEditor.Content className="min-h-[200px] h-full overflow-y-auto" />
 			</RichTextEditor>
 		</div>
 	);
