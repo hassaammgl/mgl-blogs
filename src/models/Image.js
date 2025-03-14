@@ -6,14 +6,17 @@ const imageSchema = new mongoose.Schema({
         required: true,
         default: ''
     },
-    base64: {
-        type: String,
+    data: {
+        type: Buffer,
         required: true,
-        default: ''
     },
     url: {
         type: String,
         default: ''
+    },
+    contentType: {
+        type: String,
+        required: true
     }
 });
 

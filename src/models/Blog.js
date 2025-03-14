@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { type } from 'os';
 
 const blogSchema = new mongoose.Schema({
     title: {
@@ -27,10 +26,6 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Category is required'],
         trim: true
-    },
-    image: {
-        type: String ,
-        required: [true, 'Featured image is required']
     },
     imageID: {
         type: mongoose.Schema.Types.ObjectId,

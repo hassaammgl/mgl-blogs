@@ -32,9 +32,9 @@ export default function Editor({ onChange, blogContent }) {
 
 	return (
 		<div className="h-96 w-full border border-gray-200 rounded-lg overflow-hidden relative">
-			<RichTextEditor editor={editor}>
+			<RichTextEditor immediatelyRender={false} editor={editor}>
 				<div className="w-full flex justify-center border h-8 mb-2 static top-0 bg-white text-black">
-					<RichTextEditor.Toolbar sticky stickyOffset={70}>
+					<RichTextEditor.Toolbar  sticky stickyOffset={70}>
 						<RichTextEditor.ControlsGroup className="font-bold">
 							<RichTextEditor.Bold />
 							<RichTextEditor.Italic />
