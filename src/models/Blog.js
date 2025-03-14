@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { type } from 'os';
 
 const blogSchema = new mongoose.Schema({
     title: {
@@ -19,7 +18,7 @@ const blogSchema = new mongoose.Schema({
         trim: true,
         // maxLength: [500, 'Description cannot be more than 500 characters']
     },
-    content: {
+    content: { 
         type: String,
         required: [true, 'Content is required']
     },

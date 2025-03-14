@@ -3,64 +3,79 @@ import { connectDB, disconnectDB } from '@/lib/db';
 import { Image } from '@/models/Image';
 import fs from 'fs';
 import path from 'path';
-import Blog from "@/models/Blog"
+import Blog from "@/models/Blog";
+import { User } from '@/models/User';
 
-
-function base64ToImage(base64String, filePath) {
-    // Remove the data URL prefix if present
-    const base64Data = base64String.replace(/^data:image\/\w+;base64,/, '');
-
-    // Convert base64 to buffer
-    const buffer = Buffer.from(base64Data, 'base64');
-
-    // Write the file
+async function base64ToImage(buffer, filePath) {
     fs.writeFileSync(path.join(process.cwd(), filePath), buffer);
-
     console.log('Image saved to:', filePath);
-
-    return filePath;
+    return { buffer, filePath };
 }
 
 export const POST = async (req) => {
-    let { imgByAi,  title, description, category, image, content, imageID } = await req.json();
+    let { title, description, category, image, content, imageId, user } = await req.json();
+    console.log(imageId);
 
     await connectDB();
 
     try {
+        let myUser;
+        let newBlog;
 
-        if (imgByAi) {
-            const imageobj = await Image.findOne({ _id: imageID });
-            if (!imageobj) {
+        if (imageId) {
+            // If imageId exists, retrieve the image from the database
+            const isImageExists = await Image.findOne({ _id: imageId });
+
+            if (!isImageExists) {
                 return NextResponse.json({ error: 'Image not found' }, { status: 404 });
             }
-        } else {
-            const imgPath = base64ToImage(image, `public/tmp/img-${Date.now().toLocaleString()}.png`);
-            const newImage = new Image({
-                imagePath: imgPath,
-                base64: image,
-                url: null
+
+            // Use the existing image data
+            const imageData = isImageExists.buffer; // Assuming buffer is stored in the Image model
+            const imagePath = isImageExists.imagePath; // Assuming imagePath is stored in the Image model
+
+            // Create the blog with the existing image
+            myUser = await User.findOne({ email: user });
+            newBlog = new Blog({
+                title,
+                description,
+                category,
+                content,
+                image: imageId, // Use the existing image ID
+                author: myUser._id,
             });
+
+            await newBlog.save();
+        } else {
+            // If imageId does not exist, save the new image
+            const { buffer, filePath } = await base64ToImage(image, "/public/tmp/" + Date.now() + ".png");
+
+            const newImage = new Image({
+                imagePath: filePath,
+                buffer,
+                base64: image,
+            });
+
+            
+            myUser = await User.findOne({ email: user });
+            newBlog = new Blog({
+                title,
+                description,
+                category,
+                content,
+                image: newImage._id,
+                author: myUser._id,
+            });
+            
             await newImage.save();
-            imageID = newImage._id;
+            await newBlog.save();
         }
-
-        const newBlog = new Blog({
-            title,
-            description,
-            category,
-            imageID,
-            content,
-        });
-        await newBlog.save();
-
-
 
         return NextResponse.json({ status: 200 });
     } catch (error) {
         console.error(error);
         return NextResponse.json({ error: 'An error occurred' }, { status: 500 });
-    }
-    finally {
+    } finally {
         await disconnectDB();
     }
 }

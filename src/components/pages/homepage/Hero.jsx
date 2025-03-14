@@ -5,7 +5,7 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { BackgroundLines } from "@/components/ui/background-lines";
 import { useUserStore } from "@/stores/store";
 import { useUser } from "@clerk/nextjs";
-import { useEffect, useRef, useState } from "react";
+import { useEffect,  } from "react";
 
 const Hero = () => {
 	const { data } = useUserStore();

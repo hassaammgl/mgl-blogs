@@ -23,3 +23,39 @@ export const imgGenrator = async (prompt) => {
     // Use the generated image (it's a Blob)
     console.log(image);
 }
+
+export const handleGenrateImg = async ({ setAiLoading, prompt, model, seed, setBase64Img, setImage, setImageId }) => {
+    setAiLoading(true);
+    console.log(setAiLoading, prompt, model, seed, setBase64Img, setImage, setImageId)
+    const res = await fetch(`/api/img-gen`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt, model, seed, setImage }),
+    });
+    const data = await res.json();
+
+    setBase64Img(data.base64);
+    setImage(data.buffer);
+    setImageId(data._id);
+    console.log(data._id);
+    setAiLoading(false);
+    return data._id
+};
+
+
+export const genrateContent = async (e, prompt, setContent, setRes) => {
+    e.preventDefault();
+    setRes("")
+    const res = await fetch(`/api/content-gen`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt }),
+    });
+    const data = await res.json();
+    setRes(data.blog);
+    setContent(data.blog)
+}
