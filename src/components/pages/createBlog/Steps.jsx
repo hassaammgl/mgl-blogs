@@ -18,6 +18,7 @@ import Editor from "@/components/shared/Editor";
 import { handleFileUpload } from "@/lib/utils";
 import { handleGenrateImg, genrateContent } from "@/actions/ai.action";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 
 // Define a component for rendering a single step
@@ -68,6 +69,9 @@ const Step = ({ children, stepNumber, totalSteps, onNext, onPrev, isNextDisabled
 
 // Steps component to manage rendering of different steps
 const Steps = () => {
+
+	const router = useRouter()
+
 	const { step, setStep, setContentByAi, contentByAi, setContent, content, setImage, image,
 		setTitle, title, setDescription, description,
 		setCategory, category, imgByAi, setImgByAi,
@@ -83,6 +87,7 @@ const Steps = () => {
 	const handleBlogSubmit = async () => {
 		console.log(await user);
 		console.log(imageId);
+		console.log(image);
 		const res = await fetch(`/api/create-blog`, {
 			method: "POST",
 			headers: {
@@ -93,7 +98,7 @@ const Steps = () => {
 				description,
 				category,
 				content,
-				image,
+				image: base64Img,
 				user: await user.emailAddresses[0].emailAddress,
 				imageId
 
@@ -101,6 +106,8 @@ const Steps = () => {
 		});
 		const data = await res.json();
 		console.log(data);
+
+		router.push(`/blogs/${data.blog}`);
 
 	};
 

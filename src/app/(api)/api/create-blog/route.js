@@ -6,7 +6,11 @@ import path from 'path';
 import Blog from "@/models/Blog";
 import { User } from '@/models/User';
 
-async function base64ToImage(buffer, filePath) {
+async function base64ToImage(base64String, filePath) {
+    // Extract base64 data (assuming it's in a property like 'dataURL')
+    const base64Data = base64String.replace(/^data:image\/\w+;base64,/, '');
+    const buffer = Buffer.from(base64Data, 'base64');
+
     fs.writeFileSync(path.join(process.cwd(), filePath), buffer);
     console.log('Image saved to:', filePath);
     return { buffer, filePath };
@@ -15,6 +19,7 @@ async function base64ToImage(buffer, filePath) {
 export const POST = async (req) => {
     let { title, description, category, image, content, imageId, user } = await req.json();
     console.log(imageId);
+    console.log(image);
 
     await connectDB();
 
@@ -38,7 +43,7 @@ export const POST = async (req) => {
                 description,
                 category,
                 content,
-                image: isImageExists._id, // Use the existing image ID
+                imageID: isImageExists._id, // Use the existing image ID
                 author: myUser._id,
             });
 
@@ -50,25 +55,25 @@ export const POST = async (req) => {
             const newImage = new Image({
                 imagePath: filePath,
                 buffer,
-                base64: image,
+               base64: image 
             });
 
-            
+
             myUser = await User.findOne({ email: user });
             newBlog = new Blog({
                 title,
                 description,
                 category,
                 content,
-                image: newImage._id,
+                imageID: newImage._id,
                 author: myUser._id,
             });
-            
+
             await newImage.save();
             await newBlog.save();
         }
 
-        return NextResponse.json({ status: 200 });
+        return NextResponse.json({ blog: newBlog._id }, { status: 200 });
     } catch (error) {
         console.error(error);
         return NextResponse.json({ error: 'An error occurred' }, { status: 500 });

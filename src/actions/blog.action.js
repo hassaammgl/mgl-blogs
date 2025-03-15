@@ -23,3 +23,16 @@ export const getUserData = async () => {
 
     return data
 }
+
+
+export const getBlogData = async (id) => {
+    const res = await fetch(`${domain}/api/blog/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    const data = await res.json();
+
+    return data
+}

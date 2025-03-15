@@ -7,6 +7,8 @@ body {
 	background-color: black;
 }
 
+
+
 @layer utilities {
 	.clip-path-closed {
 		clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);

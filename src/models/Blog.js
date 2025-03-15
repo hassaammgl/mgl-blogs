@@ -27,10 +27,7 @@ const blogSchema = new mongoose.Schema({
         required: [true, 'Category is required'],
         trim: true
     },
-    image: {
-        type: String ,
-        required: [true, 'Featured image is required']
-    },
+ 
     imageID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Image'
