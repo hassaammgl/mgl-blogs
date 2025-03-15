@@ -30,9 +30,6 @@ export const POST = async (req) => {
                 return NextResponse.json({ error: 'Image not found' }, { status: 404 });
             }
 
-            // Use the existing image data
-            const imageData = isImageExists.buffer; // Assuming buffer is stored in the Image model
-            const imagePath = isImageExists.imagePath; // Assuming imagePath is stored in the Image model
 
             // Create the blog with the existing image
             myUser = await User.findOne({ email: user });
@@ -41,7 +38,7 @@ export const POST = async (req) => {
                 description,
                 category,
                 content,
-                image: imageId, // Use the existing image ID
+                image: isImageExists._id, // Use the existing image ID
                 author: myUser._id,
             });
 
