@@ -103,7 +103,7 @@ const Menu = () => {
 			</div>
 
 			{/* Menu Overlay */}
-			<div className="menu-overlay fixed top-0 left-0 w-screen h-screen p-8 flex flex-col z-[2] bg-green-600">
+			<div className="menu-overlay fixed top-0 left-0 w-screen h-screen p-8 flex flex-col bg-green-600 z-50">
 				<div className="menu-overlay-bar flex justify-between items-center w-full">
 					<div className="menu-logo text-black">
 						<Link href="/">MGLBLOGS</Link>
