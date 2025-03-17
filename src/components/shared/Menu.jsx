@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
-import "@/styles/Menu.css";
+import "@/styles/Menu.css"; // Remove this line after conversion
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import {
@@ -13,6 +13,7 @@ import {
 	SignedOut,
 	UserButton,
 } from '@clerk/nextjs'
+
 
 const menuLinks = [
 	{
@@ -42,7 +43,9 @@ const menuLinks = [
 	},
 ];
 
+
 const Menu = () => {
+
 	const container = useRef();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -86,42 +89,53 @@ const Menu = () => {
 
 	return (
 		<nav className="menu-container" ref={container}>
-			<div className="menu-bar">
+			{/* Menu Bar */}
+			<div className="menu-bar fixed top-0 left-0 w-screen p-8 flex justify-between items-center">
 				<div className="menu-logo">
-					<Link className="menu-logo-link" href="/">
-						MGLBLOGS
-					</Link>
+					<Link className="text-white" href="/">MGLBLOGS</Link>
 				</div>
-				<div className="menu-open" onClick={toggleMenu}>
+				<div
+					className="menu-open text-white cursor-pointer"
+					onClick={toggleMenu}
+				>
 					<p>MENU</p>
 				</div>
 			</div>
-			<div className="menu-overlay">
-				<div className="menu-overlay-bar">
-					<div className="menu-logo">
+
+			{/* Menu Overlay */}
+			<div className="menu-overlay fixed top-0 left-0 w-screen h-screen p-8 flex flex-col z-[2] bg-green-600">
+				<div className="menu-overlay-bar flex justify-between items-center w-full">
+					<div className="menu-logo text-black">
 						<Link href="/">MGLBLOGS</Link>
 					</div>
-					<div className="menu-close" onClick={toggleMenu}>
-						<p>CLOSE</p>
-					</div>
-					<div className="menu-close" >
-						<SignedOut>
-							<SignInButton />
-							<SignUpButton />
-						</SignedOut>
-						<SignedIn>
-							<UserButton />
-						</SignedIn>
+					<div className="flex gap-4">
+						<div
+							className="menu-close text-black cursor-pointer"
+							onClick={toggleMenu}
+						>
+							<p>CLOSE</p>
+						</div>
+						<div className="menu-close text-black">
+							<SignedOut>
+								<SignInButton />
+								<SignUpButton />
+							</SignedOut>
+							<SignedIn>
+								<UserButton />
+							</SignedIn>
+						</div>
 					</div>
 				</div>
-				<div className="menu-copy">
+
+				{/* Menu Content */}
+				<div className="menu-copy flex flex-col justify-center pt-8 flex-[4]">
 					<div className="menu-links">
 						{menuLinks.map((link) => (
-							<div key={link._id} className="menu-link-item">
-								<div className="menu-link-item-holder">
+							<div key={link._id} className="menu-link-item w-max overflow-hidden">
+								<div className="menu-link-item-holder relative">
 									<Link
 										href={link.href}
-										className="menu-link"
+										className="menu-link text-black text-[80px] font-normal leading-[85%] tracking-[-0.02em]"
 									>
 										{link.label}
 									</Link>
@@ -129,16 +143,18 @@ const Menu = () => {
 							</div>
 						))}
 					</div>
-					<div className="menu-info">
-						<div className="menu-info-col">
-							<a href="#">X &#8599;</a>
-							<a href="#">Instagram &#8599;</a>
-							<a href="#">LinkedIn &#8599;</a>
-							<a href="#">Behance &#8599;</a>
-							<a href="#">Dribble &#8599;</a>
+
+					{/* Footer Info */}
+					<div className="menu-info flex justify-between items-end w-screen mt-auto">
+						<div className="menu-info-col flex flex-col justify-end p-4">
+							<a href="#" className="text-black">X ↗</a>
+							<a href="#" className="text-black">Instagram ↗</a>
+							<a href="#" className="text-black">LinkedIn ↗</a>
+							<a href="#" className="text-black">Behance ↗</a>
+							<a href="#" className="text-black">Dribble ↗</a>
 						</div>
-						<div className="menu-info-col w-fit flex-start flex-1">
-							<p>&copy; 2025 MGLBLOGS. All rights reserved.</p>
+						<div className="menu-info-col p-4 w-fit flex-1">
+							<p className="text-black">&copy; 2025 MGLBLOGS. All rights reserved.</p>
 						</div>
 					</div>
 				</div>
