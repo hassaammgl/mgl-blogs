@@ -8,7 +8,7 @@ import { testimonials } from "@/constants";
 
 const BlogsCategory = () => {
 	return (
-		<section className="overflow-hidden w-full h-screen flex-col bg-green-600 flex items-center justify-center">
+		<section className="background-image overflow-hidden w-full h-screen flex-col  flex items-center justify-center">
 			<ScrollVelocity velocity={4} className="rotate-12">
 				{testimonials.map(({ name, src }) => (
 					<div
@@ -24,10 +24,10 @@ const BlogsCategory = () => {
 					</div>
 				))}
 			</ScrollVelocity>
-			<div className="w-full"	>
+			<div className="w-full flex justify-center"	>
 				<ScrollVelocity velocity={-2}>
 					{testimonials.map((v, index) => (
-						<span className="text-white text-9xl " key={index}>{` ${v.name} . `}</span>
+						<span className="text-white text-9xl " key={index}>{`${v.name}`}.</span>
 					))}
 				</ScrollVelocity>
 			</div>

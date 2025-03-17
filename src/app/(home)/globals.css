@@ -36,3 +36,9 @@ body {
 .special-border {
 	clip-path: polygon(11% 0, 89% 0, 80% 100%, 20% 100%);
 }
+
+.background-image {
+	background-image: url("/candel.jpg");
+	background-size: cover;
+	background-position: center;
+}
