@@ -7,6 +7,7 @@ import {
 } from "@clerk/nextjs";
 import Scroll from "@/components/Scroll";
 import { ThemeProvider } from "@/components/shared/theme-provider";
+import Footer from "@/components/shared/Footer";
 
 
 export const metadata = {
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
             >
               {children}
             </ThemeProvider>
+            <Footer />
           </Scroll>
         </body>
       </html>

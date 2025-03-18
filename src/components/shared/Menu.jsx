@@ -53,6 +53,7 @@ const Menu = () => {
 
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
+
 	};
 
 	useGSAP(
@@ -82,8 +83,20 @@ const Menu = () => {
 	useEffect(() => {
 		if (isMenuOpen) {
 			tl.current.play();
+			window.addEventListener('scroll', (e) => {
+				e.preventDefault();
+				tl.current.reverse();
+			})
+
 		} else {
 			tl.current.reverse();
+		}
+
+		return () => {
+			window.removeEventListener('scroll', (e) => {
+				e.preventDefault();
+				tl.current.reverse();
+			})
 		}
 	}, [isMenuOpen]);
 
